@@ -23,7 +23,7 @@
   </div>
 
   <script>
-    // EXACT filename + same folder as index.html:
+    // EXACT filename — same folder as index.html
     const pdfRel = "./Studio-Apposite.pdf";
     const pdfAbs = new URL(pdfRel, window.location.href).href;
 
@@ -31,8 +31,8 @@
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
                   (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
-    // "redirect" = best quality on iOS; "gview" = Google viewer embedded
-    const iosMode = "redirect"; // change to "gview" if you want in-page Google viewer on iOS
+    // "redirect" = best quality on iOS; "gview" = Google viewer embedded on iOS
+    const iosMode = "redirect"; // change to "gview" if you want in-page Google viewer
 
     if (isIOS && iosMode === "redirect") {
       window.location.replace(pdfAbs);
