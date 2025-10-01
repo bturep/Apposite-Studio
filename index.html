@@ -32,7 +32,7 @@
                   (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
     // "redirect" = best quality on iOS; "gview" = Google viewer embedded on iOS
-    const iosMode = "redirect"; // change to "gview" if you want in-page Google viewer
+    const iosMode = "gview"; // change to "gview" if you want in-page Google viewer
 
     if (isIOS && iosMode === "redirect") {
       window.location.replace(pdfAbs);
