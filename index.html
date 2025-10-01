@@ -4,53 +4,46 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Apposite Studio — Practice Info (PDF)</title>
-  <meta name="description" content="Apposite Studio — architectural design in Victoria, BC. Open the studio PDF for details and contact." />
   <style>
     html,body{height:100%;margin:0}
-    /* Use dynamic viewport units on iOS to avoid the soft/short 100vh issue */
-    .wrap{height:100dvh; min-height:100vh}
-    .viewer{border:0; width:100%; height:100%}
-    .bar{position:fixed; inset:auto 0 0 0; padding:8px 12px; background:rgba(255,255,255,.85); font:14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial}
+    .wrap{height:100dvh;min-height:100vh}
+    .viewer{border:0;width:100%;height:100%}
+    .bar{position:fixed;left:0;right:0;bottom:0;padding:8px 12px;background:rgba(255,255,255,.85);font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Arial}
     .bar a{margin-right:12px}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- We’ll set this src via JS to handle iOS switching -->
     <iframe id="pv" class="viewer" title="Apposite Studio PDF"></iframe>
   </div>
 
-  <!-- Always provide a direct link -->
   <div class="bar">
-    <a href="/apposite-studio.pdf">Open PDF</a>
-    <span>Problems on iPhone? Use the link above to view in the native viewer.</span>
+    <a id="direct" href="./Studio-Apposite.pdf">Open PDF</a>
+    <span>If it looks fuzzy on iPhone, use the link above.</span>
   </div>
 
   <script>
-    (function(){
-      var pdfPath = "/apposite-studio.pdf"; // change if your file name differs
-      var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
-                  || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1); // iPadOS
-      // Choose how to handle iOS: "redirect" (best quality) or "gview" (in-page viewer)
-      var iosMode = "redirect"; // change to "gview" if you want in-page Google viewer on iOS
+    // EXACT filename + same folder as index.html:
+    const pdfRel = "./Studio-Apposite.pdf";
+    const pdfAbs = new URL(pdfRel, window.location.href).href;
 
-      if (isIOS && iosMode === "redirect") {
-        // Send iOS users to the native PDF viewer (crisp text, best UX)
-        window.location.replace(pdfPath);
-        return;
-      }
+    // iOS detection (covers iPadOS too)
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                  (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
-      var src;
-      if (isIOS && iosMode === "gview") {
-        // Google Docs Viewer (server-side render), keeps the page but uses Google’s viewer
-        var absolute = location.origin + pdfPath; // ensure absolute URL for Google
-        src = "https://docs.google.com/gview?embedded=1&url=" + encodeURIComponent(absolute);
-      } else {
-        // Default: browser’s built-in PDF viewer, full-page
-        src = pdfPath + "#zoom=page-fit";
-      }
+    // "redirect" = best quality on iOS; "gview" = Google viewer embedded
+    const iosMode = "redirect"; // change to "gview" if you want in-page Google viewer on iOS
+
+    if (isIOS && iosMode === "redirect") {
+      window.location.replace(pdfAbs);
+    } else {
+      const src = (isIOS && iosMode === "gview")
+        ? "https://docs.google.com/gview?embedded=1&url=" + encodeURIComponent(pdfAbs)
+        : pdfAbs + "#zoom=page-fit";
       document.getElementById("pv").src = src;
-    })();
+    }
+
+    document.getElementById("direct").href = pdfRel;
   </script>
 </body>
 </html>
