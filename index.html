@@ -1,47 +1,56 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Apposite Studio — Architectural Design · Victoria, BC · Brandon Poole</title>
-  <meta name="description" content="Apposite Studio is the architectural design practice of Brandon Poole in Victoria, BC. Residential and custom renovation design. Open the studio PDF for details and contact.">
-  <link rel="canonical" href="https://apposite.studio/">
-
-  <!-- Social share (optional but nice) -->
-  <meta property="og:title" content="Apposite Studio — Architectural Design · Victoria, BC">
-  <meta property="og:description" content="Residential & custom renovation design by Brandon Poole. Open the studio PDF for details and contact.">
-  <meta property="og:url" content="https://apposite.studio/">
-  <meta name="twitter:card" content="summary">
-
-  <!-- Structured data so Google knows this is your practice -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"ProfessionalService",
-    "name":"Studio Apposite",
-    "url":"https://apposite.studio/",
-    "areaServed":"Victoria, BC, Canada",
-    "description":"Residential and custom renovation architectural design.",
-    "founder":{"@type":"Person","name":"Brandon Poole"},
-    "sameAs":["https://www.brandonpoole.net/"]
-  }
-  </script>
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Apposite Studio — Practice Info (PDF)</title>
+  <meta name="description" content="Apposite Studio — architectural design in Victoria, BC. Open the studio PDF for details and contact." />
   <style>
     html,body{height:100%;margin:0}
-    .wrap{height:100vh}
-    .note{margin:8px 12px;font:14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial; text-align:center;}
+    /* Use dynamic viewport units on iOS to avoid the soft/short 100vh issue */
+    .wrap{height:100dvh; min-height:100vh}
+    .viewer{border:0; width:100%; height:100%}
+    .bar{position:fixed; inset:auto 0 0 0; padding:8px 12px; background:rgba(255,255,255,.85); font:14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial}
+    .bar a{margin-right:12px}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- Update the filename below to match your actual PDF -->
-    <object data="Studio-Apposite.pdf#zoom=page-fit"
-            type="application/pdf" width="100%" height="100%">
-      <p>Open the PDF: <a href="Studio-Apposite.pdf">Apposite Studio — Practice Info & Contact (PDF)</a>.</p>
-    </object>
+    <!-- We’ll set this src via JS to handle iOS switching -->
+    <iframe id="pv" class="viewer" title="Apposite Studio PDF"></iframe>
   </div>
 
-  <!-- Tiny crawlable line = keywords without “making a site” -->
+  <!-- Always provide a direct link -->
+  <div class="bar">
+    <a href="/apposite-studio.pdf">Open PDF</a>
+    <span>Problems on iPhone? Use the link above to view in the native viewer.</span>
+  </div>
+
+  <script>
+    (function(){
+      var pdfPath = "/apposite-studio.pdf"; // change if your file name differs
+      var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+                  || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1); // iPadOS
+      // Choose how to handle iOS: "redirect" (best quality) or "gview" (in-page viewer)
+      var iosMode = "redirect"; // change to "gview" if you want in-page Google viewer on iOS
+
+      if (isIOS && iosMode === "redirect") {
+        // Send iOS users to the native PDF viewer (crisp text, best UX)
+        window.location.replace(pdfPath);
+        return;
+      }
+
+      var src;
+      if (isIOS && iosMode === "gview") {
+        // Google Docs Viewer (server-side render), keeps the page but uses Google’s viewer
+        var absolute = location.origin + pdfPath; // ensure absolute URL for Google
+        src = "https://docs.google.com/gview?embedded=1&url=" + encodeURIComponent(absolute);
+      } else {
+        // Default: browser’s built-in PDF viewer, full-page
+        src = pdfPath + "#zoom=page-fit";
+      }
+      document.getElementById("pv").src = src;
+    })();
+  </script>
 </body>
 </html>
