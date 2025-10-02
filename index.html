@@ -6,18 +6,12 @@
   <title>Apposite Studio — Practice Info (PDF)</title>
   <style>
     html,body{height:100%;margin:0}
-    /* Fallbacks for different iOS viewport unit behaviors */
-    .wrap{height:100vh; height:100svh; height:100dvh; min-height:100vh}
     .viewer{position:fixed; inset:0; border:0; width:100%; height:100%}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <iframe id="pv" class="viewer" title="Apposite Studio PDF"></iframe>
-  </div>
-
   <script>
-    // Exact filename; place this PDF next to index.html
+    // Exact filename; same folder as index.html
     const pdfRel = "./Studio-Apposite.pdf";
     const pdfAbs = new URL(pdfRel, window.location.href).href;
 
@@ -26,25 +20,23 @@
     const isIOS = /iPad|iPhone|iPod/.test(ua) ||
                   (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
-    // iOS: prefer Google viewer, with a fast fallback to native viewer if gview stalls
-    const frame = document.getElementById("pv");
     if (isIOS) {
+      // Load Google's viewer in the TOP WINDOW (avoids blank iframe on iOS)
       const gview = "https://docs.google.com/gview?embedded=1&url=" + encodeURIComponent(pdfAbs);
-
-      let loaded = false;
-      frame.onload = function(){ loaded = true; };
-
-      // Try Google viewer first
-      frame.src = gview;
-
-      // Fallback to native viewer if Google viewer doesn’t load quickly
-      setTimeout(function(){
-        if (!loaded) window.location.replace(pdfAbs);
-      }, 2000); // adjust if you want to wait longer
+      window.location.replace(gview);
     } else {
-      // Non-iOS: use the browser’s built-in PDF viewer
-      frame.src = pdfAbs + "#zoom=page-fit";
+      // Non-iOS: embed the browser’s viewer
+      const f = document.createElement("iframe");
+      f.className = "viewer";
+      f.title = "Apposite Studio PDF";
+      f.src = pdfAbs + "#zoom=page-fit";
+      document.body.appendChild(f);
     }
   </script>
+
+  <noscript>
+    <!-- No JS? Just open the PDF -->
+    <meta http-equiv="refresh" content="0; url=./Studio-Apposite.pdf">
+  </noscript>
 </body>
 </html>
