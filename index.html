@@ -6,10 +6,9 @@
   <title>Apposite Studio — Practice Info (PDF)</title>
   <style>
     html,body{height:100%;margin:0}
-    .wrap{height:100dvh;min-height:100vh}
-    .viewer{border:0;width:100%;height:100%}
-    .bar{position:fixed;left:0;right:0;bottom:0;padding:8px 12px;background:rgba(255,255,255,.85);font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Arial}
-    .bar a{margin-right:12px}
+    /* Fallbacks for different iOS viewport unit behaviors */
+    .wrap{height:100vh; height:100svh; height:100dvh; min-height:100vh}
+    .viewer{position:fixed; inset:0; border:0; width:100%; height:100%}
   </style>
 </head>
 <body>
@@ -18,27 +17,34 @@
   </div>
 
   <script>
-    // EXACT filename — same folder as index.html
+    // Exact filename; place this PDF next to index.html
     const pdfRel = "./Studio-Apposite.pdf";
     const pdfAbs = new URL(pdfRel, window.location.href).href;
 
-    // iOS detection (covers iPadOS too)
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    // iOS (incl. iPadOS) detection
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    const isIOS = /iPad|iPhone|iPod/.test(ua) ||
                   (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
-    // "redirect" = best quality on iOS; "gview" = Google viewer embedded on iOS
-    const iosMode = "gview"; // change to "gview" if you want in-page Google viewer
+    // iOS: prefer Google viewer, with a fast fallback to native viewer if gview stalls
+    const frame = document.getElementById("pv");
+    if (isIOS) {
+      const gview = "https://docs.google.com/gview?embedded=1&url=" + encodeURIComponent(pdfAbs);
 
-    if (isIOS && iosMode === "redirect") {
-      window.location.replace(pdfAbs);
+      let loaded = false;
+      frame.onload = function(){ loaded = true; };
+
+      // Try Google viewer first
+      frame.src = gview;
+
+      // Fallback to native viewer if Google viewer doesn’t load quickly
+      setTimeout(function(){
+        if (!loaded) window.location.replace(pdfAbs);
+      }, 2000); // adjust if you want to wait longer
     } else {
-      const src = (isIOS && iosMode === "gview")
-        ? "https://docs.google.com/gview?embedded=1&url=" + encodeURIComponent(pdfAbs)
-        : pdfAbs + "#zoom=page-fit";
-      document.getElementById("pv").src = src;
+      // Non-iOS: use the browser’s built-in PDF viewer
+      frame.src = pdfAbs + "#zoom=page-fit";
     }
-
-    document.getElementById("direct").href = pdfRel;
   </script>
 </body>
 </html>
