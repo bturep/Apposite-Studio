@@ -5,38 +5,170 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Apposite Studio — Practice Info (PDF)</title>
   <style>
-    html,body{height:100%;margin:0}
-    .viewer{position:fixed; inset:0; border:0; width:100%; height:100%}
+    :root { --bar: 52px; }
+    html, body { height: 100%; margin: 0; }
+    body { font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial; color: #111; }
+    .toolbar {
+      position: fixed; inset: 0 0 auto 0; height: var(--bar);
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 12px; background: #fff; border-bottom: 1px solid #eee;
+      z-index: 10;
+    }
+    .toolbar .spacer { flex: 1; }
+    .btn {
+      appearance: none; border: 1px solid #ddd; background: #f9f9f9;
+      padding: 6px 10px; border-radius: 8px; cursor: pointer;
+    }
+    .btn:active { transform: translateY(1px); }
+    .viewer {
+      position: fixed; inset: var(--bar) 0 0 0;
+      overflow: auto; -webkit-overflow-scrolling: touch;
+      background: #f2f2f2;
+      display: grid; place-items: start center;
+    }
+    canvas { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+    .meta { font-variant-numeric: tabular-nums; }
+    .sr { position: absolute; left: -9999px; }
   </style>
+
+  <!-- PDF.js (CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.5.136/pdf.min.js" defer></script>
 </head>
 <body>
+  <header class="toolbar">
+    <strong>Apposite Studio — PDF</strong>
+    <span class="spacer"></span>
+    <button class="btn" id="prev" title="Previous page">◀︎</button>
+    <span class="meta" id="pageInfo">Page 1 / 1</span>
+    <button class="btn" id="next" title="Next page">▶︎</button>
+    <span class="spacer"></span>
+    <button class="btn" id="fit" title="Fit to width">Fit</button>
+    <button class="btn" id="zoomOut" title="Zoom out">−</button>
+    <button class="btn" id="zoomIn" title="Zoom in">+</button>
+    <a class="btn" id="download" href="./Studio-Apposite.pdf" download>Download PDF</a>
+  </header>
+
+  <main class="viewer">
+    <canvas id="pageCanvas"></canvas>
+  </main>
+
+  <p class="sr"><a href="./Studio-Apposite.pdf">Direct link to the PDF</a></p>
+
   <script>
-    // Exact filename; same folder as index.html
-    const pdfRel = "./Studio-Apposite.pdf";
-    const pdfAbs = new URL(pdfRel, window.location.href).href;
+    // EXACT filename; keep it next to index.html
+    const PDF_REL = "./Studio-Apposite.pdf";
 
-    // iOS (incl. iPadOS) detection
-    const ua = navigator.userAgent || navigator.vendor || window.opera;
-    const isIOS = /iPad|iPhone|iPod/.test(ua) ||
-                  (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    // Wait for PDF.js to load
+    window.addEventListener("load", async () => {
+      // Configure worker from CDN
+      // (must be set before loading the document)
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.5.136/pdf.worker.min.js";
 
-    if (isIOS) {
-      // Load Google's viewer in the TOP WINDOW (avoids blank iframe on iOS)
-      const gview = "https://docs.google.com/gview?embedded=1&url=" + encodeURIComponent(pdfAbs);
-      window.location.replace(gview);
-    } else {
-      // Non-iOS: embed the browser’s viewer
-      const f = document.createElement("iframe");
-      f.className = "viewer";
-      f.title = "Apposite Studio PDF";
-      f.src = pdfAbs + "#zoom=page-fit";
-      document.body.appendChild(f);
-    }
+      const canvas = document.getElementById("pageCanvas");
+      const ctx = canvas.getContext("2d");
+      const pageInfo = document.getElementById("pageInfo");
+      const btnPrev = document.getElementById("prev");
+      const btnNext = document.getElementById("next");
+      const btnZoomIn = document.getElementById("zoomIn");
+      const btnZoomOut = document.getElementById("zoomOut");
+      const btnFit = document.getElementById("fit");
+
+      const container = document.querySelector(".viewer");
+
+      let pdfDoc = null;
+      let pageNum = 1;
+      let scale = 1.0;
+      let fitToWidth = true;
+      let rendering = false;
+      let pendingPage = null;
+
+      function computeFitScale(pageViewport) {
+        // Fit to container width with a small margin
+        const margin = 16; // px
+        const target = container.clientWidth - margin;
+        const widthAt1 = pageViewport.width; // width when scale=1
+        return Math.max(0.5, Math.min(3, target / widthAt1));
+      }
+
+      async function renderPage(num) {
+        rendering = true;
+        const page = await pdfDoc.getPage(num);
+
+        // Compute scale (fit-to-width or current)
+        const baseViewport = page.getViewport({ scale: 1 });
+        if (fitToWidth) scale = computeFitScale(baseViewport);
+
+        const viewport = page.getViewport({ scale });
+        const dpr = window.devicePixelRatio || 1;
+
+        // Size canvas with DPR for crisp text
+        canvas.width = Math.floor(viewport.width * dpr);
+        canvas.height = Math.floor(viewport.height * dpr);
+        canvas.style.width = Math.floor(viewport.width) + "px";
+        canvas.style.height = Math.floor(viewport.height) + "px";
+
+        const renderContext = {
+          canvasContext: ctx,
+          viewport,
+          transform: [dpr, 0, 0, dpr, 0, 0]
+        };
+
+        await page.render(renderContext).promise;
+
+        pageInfo.textContent = `Page ${num} / ${pdfDoc.numPages}`;
+        btnPrev.disabled = (num <= 1);
+        btnNext.disabled = (num >= pdfDoc.numPages);
+
+        rendering = false;
+        if (pendingPage !== null) {
+          const next = pendingPage;
+          pendingPage = null;
+          renderPage(next);
+        }
+      }
+
+      function queueRenderPage(num) {
+        if (rendering) {
+          pendingPage = num;
+        } else {
+          renderPage(num);
+        }
+      }
+
+      function changePage(delta) {
+        const next = Math.min(Math.max(1, pageNum + delta), pdfDoc.numPages);
+        if (next !== pageNum) {
+          pageNum = next;
+          queueRenderPage(pageNum);
+        }
+      }
+
+      // Wire controls
+      btnPrev.addEventListener("click", () => changePage(-1));
+      btnNext.addEventListener("click", () => changePage(1));
+      btnZoomIn.addEventListener("click", () => { fitToWidth = false; scale *= 1.15; queueRenderPage(pageNum); });
+      btnZoomOut.addEventListener("click", () => { fitToWidth = false; scale /= 1.15; queueRenderPage(pageNum); });
+      btnFit.addEventListener("click", () => { fitToWidth = true; queueRenderPage(pageNum); });
+
+      // Refit on rotate/resize
+      let resizeTimer;
+      window.addEventListener("resize", () => {
+        if (!fitToWidth) return;
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => queueRenderPage(pageNum), 150);
+      });
+
+      // Load the document
+      try {
+        pdfDoc = await pdfjsLib.getDocument(PDF_REL).promise;
+        renderPage(pageNum);
+      } catch (err) {
+        // If loading fails (e.g., wrong path), fall back to direct open
+        console.error("PDF load failed:", err);
+        location.replace(PDF_REL);
+      }
+    });
   </script>
-
-  <noscript>
-    <!-- No JS? Just open the PDF -->
-    <meta http-equiv="refresh" content="0; url=./Studio-Apposite.pdf">
-  </noscript>
 </body>
 </html>
