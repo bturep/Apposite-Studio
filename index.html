@@ -1,23 +1,17 @@
-<!-- <!doctype html>
-<meta charset="utf-8">
-<title>Apposite Studio — PDF</title>
-<script>
-  // Build an absolute URL to your PDF (same folder as index.html)
-  const pdfAbs = new URL("./Studio-Apposite.pdf", location.href).href;
-  // Jump straight to Google Docs Viewer (no iframe, no reload quirks)
-  location.replace("https://docs.google.com/gview?embedded=1&url=" + encodeURIComponent(pdfAbs));
-</script>
-<noscript>
-  <meta http-equiv="refresh" content="0; url=https://docs.google.com/gview?embedded=1&url=https%3A%2F%2Fapposite.studio%2FStudio-Apposite.pdf">
-</noscript>
--->
 <!doctype html>
+<html lang="en">
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Apposite Studio — PDF</title>
-<script>
-  // Open the PDF on your own domain (exact case + same folder as this file)
-  location.replace('./Studio-Apposite.pdf#page=1&view=FitH');
-</script>
-<noscript>
-  <meta http-equiv="refresh" content="0; url=./Studio-Apposite.pdf#page=1&view=FitH">
-</noscript>
+<style>
+  html,body{height:100%;margin:0}
+  .viewer{position:fixed;inset:0;border:0;width:100%;height:100%}
+</style>
+<body>
+  <iframe
+    class="viewer"
+    title="Apposite Studio PDF"
+    src="/pdfjs/web/viewer.html?file=%2FStudio-Apposite.pdf#zoom=page-fit">
+  </iframe>
+</body>
+</html>
