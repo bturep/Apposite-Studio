@@ -46,16 +46,30 @@ See https://github.com/adobe-type-tools/cmap-resources
   });
 </script>
 <style>
-  /* Hide the toolbar page counter (“1 of N”) */
-  #pageNumber,
-  #numPages,
-  #numPagesLabel { display: none !important; }
-
-  /* Hide the transient floating page number overlay (e.g., during scroll/presentation) */
+  /* Hide the transient page-number overlay shown during scroll/presentation */
   #overlayContainer .pageNumber,
-  .pageNumber { display: none !important; }
+  #overlayContainer #pageNumber,
+  #overlayContainer [role="status"].pageNumber { display: none !important; }
 </style>
+      <script>
+  document.addEventListener('webviewerloaded', () => {
+    const oc = document.getElementById('overlayContainer');
+    const hide = () => {
+      if (!oc) return;
+      // Hide common variants of the floating page label
+      oc.querySelectorAll('.pageNumber, #pageNumber, [role="status"].pageNumber')
+        .forEach(el => el.style.display = 'none');
 
+      // Extra guard: hide any overlay that looks like "3 of 12" or "3/12"
+      oc.querySelectorAll('*').forEach(el => {
+        const t = (el.textContent || '').trim();
+        if (/^\d+\s*(?:of|\/)\s*\d+$/i.test(t)) el.style.display = 'none';
+      });
+    };
+    hide();
+    new MutationObserver(hide).observe(oc || document.body, { childList: true, subtree: true });
+  });
+</script>
   </head>
 
   <body tabindex="0">
