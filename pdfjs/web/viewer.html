@@ -45,6 +45,16 @@ See https://github.com/adobe-type-tools/cmap-resources
     document.title = "Apposite Studio — PDF";
   });
 </script>
+<style>
+  /* Hide the toolbar page counter (“1 of N”) */
+  #pageNumber,
+  #numPages,
+  #numPagesLabel { display: none !important; }
+
+  /* Hide the transient floating page number overlay (e.g., during scroll/presentation) */
+  #overlayContainer .pageNumber,
+  .pageNumber { display: none !important; }
+</style>
 
   </head>
 
