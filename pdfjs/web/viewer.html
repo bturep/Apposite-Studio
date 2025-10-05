@@ -70,19 +70,40 @@ See https://github.com/adobe-type-tools/cmap-resources
     new MutationObserver(hide).observe(oc || document.body, { childList: true, subtree: true });
   });
 </script>
-      <style>
-  /* Hide the entire top toolbar + extras */
+<style>
+  /* Hide all top bars */
   #toolbarContainer,
+  #toolbar,
+  #toolbarViewer,
   #secondaryToolbar,
   #findbar,
-  #findbarContainer,
   #loadingBar { display: none !important; }
 
-  /* Remove the space the toolbar normally reserves */
+  /* Remove the space normally reserved for the toolbar */
   :root { --toolbar-height: 0px !important; }
-  #viewerContainer,
-  #sidebarContainer { top: 0 !important; }
+  #viewerContainer, #sidebarContainer { top: 0 !important; }
 </style>
+
+<script>
+  // Extra guard: if the viewer re-injects UI, nuke it again.
+  document.addEventListener('webviewerloaded', () => {
+    const kill = () => {
+      const t = document.getElementById('toolbarContainer');
+      if (t) t.style.setProperty('display','none','important');
+      const vc = document.getElementById('viewerContainer');
+      if (vc) vc.style.setProperty('top','0','important');
+      const sc = document.getElementById('sidebarContainer');
+      if (sc) sc.style.setProperty('top','0','important');
+      const lb = document.getElementById('loadingBar');
+      if (lb) lb.style.setProperty('display','none','important');
+      const fb = document.getElementById('findbar');
+      if (fb) fb.style.setProperty('display','none','important');
+    };
+    kill();
+    const root = document.getElementById('outerContainer') || document.body;
+    new MutationObserver(kill).observe(root, { attributes:true, childList:true, subtree:true });
+  });
+</script>
 
   </head>
 
