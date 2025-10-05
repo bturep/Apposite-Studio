@@ -34,6 +34,18 @@ See https://github.com/adobe-type-tools/cmap-resources
     <link rel="stylesheet" href="viewer.css">
 
   <script src="viewer.mjs" type="module"></script>
+      
+      <style>
+  /* Hide the file name in the toolbar */
+  #fileName { display: none !important; }
+</style>
+<script>
+  // Set a custom browser tab title (instead of the file name)
+  document.addEventListener("webviewerloaded", () => {
+    document.title = "Apposite Studio — PDF";
+  });
+</script>
+
   </head>
 
   <body tabindex="0">
