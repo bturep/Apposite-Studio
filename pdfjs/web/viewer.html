@@ -70,6 +70,20 @@ See https://github.com/adobe-type-tools/cmap-resources
     new MutationObserver(hide).observe(oc || document.body, { childList: true, subtree: true });
   });
 </script>
+      <style>
+  /* Hide the entire top toolbar + extras */
+  #toolbarContainer,
+  #secondaryToolbar,
+  #findbar,
+  #findbarContainer,
+  #loadingBar { display: none !important; }
+
+  /* Remove the space the toolbar normally reserves */
+  :root { --toolbar-height: 0px !important; }
+  #viewerContainer,
+  #sidebarContainer { top: 0 !important; }
+</style>
+
   </head>
 
   <body tabindex="0">
