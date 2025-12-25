@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Studio Apposite</title>
+  <meta name="description" content="Design-sensitive repair, alterations, and new work — from small-scale interventions to full renovations." />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="index.html">Studio Apposite</a>
+      <nav class="navlinks">
+        <a data-nav href="studio.html">Studio</a>
+        <a data-nav href="services.html">Services</a>
+        <a data-nav href="work.html">Work</a>
+        <a data-nav href="press.html">Press</a>
+        <a data-nav href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="kicker">Architecture + Research</div>
+      <h1>Design-sensitive work at any scale.</h1>
+      <p class="lede">
+        We take on small projects (entries, decks, bathrooms) and larger renovations or additions—
+        with particular attention to repair and alteration that integrates carefully with what’s already there.
+      </p>
+      <div class="cta">
+        <a class="button" href="contact.html">Start a conversation</a>
+        <a class="button secondary" href="press.html">Publication series</a>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="Highlights">
+      <div class="card span-4">
+        <h3>Small projects</h3>
+        <p>Targeted interventions that improve daily use: entries, stairs, built-ins, kitchens, baths, decks.</p>
+      </div>
+      <div class="card span-4">
+        <h3>Alteration + repair</h3>
+        <p>Design-sensitive upgrades to existing buildings—constraints, continuity, and good details.</p>
+      </div>
+      <div class="card span-4">
+        <h3>Larger scope</h3>
+        <p>Renovations, additions, and phased projects with clear scope, pacing, and documentation.</p>
+      </div>
+    </section>
+
+    <hr />
+
+    <section class="grid" aria-label="Selected work">
+      <div class="span-12">
+        <div class="kicker">Selected work</div>
+      </div>
+
+      <article class="card span-6">
+        <h3>(Project)</h3>
+        <p class="small">Victoria, BC · Year · Scope</p>
+        <p style="margin-top:10px;">Short description (keep it modest; we can expand later).</p>
+      </article>
+
+      <article class="card span-6">
+        <h3>(Project)</h3>
+        <p class="small">Victoria, BC · Year · Scope</p>
+        <p style="margin-top:10px;">Short description.</p>
+      </article>
+
+      <div class="span-12">
+        <p class="small">More → <a href="work.html">Work</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>© <span id="y"></span> Studio Apposite · Victoria, BC</div>
+      <div class="small">Email: <a href="mailto:mail@apposite.studio">mail@apposite.studio</a></div>
+    </div>
+  </footer>
+
+  <script src="assets/site.js"></script>
+  <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+:root{
+  --bg:#ffffff;
+  --fg:#111111;
+  --muted:#666666;
+  --line:#e6e6e6;
+  --max: 1080px;
+  --pad: 24px;
+  --radius: 16px;
+}
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  background:var(--bg);
+  color:var(--fg);
+  line-height:1.45;
+}
+
+a{ color:inherit; text-decoration:none; }
+a:hover{ text-decoration:underline; }
+
+.container{ max-width:var(--max); margin:0 auto; padding:0 var(--pad); }
+
+header{
+  position:sticky; top:0;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:saturate(180%) blur(10px);
+  border-bottom:1px solid var(--line);
+  z-index:10;
+}
+.nav{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 0;
+  gap:16px;
+}
+.brand{
+  font-weight:650;
+  letter-spacing:0.2px;
+}
+.navlinks{ display:flex; gap:16px; flex-wrap:wrap; }
+.navlinks a{ color:var(--muted); }
+.navlinks a[aria-current="page"]{ color:var(--fg); text-decoration:underline; }
+
+main{ padding:48px 0 72px; }
+.hero{ padding:32px 0 8px; }
+h1{
+  font-size: clamp(32px, 5vw, 54px);
+  margin:0 0 10px;
+  letter-spacing:-0.6px;
+}
+h2{
+  font-size: clamp(22px, 3.2vw, 28px);
+  margin:0 0 8px;
+  letter-spacing:-0.3px;
+}
+.lede{
+  font-size: clamp(16px, 2.2vw, 20px);
+  color:var(--muted);
+  max-width: 75ch;
+  margin:0 0 18px;
+}
+.cta{ display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+
+.button{
+  display:inline-flex; align-items:center; justify-content:center;
+  border:1px solid var(--fg);
+  padding:10px 14px;
+  border-radius: 999px;
+  font-weight:600;
+}
+.button.secondary{
+  border-color: var(--line);
+  color: var(--fg);
+  background: #f7f7f7;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap:16px;
+  margin-top:28px;
+}
+.card{
+  border:1px solid var(--line);
+  border-radius: var(--radius);
+  padding:16px;
+  background:#fff;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+}
+.card h3{ margin:0 0 8px; }
+.card p{ margin:0; color:var(--muted); }
+
+.span-4{ grid-column: span 4; }
+.span-6{ grid-column: span 6; }
+.span-8{ grid-column: span 8; }
+.span-12{ grid-column: span 12; }
+
+hr{ border:none; border-top:1px solid var(--line); margin:32px 0; }
+
+.footer{
+  border-top:1px solid var(--line);
+  padding:22px 0;
+  color:var(--muted);
+  font-size:14px;
+}
+.small{ font-size:14px; color:var(--muted); }
+.kicker{ color:var(--muted); font-weight:650; text-transform:uppercase; letter-spacing:0.08em; font-size:12px; }
+
+/* Two-column editorial (Press page) */
+.two-col{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:24px;
+  margin-top:24px;
+  align-items:start;
+}
+.sticky-col{
+  position: sticky;
+  top: 88px;
+  align-self:start;
+}
+.pub{
+  border-top:1px solid var(--line);
+  padding-top:16px;
+  margin-top:16px;
+}
+.pub:first-child{ border-top:none; padding-top:0; margin-top:0; }
+
+.pub-meta{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  color:var(--muted);
+  font-size:14px;
+}
+.badge{
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:12px;
+  color:var(--muted);
+}
+.figure{
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+  background:#fafafa;
+}
+.figure .ph{
+  aspect-ratio: 4 / 3;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--muted);
+  font-size:14px;
+  padding:16px;
+  text-align:center;
+}
+.figure .cap{
+  border-top:1px solid var(--line);
+  padding:10px 12px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+form.inline{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+input[type="email"]{
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  min-width: 240px;
+  font: inherit;
+}
+input[type="submit"]{
+  cursor:pointer;
+  background:#111;
+  color:#fff;
+  border:1px solid #111;
+  padding:10px 14px;
+  border-radius:999px;
+  font-weight:600;
+}
+
+@media (max-width: 860px){
+  .span-4,.span-6,.span-8{ grid-column: span 12; }
+  .two-col{ grid-template-columns: 1fr; }
+  .sticky-col{ position: static; }
+}
