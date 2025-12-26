@@ -14,27 +14,34 @@
   <style>
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
+
     body{
       font-family: "Lato", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      font-size: 16px;
+      font-size: 16px;              /* one size everywhere */
       line-height: 1.55;
-      color: #000;
+      color: #000;                  /* full black only */
       background: #fff;
     }
 
+    /* PRINT-LIKE RHYTHM */
     :root{
-      --rhythm: 16px;
-
-      /* Fix: enforce a real reading measure */
-      --label-col: 190px;     /* headings field */
-      --text-col: 600px;      /* primary text field (key) */
-      --preview-col: 280px;   /* secondary preview field */
+      --rhythm: 16px;      /* baseline unit */
+      --label-col: 210px;
       --gap: 34px;
-
-      --page-pad-x: 22px;
-      --page-pad-top: calc(var(--rhythm) * 5);  /* 80px */
-      --page-pad-bot: calc(var(--rhythm) * 6);  /* 96px */
     }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: calc(var(--rhythm) * 5) 22px calc(var(--rhythm) * 6); /* 80px / 96px */
+    }
+
+    p{
+      margin: 0 0 calc(var(--rhythm) * 1) 0; /* consistent paragraph spacing */
+    }
+
+    .b{ font-weight: 700; }
+    .i{ font-style: italic; }
 
     a{
       color:#000;
@@ -43,7 +50,7 @@
       text-decoration-thickness: 1px;
     }
 
-    /* subtle, print-like hover underline (no opacity tricks) */
+    /* Hover-only underline micro-motion (no opacity tricks) */
     @media (hover:hover){
       a{
         background-image: linear-gradient(#000,#000);
@@ -57,348 +64,321 @@
       a:hover{ background-size: 100% 1px; }
     }
 
-    .b{ font-weight: 700; }
-    .i{ font-style: italic; }
-
-    p{ margin: 0 0 var(--rhythm) 0; }
-
-    /* Page: three-field system (label / text / preview) */
-    .page{
-      max-width: calc(var(--label-col) + var(--text-col) + var(--preview-col) + (var(--gap) * 2));
-      margin: 0 auto;
-      padding: var(--page-pad-top) var(--page-pad-x) var(--page-pad-bot);
-      display: grid;
-      grid-template-columns: var(--label-col) var(--text-col) var(--preview-col);
-      column-gap: var(--gap);
-      align-items: start;
-    }
-
-    /* Rows live across label+text only */
+    /* Two-column system */
     .row{
-      grid-column: 1 / 3;
       display: grid;
-      grid-template-columns: var(--label-col) var(--text-col);
+      grid-template-columns: var(--label-col) 1fr;
       column-gap: var(--gap);
-      padding: calc(var(--rhythm) * 0.5) 0; /* tight; no extra section spacing */
+      padding: calc(var(--rhythm) * 0.5) 0; /* 8px (kept tight; no extra section spacing) */
     }
 
     .label{
       font-weight: 700;
-      text-align: left; /* your site-wide left justification */
-      padding-top: 3px; /* optical alignment */
+      text-align: left;     /* left-justify entire site */
+      padding-top: 3px;     /* optical alignment */
     }
 
-    .content{ min-width: 0; }
     .content p:last-child{ margin-bottom: 0; }
 
-    /* Divider aligned to content start (no bleed left) */
-    .rulewrap{
-      grid-column: 1 / 3;
-      display: grid;
-      grid-template-columns: var(--label-col) var(--text-col);
-      column-gap: var(--gap);
-      margin: var(--rhythm) 0;  /* restrained rhythm */
-    }
+    /* Divider that begins exactly at content column */
     .rule{
-      grid-column: 2;
       height: 1px;
       width: 100%;
       background-image: repeating-linear-gradient(
         to right,
-        #000 0, #000 2px,
-        transparent 2px, transparent 7px
+        #000 0,
+        #000 2px,
+        transparent 2px,
+        transparent 7px
       );
       transform-origin: 0 50%;
-      transform: scaleX(0);
+      transform: scaleX(0);                 /* motion only; no opacity changes */
       transition: transform 180ms linear;
     }
 
-    /* Global preview: sticky + centered in viewport */
-    .preview{
-      grid-column: 3;
-      position: sticky;
-      top: 50%;
-      transform: translateY(-50%);
-      align-self: start;
+    /* Keep divider rhythm, but remove “extra” spacing between sections */
+    .rulewrap{
+      margin: calc(var(--rhythm) * 1) 0;    /* 16px (tighter than earlier) */
     }
 
-    .plate{
+    /* Thumbnail preview system (composed, not tooltip-y) */
+    .thumbgrid{
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      column-gap: calc(var(--rhythm) * 2);
+      align-items: start;
+      margin-bottom: calc(var(--rhythm) * 1);
+    }
+
+    .thumblist p{
+      margin-bottom: calc(var(--rhythm) * 0.5);
+    }
+
+    .thumbwell{
+      margin: 0;
       border: 1px dashed #000;
       padding: calc(var(--rhythm) * 0.75);
-      min-height: 220px;
+      min-height: 180px;
     }
 
-    .plate img{
+    .thumbwell img{
       width: 100%;
       height: auto;
       display: block;
       opacity: 0;
       transition: opacity 140ms linear;
     }
-    .plate img.is-visible{ opacity: 1; }
 
-    .caption{
-      margin-top: calc(var(--rhythm) * 0.75);
-      line-height: 1.4;
-    }
-
-    /* Keep preview visually secondary */
-    .caption{ font-size: 16px; } /* same size, per your rule */
-
-    /* Mobile: collapse preview to top (no sticky sidebar) */
-    @media (max-width: 1120px){
-      :root{
-        --text-col: 560px;
-        --preview-col: 260px;
-        --label-col: 180px;
-      }
-    }
-
-    @media (max-width: 980px){
-      .page{
-        max-width: 980px;
-        grid-template-columns: 1fr;
-        row-gap: calc(var(--rhythm) * 2);
-      }
-
-      .preview{
-        grid-column: 1;
-        position: relative;
-        top: auto;
-        transform: none;
-      }
-
-      .row, .rulewrap{
-        grid-column: 1;
-        grid-template-columns: 1fr;
-      }
-
-      .label{
-        margin-bottom: 6px;
-        padding-top: 0;
-      }
-
-      .rule{
-        grid-column: 1;
-      }
+    .thumbwell img.is-visible{
+      opacity: 1;
     }
 
     @media (prefers-reduced-motion: reduce){
       .rule{ transform: none !important; transition: none !important; }
       a{ transition: none !important; }
-      .plate img{ transition: none !important; }
+      .thumbwell img{ transition: none !important; }
+    }
+
+    /* Mobile */
+    @media (max-width: 760px){
+      .wrap{
+        padding-top: calc(var(--rhythm) * 4); /* 64px */
+      }
+      .row{
+        grid-template-columns: 1fr;
+      }
+      .label{
+        margin-bottom: 6px;
+        padding-top: 0;
+      }
+      .thumbgrid{
+        grid-template-columns: 1fr;
+        row-gap: calc(var(--rhythm) * 1);
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="page">
+<main class="wrap">
 
-    <!-- GLOBAL PREVIEW WELL -->
-    <aside class="preview" aria-label="Preview">
-      <div class="plate">
-        <img id="globalPreviewImg" alt="" />
-        <div class="caption" id="globalPreviewCaption"></div>
-      </div>
-    </aside>
+  <!-- Top block -->
+  <section class="row">
+    <div class="label">Studio Apposite</div>
+    <div class="content">
+      <p>
+        <span class="i">Architecture + Research</span> — <span class="b">Design-sensitive work at any scale.</span>
+      </p>
 
-    <!-- TOP BLOCK (title moved into label system) -->
-    <section class="row">
-      <div class="label">Studio Apposite</div>
-      <div class="content">
-        <p><span class="i">Architecture + Research</span> — <span class="b">Design-sensitive work at any scale.</span></p>
+      <p>
+        Studio Apposite is the architectural design and research practice of Brandon Poole and Patrick Rollins.
+        The studio specializes in residential renovations, small additions, heritage-sensitive upgrades, and custom millwork,
+        balancing craft and composition toward design that is <span class="i">apposite</span>: fitting to situation and context.
+      </p>
 
-        <p>
-          Studio Apposite is the architectural design and research practice of Brandon Poole and Patrick Rollins.
-          The studio specializes in residential renovations, small additions, heritage-sensitive upgrades, and custom millwork,
-          balancing craft and composition toward design that is <span class="i">apposite</span>: fitting to situation and context.
-        </p>
-
-        <p>
-          Alongside client work, Studio Apposite operates as a hybrid research platform, producing exhibitions, publications,
-          and archival studies focused on the architecture of Vancouver Island and the Gulf Islands. This research directly informs
-          the design practice, grounding each project in the spatial, material, and cultural conditions of its site.
-        </p>
-      </div>
-    </section>
-
-    <div class="rulewrap" aria-hidden="true">
-      <div></div>
-      <div class="rule"></div>
+      <p>
+        Alongside client work, Studio Apposite operates as a hybrid research platform, producing exhibitions, publications,
+        and archival studies focused on the architecture of Vancouver Island and the Gulf Islands. This research directly informs
+        the design practice, grounding each project in the spatial, material, and cultural conditions of its site.
+      </p>
     </div>
+  </section>
 
-    <section class="row" id="practice">
-      <div class="label">Practice</div>
-      <div class="content">
-        <p>
-          Studio Apposite works primarily with existing buildings, treating them as <span class="i">material</span>, <span class="i">evidence</span>, and <span class="i">constraint</span>.
-          Projects are approached through careful measurement, proportion, and construction logic, with particular attention to repair,
-          alteration, and integration rather than replacement. The aim is not novelty, but fit: work that is buildable, legible,
-          and continuous with what already exists.
-        </p>
+  <!-- rule aligned to content column only -->
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
-        <p class="b">Selected projects (forthcoming):</p>
+  <section class="row" id="practice">
+    <div class="label">Practice</div>
+    <div class="content">
+      <p>
+        Studio Apposite works primarily with existing buildings, treating them as <span class="i">material</span>, <span class="i">evidence</span>, and <span class="i">constraint</span>.
+        Projects are approached through careful measurement, proportion, and construction logic, with particular attention to repair,
+        alteration, and integration rather than replacement. The aim is not novelty, but fit: work that is buildable, legible,
+        and continuous with what already exists.
+      </p>
 
-        <p>
-          <a href="#" class="previewlink"
-             data-img="assets/images/placeholder.jpg"
-             data-caption="Entry renovation (placeholder)">Entry renovation</a><br>
-          <a href="#" class="previewlink"
-             data-img="assets/images/placeholder.jpg"
-             data-caption="Deck (placeholder)">Deck</a><br>
-          <a href="#" class="previewlink"
-             data-img="assets/images/placeholder.jpg"
-             data-caption="Bathroom (placeholder)">Bathroom</a><br>
-          <a href="#" class="previewlink"
-             data-img="assets/images/placeholder.jpg"
-             data-caption="Custom millwork (placeholder)">Custom millwork</a>
-        </p>
+      <p>
+        Typical work includes entries and stairs, built-ins, kitchens and bathrooms, decks, envelope and upgrade strategies,
+        and renovations or additions.
+      </p>
+
+      <p class="b">Selected projects (forthcoming):</p>
+
+      <div class="thumbgrid" aria-label="Selected projects with thumbnail preview">
+        <div class="thumblist">
+          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Entry renovation (placeholder)">Entry renovation</a></p>
+          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Deck (placeholder)">Deck</a></p>
+          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Bathroom (placeholder)">Bathroom</a></p>
+          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Custom millwork (placeholder)">Custom millwork</a></p>
+        </div>
+
+        <figure class="thumbwell" aria-live="polite">
+          <img id="thumbPreviewProjects" alt="" />
+        </figure>
       </div>
-    </section>
-
-    <div class="rulewrap" aria-hidden="true">
-      <div></div>
-      <div class="rule"></div>
     </div>
+  </section>
 
-    <section class="row" id="research">
-      <div class="label">Expanded Research</div>
-      <div class="content">
-        <p>
-          Alongside client work, Studio Apposite is developing a small publication series focused on specific buildings and practices.
-          Each issue assembles drawings, photographs, and archival research into a compact object.
-        </p>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
-        <p class="b">Publications (in development):</p>
+  <section class="row" id="research">
+    <div class="label">Expanded Research</div>
+    <div class="content">
+      <p>
+        Alongside client work, Studio Apposite is developing a small publication series focused on specific buildings and practices.
+        Each issue assembles drawings, photographs, and archival research into a compact object.
+      </p>
 
-        <p>
-          <a href="#" class="previewlink"
-             data-img="assets/images/placeholder.jpg"
-             data-caption="Issue 01 — Alan Hodgson · Mayhew Studio (cover placeholder)">Issue 01 — Alan Hodgson · Mayhew Studio</a><br>
-          <a href="#" class="previewlink"
-             data-img="assets/images/placeholder.jpg"
-             data-caption="Issue 02 — Richard Hunter · Hunter House (cover placeholder)">Issue 02 — Richard Hunter · Hunter House</a><br>
-          <a href="#" class="previewlink"
-             data-img="assets/images/placeholder.jpg"
-             data-caption="Issue 03 — Claude Maurice · Maurice House (cover placeholder)">Issue 03 — Claude Maurice · Maurice House</a><br>
-          <a href="#" class="previewlink"
-             data-img="assets/images/placeholder.jpg"
-             data-caption="Issue 04 — Roger Smeeth · Fisher House (cover placeholder)">Issue 04 — Roger Smeeth · Fisher House</a>
-        </p>
+      <p class="b">Publications (in development):</p>
 
-        <p><span class="b">Newsletter:</span> <a href="#newsletter">research updates</a></p>
+      <div class="thumbgrid" aria-label="Publications with thumbnail preview">
+        <div class="thumblist">
+          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Alan Hodgson — Mayhew Studio (cover placeholder)">Issue 01 — Alan Hodgson · Mayhew Studio</a></p>
+          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Richard Hunter — Hunter House (cover placeholder)">Issue 02 — Richard Hunter · Hunter House</a></p>
+          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Claude Maurice — Maurice House (cover placeholder)">Issue 03 — Claude Maurice · Maurice House</a></p>
+          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Roger Smeeth — Fisher House (cover placeholder)">Issue 04 — Roger Smeeth · Fisher House</a></p>
+        </div>
+
+        <figure class="thumbwell" aria-live="polite">
+          <img id="thumbPreviewResearch" alt="" />
+        </figure>
       </div>
-    </section>
 
-    <div class="rulewrap" aria-hidden="true">
-      <div></div>
-      <div class="rule"></div>
+      <p>
+        <span class="b">Newsletter:</span> <a href="#newsletter">research updates</a>
+      </p>
     </div>
+  </section>
 
-    <section class="row" id="people">
-      <div class="label">People</div>
-      <div class="content">
-        <p>
-          <span class="b">Brandon Poole</span> is a PhD Candidate at the McGill School of Architecture, where he is a Vadasz Scholar and SSHRC
-          Doctoral Fellow. He holds a Master of Visual Studies (MVS) from the University of Toronto’s Faculty of Architecture, Landscape,
-          and Design, and a Bachelor of Fine Arts (BFA, Honours with Distinction) from the University of Victoria. Alongside architectural design,
-          he is an artist, a filmmaker, and a lecturer in the Visual Arts Department at UVic.
-        </p>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
-        <p>
-          <span class="b">Patrick Rollins</span> is a designer, researcher, and curator. Recent projects include contributions to
-          <span class="i">From the Ground, Into the Light: Organic Architecture of the Islands</span> and
-          <span class="i">Centennial Square: A Design History</span>, both at the Wentworth Villa Architectural Museum. Upcoming projects include
-          exhibitions on the furniture of architect and architectural historian Peter Neve Cotton, and a photo-book series beginning with Alan
-          Hodgson’s Elza Mayhew Studio (1969).
-        </p>
-      </div>
-    </section>
+  <section class="row" id="people">
+    <div class="label">People</div>
+    <div class="content">
+      <p>
+        <span class="b">Brandon Poole</span> is a PhD Candidate at the McGill School of Architecture, where he is a Vadasz Scholar and SSHRC
+        Doctoral Fellow. He holds a Master of Visual Studies (MVS) from the University of Toronto’s Faculty of Architecture, Landscape,
+        and Design, and a Bachelor of Fine Arts (BFA, Honours with Distinction) from the University of Victoria. Alongside architectural design,
+        he is an artist, a filmmaker, and a lecturer in the Visual Arts Department at UVic.
+      </p>
 
-    <div class="rulewrap" aria-hidden="true">
-      <div></div>
-      <div class="rule"></div>
+      <p>
+        <span class="b">Patrick Rollins</span> is a designer, researcher, and curator. Recent projects include contributions to
+        <span class="i">From the Ground, Into the Light: Organic Architecture of the Islands</span> and
+        <span class="i">Centennial Square: A Design History</span>, both at the Wentworth Villa Architectural Museum. Upcoming projects include
+        exhibitions on the furniture of architect and architectural historian Peter Neve Cotton, and a photo-book series beginning with Alan
+        Hodgson’s Elza Mayhew Studio (1969).
+      </p>
     </div>
+  </section>
 
-    <section class="row" id="contact">
-      <div class="label">Contact</div>
-      <div class="content">
-        <p><a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a></p>
-        <p>© <span id="y"></span> Studio Apposite · Victoria, BC</p>
-      </div>
-    </section>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
-    <section class="row" id="newsletter">
-      <div class="label">Newsletter</div>
-      <div class="content">
-        <p><span class="b">Research updates</span><br>(Subscription form to be added.)</p>
-      </div>
-    </section>
+  <section class="row" id="contact">
+    <div class="label">Contact</div>
+    <div class="content">
+      <p>
+        <a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a>
+      </p>
+      <p>© <span id="y"></span> Studio Apposite · Victoria, BC</p>
+    </div>
+  </section>
 
-  </div>
+  <section class="row" id="newsletter">
+    <div class="label">Newsletter</div>
+    <div class="content">
+      <p>
+        <span class="b">Research updates</span><br>
+        (Subscription form to be added.)
+      </p>
+    </div>
+  </section>
 
-  <script>
-    // Year
-    document.getElementById("y").textContent = new Date().getFullYear();
+</main>
 
-    // Animate only dashed rules (no content opacity)
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const ruleEls = Array.from(document.querySelectorAll(".rule"));
+<script>
+  // Year
+  document.getElementById("y").textContent = new Date().getFullYear();
 
-    if (!prefersReduced && "IntersectionObserver" in window) {
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.style.transform = "scaleX(1)";
-          io.unobserve(entry.target);
-        });
-      }, { root: null, rootMargin: "0px 0px -12% 0px", threshold: 0.01 });
+  // Animate only the dashed rules on first view (no content opacity changes)
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ruleEls = Array.from(document.querySelectorAll(".rule"));
 
-      ruleEls.forEach(el => io.observe(el));
-    } else {
-      ruleEls.forEach(el => { el.style.transform = "scaleX(1)"; });
-    }
+  if (!prefersReduced && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        el.style.transform = "scaleX(1)";
+        io.unobserve(el);
+      });
+    }, { root: null, rootMargin: "0px 0px -12% 0px", threshold: 0.01 });
 
-    // Global preview well
-    const imgEl = document.getElementById("globalPreviewImg");
-    const capEl = document.getElementById("globalPreviewCaption");
-    const links = Array.from(document.querySelectorAll(".previewlink"));
+    ruleEls.forEach(el => io.observe(el));
+  } else {
+    ruleEls.forEach(el => { el.style.transform = "scaleX(1)"; });
+  }
 
-    function showPreview(src, caption){
+  // Thumbnail preview system (hover/focus; tap on mobile)
+  function setupThumbPreview(containerSelector, imgSelector){
+    const container = document.querySelector(containerSelector);
+    if (!container) return;
+
+    const imgEl = container.querySelector(imgSelector);
+    const links = container.querySelectorAll(".thumblink");
+    if (!imgEl || !links.length) return;
+
+    function show(src, alt){
       if (!src) return;
       imgEl.src = src;
-      imgEl.alt = caption || "";
-      capEl.textContent = caption || "";
+      imgEl.alt = alt || "";
       imgEl.classList.add("is-visible");
     }
 
-    function clearPreview(){
+    function clear(){
       imgEl.classList.remove("is-visible");
-      capEl.textContent = "";
     }
 
     links.forEach((a, idx) => {
       const src = a.getAttribute("data-img");
-      const caption = a.getAttribute("data-caption") || a.textContent.trim();
+      const alt = a.getAttribute("data-alt") || a.textContent.trim();
 
-      a.addEventListener("mouseenter", () => showPreview(src, caption));
-      a.addEventListener("mouseleave", () => clearPreview());
+      // Desktop hover
+      a.addEventListener("mouseenter", () => show(src, alt));
+      a.addEventListener("mouseleave", () => clear());
 
-      a.addEventListener("focus", () => showPreview(src, caption));
-      a.addEventListener("blur", () => clearPreview());
+      // Keyboard accessibility
+      a.addEventListener("focus", () => show(src, alt));
+      a.addEventListener("blur", () => clear());
 
-      // If href is '#', preview on click (mobile/touch) without navigating
+      // Touch / click: if href is #, prevent navigation and just preview
       a.addEventListener("click", (e) => {
         const href = a.getAttribute("href") || "#";
         if (href === "#") {
           e.preventDefault();
-          showPreview(src, caption);
+          show(src, alt);
         }
       });
 
-      // Resting state: first item populates the plate
-      if (idx === 0 && src) showPreview(src, caption);
+      // Preload a “resting” state (first item)
+      if (idx === 0 && src) show(src, alt);
     });
-  </script>
+  }
+
+  setupThumbPreview('[aria-label="Selected projects with thumbnail preview"]', "#thumbPreviewProjects");
+  setupThumbPreview('[aria-label="Publications with thumbnail preview"]', "#thumbPreviewResearch");
+</script>
 </body>
 </html>
