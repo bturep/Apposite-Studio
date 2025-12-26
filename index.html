@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Studio Apposite</title>
-  <meta name="description" content="Studio Apposite — Architectural Design + Research." />
+  <meta name="description" content="Studio Apposite — Architecture + Research." />
 
   <!-- Lato -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,7 +36,7 @@
       padding: calc(var(--rhythm) * 5) var(--page-pad) calc(var(--rhythm) * 6);
     }
 
-    p{ margin: 0 0 var(--rhythm) 0; }
+    p{ margin: 0 0 calc(var(--rhythm) * 1) 0; }
 
     .b{ font-weight: 700; }
     .i{ font-style: italic; }
@@ -61,7 +61,6 @@
       a:hover{ background-size: 100% 1px; }
     }
 
-    /* Grid rows */
     .row{
       display: grid;
       grid-template-columns: var(--label-col) 1fr;
@@ -70,22 +69,14 @@
       align-items: baseline;
     }
 
-    .row-top{
-      align-items: start;
-    }
-
     .label{
       font-weight: 700;
       text-align: right;
-    }
-
-    .row-top .label{
-      padding-top: 6px; /* optical alignment with email box */
+      padding-top: 0;
     }
 
     .content p:last-child{ margin-bottom: 0; }
 
-    /* Rules */
     .rule{
       height: 1px;
       width: 100%;
@@ -103,22 +94,46 @@
 
     .rulewrap{ margin: calc(var(--rhythm) * 0.75) 0; }
 
-    /* Newsletter */
+    /* Inputs (global baseline) */
+    input, button{
+      font: inherit;
+      color: #000;
+      background: #fff;
+      border: 1px solid #000;
+      padding: 6px 8px;
+      border-radius: 0;
+    }
+    button{ cursor: pointer; }
+    input{ width: min(520px, 100%); }
+
+    /* --- Newsletter (updated) --- */
+
+    /* Top-align the Newsletter label with the form block */
+    .newsletter-section{
+      align-items: start;
+    }
+    .newsletter-section .label{
+      padding-top: 6px; /* optical align to the email box */
+    }
+
+    .newsletter-form{ margin: 0; }
+
+    /* Row 1: email box */
     .newsletter-row{
       display: flex;
       align-items: center;
+      gap: 18px;
     }
 
     .emailfield{
       position: relative;
       border: 1px dotted #000;
-      padding: 6px 10px;
       width: min(760px, 100%);
       height: 38px;
-      display: flex;
-      align-items: center;
+      display: block;
     }
 
+    /* Left “Email” + right hint */
     .emailfield-left,
     .emailfield-right{
       position: absolute;
@@ -126,6 +141,7 @@
       transform: translateY(-50%);
       pointer-events: none;
       white-space: nowrap;
+      font: inherit;
     }
 
     .emailfield-left{
@@ -137,8 +153,10 @@
       max-width: 65%;
       overflow: hidden;
       text-overflow: ellipsis;
+      font-style: italic;
     }
 
+    /* Invisible input overlay */
     .emailfield input{
       position: absolute;
       inset: 0;
@@ -146,43 +164,59 @@
       height: 100%;
       border: 0;
       background: transparent;
-      padding: 6px 10px 6px 70px;
+      padding: 6px 10px;
       font: inherit;
       color: #000;
       outline: none;
+      padding-left: 70px; /* starts after “Email” */
     }
 
+    /* Hide right hint once user types */
     .emailfield.has-value .emailfield-right{
       display: none;
     }
 
-    .newsletter-submit{
-      margin-top: 10px;
+    /* Row 2: subscribe on its own line */
+    .newsletter-actions{
+      margin-top: 10px; /* small, deliberate drop */
+    }
+
+    .newsletter-actions button{
       border: none;
-      background: none;
       padding: 0;
+      background: none;
       cursor: pointer;
-      font: inherit;
       text-decoration: underline;
       text-underline-offset: 3px;
       text-decoration-thickness: 1px;
+      line-height: 1;
     }
 
-    /* Colophon */
+    /* Colophon (smaller + closer) */
     .colophon{
+      margin-top: 10px;
       font-size: 13px;
-      margin-top: calc(var(--rhythm) * 0.5);
+      line-height: 1.4;
     }
 
     /* Mobile */
     @media (max-width: 760px){
       :root{ --page-pad: 22px; }
       .wrap{ padding-top: calc(var(--rhythm) * 4); }
+
       .row{ grid-template-columns: 1fr; }
-      .label{
-        text-align: left;
-        margin-bottom: 6px;
-        padding-top: 0;
+      .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
+
+      .newsletter-section .label{ padding-top: 0; }
+
+      .newsletter-row{
+        gap: 12px;
+      }
+      .emailfield{
+        width: 100%;
+      }
+      .emailfield-right{
+        max-width: 52%;
       }
     }
 
@@ -196,11 +230,11 @@
 <body>
 <main class="wrap">
 
-  <!-- Intro -->
+  <!-- Top block -->
   <section class="row">
     <div class="label">STUDIO APPOSITE</div>
     <div class="content">
-      <p class="i">Architectural Design + Research</p>
+      <p><span class="i">Architectural Design + Research</span></p>
 
       <p>
         Studio Apposite is the architectural design and research practice of Brandon Poole and Patrick Rollins.
@@ -210,114 +244,184 @@
 
       <p>
         Alongside client work, Studio Apposite operates as a hybrid research platform, producing exhibitions, publications,
-        and archival studies focused on the architecture of Vancouver Island and the Gulf Islands.
+        and archival studies focused on the architecture of Vancouver Island and the Gulf Islands. This research directly informs
+        the design practice, grounding each project in the spatial, material, and cultural conditions of its site.
       </p>
     </div>
   </section>
 
-  <section class="row rulewrap"><div></div><div class="rule"></div></section>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
-  <!-- Practice -->
-  <section class="row">
+  <section class="row" id="practice">
     <div class="label">Practice</div>
     <div class="content">
       <p>
-        Studio Apposite works primarily with existing buildings, treating them as
-        <span class="i">material</span>, <span class="i">evidence</span>, and <span class="i">constraint</span>.
+        Studio Apposite works primarily with existing buildings, treating them as <span class="i">material</span>, <span class="i">evidence</span>, and <span class="i">constraint</span>.
+        Projects are approached through careful measurement, proportion, and construction logic, with particular attention to repair,
+        alteration, and integration rather than replacement. The aim is not novelty, but fit: work that is buildable, legible,
+        and continuous with what already exists.
       </p>
+
       <p>
-        Typical work includes entries and stairs, built-ins, kitchens and bathrooms, decks,
-        envelope strategies, and renovations or additions.
+        Typical work includes entries and stairs, built-ins, kitchens and bathrooms, decks, envelope and upgrade strategies,
+        and renovations or additions.
       </p>
-      <p><a href="practice.html" class="b">View services + portfolio</a></p>
+
+      <p><a href="practice.html"><span class="b">View services + portfolio</span></a></p>
     </div>
   </section>
 
-  <section class="row rulewrap"><div></div><div class="rule"></div></section>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
-  <!-- Research -->
-  <section class="row">
+  <section class="row" id="research">
     <div class="label">Research</div>
     <div class="content">
       <p>
-        Research includes archival surveys, interviews, and image-based studies culminating
-        in small publications and occasional exhibitions.
+        Studio Apposite’s research work includes archival surveys, interviews, and image-based studies that culminate in small publications
+        and occasional exhibitions. The aim is to build a local record of buildings and practices, and to carry that material back into client work.
       </p>
-      <p><a href="research.html" class="b">View publications + exhibitions</a></p>
+
+      <p><a href="research.html"><span class="b">View publications + exhibitions</span></a></p>
     </div>
   </section>
 
-  <section class="row rulewrap"><div></div><div class="rule"></div></section>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
-  <!-- Studio -->
-  <section class="row">
+  <section class="row" id="studio">
     <div class="label">Studio</div>
     <div class="content">
-      <p><span class="b">Brandon Poole</span> is a PhD Candidate at the McGill School of Architecture.</p>
-      <p><span class="b">Patrick Rollins</span> is a designer, researcher, and curator.</p>
+      <p>
+        <span class="b">Brandon Poole</span> is a PhD Candidate at the McGill School of Architecture, where he is a Vadasz Scholar and SSHRC
+        Doctoral Fellow. He holds a Master of Visual Studies (MVS) from the University of Toronto’s Faculty of Architecture, Landscape,
+        and Design, and a Bachelor of Fine Arts (BFA, Honours with Distinction) from the University of Victoria. Alongside architectural design,
+        he is an artist, a filmmaker, and a lecturer in the Visual Arts Department at UVic.
+      </p>
+
+      <p>
+        <span class="b">Patrick Rollins</span> is a designer, researcher, and curator. Recent projects include contributions to
+        <span class="i">From the Ground, Into the Light: Organic Architecture of the Islands</span> and
+        <span class="i">Centennial Square: A Design History</span>, both at the Wentworth Villa Architectural Museum. Upcoming projects include
+        exhibitions on the furniture of architect and architectural historian Peter Neve Cotton, and a photo-book series beginning with Alan
+        Hodgson’s Elza Mayhew Studio (1969).
+      </p>
     </div>
   </section>
 
-  <section class="row rulewrap"><div></div><div class="rule"></div></section>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
-  <!-- Contact -->
-  <section class="row">
+  <section class="row" id="contact">
     <div class="label">Contact</div>
     <div class="content">
-      <p><a href="mailto:mail@apposite.studio" class="b">mail@apposite.studio</a></p>
+      <p><a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a></p>
     </div>
   </section>
 
-  <section class="row rulewrap"><div></div><div class="rule"></div></section>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
-  <!-- Newsletter -->
-  <section class="row row-top" id="newsletter">
+  <section class="row newsletter-section" id="newsletter">
     <div class="label">Newsletter</div>
     <div class="content">
-
       <form
+        class="newsletter-form"
         action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
         method="post"
       >
         <input type="hidden" name="tag" value="research" />
         <input type="hidden" name="metadata[source]" value="index" />
+
+        <!-- Honeypot -->
         <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
                style="position:absolute;left:-5000px;" aria-hidden="true">
 
         <div class="newsletter-row">
           <div class="emailfield">
             <span class="emailfield-left">Email</span>
-            <span class="emailfield-right i">Updates on research and publications.</span>
+            <span class="emailfield-right">Updates on research and publications.</span>
+
             <input
               id="bd-email"
               type="email"
               name="email"
-              autocomplete="email"
               required
+              aria-label="Email address"
+              autocomplete="email"
+              inputmode="email"
             />
           </div>
         </div>
 
-        <button type="submit" class="newsletter-submit b">Subscribe</button>
-      </form>
+        <div class="newsletter-actions">
+          <button type="submit" class="b">Subscribe</button>
+        </div>
 
-      <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
+        <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
+      </form>
     </div>
   </section>
 
 </main>
 
 <script>
+  // Year
   document.getElementById("y").textContent = new Date().getFullYear();
 
-  const input = document.getElementById("bd-email");
-  const wrap = input.closest(".emailfield");
+  // Animate only the dashed rules on first view (no content opacity changes)
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ruleEls = Array.from(document.querySelectorAll(".rule"));
 
-  function sync(){
-    wrap.classList.toggle("has-value", !!input.value.trim());
+  if (!prefersReduced && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        el.style.transform = "scaleX(1)";
+        io.unobserve(el);
+      });
+    }, { root: null, rootMargin: "0px 0px -12% 0px", threshold: 0.01 });
+
+    ruleEls.forEach(el => io.observe(el));
+  } else {
+    ruleEls.forEach(el => { el.style.transform = "scaleX(1)"; });
   }
-  input.addEventListener("input", sync);
-  sync();
+
+  // Buttondown honeypot guard
+  (function(){
+    const hp = document.querySelector('input[name="bd_hp"]');
+    const form = hp ? hp.closest("form") : null;
+    if (!form) return;
+    form.addEventListener("submit", (e) => {
+      if (hp.value) e.preventDefault();
+    });
+  })();
+
+  // Hide the right-side hint when user types
+  (function(){
+    const input = document.getElementById("bd-email");
+    if (!input) return;
+    const wrap = input.closest(".emailfield");
+    if (!wrap) return;
+
+    function sync(){
+      wrap.classList.toggle("has-value", !!input.value.trim());
+    }
+    input.addEventListener("input", sync);
+    sync();
+  })();
 </script>
 
 </body>
