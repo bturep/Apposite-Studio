@@ -8,71 +8,80 @@
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
+
   <header>
     <div class="container nav">
       <a class="brand" href="index.html">Studio Apposite</a>
-      <nav class="navlinks">
-        <a data-nav href="studio.html">Studio</a>
-        <a data-nav href="services.html">Services</a>
-        <a data-nav href="work.html">Work</a>
-        <a data-nav href="press.html">Press</a>
-        <a data-nav href="contact.html">Contact</a>
+
+      <nav class="navlinks" aria-label="Primary">
+        <div class="navgroup" aria-label="Practice">
+          <span class="navlabel">Practice</span>
+          <a data-nav href="studio.html">Studio</a>
+          <a data-nav href="services.html">Services</a>
+          <a data-nav href="work.html">Work</a>
+          <a data-nav href="contact.html">Contact</a>
+        </div>
+
+        <div class="navsep" aria-hidden="true"></div>
+
+        <div class="navgroup" aria-label="Expanded Research">
+          <span class="navlabel">Expanded Research</span>
+          <a data-nav href="press.html">Press</a>
+        </div>
       </nav>
     </div>
   </header>
 
   <main class="container">
-    <section class="hero">
-      <div class="kicker">Architecture + Research</div>
-      <h1>Design-sensitive work at any scale.</h1>
-      <p class="lede">
-        We take on small projects (entries, decks, bathrooms) and larger renovations or additions—
-        with particular attention to repair and alteration that integrates carefully with what’s already there.
-      </p>
-      <div class="cta">
-        <a class="button" href="contact.html">Start a conversation</a>
-        <a class="button secondary" href="press.html">Publication series</a>
-      </div>
-    </section>
+    <div class="kicker">Architecture + Research</div>
+    <h1>Design-sensitive work at any scale.</h1>
 
-    <section class="grid" aria-label="Highlights">
-      <div class="card span-4">
-        <h3>Small projects</h3>
-        <p>Targeted interventions that improve daily use: entries, stairs, built-ins, kitchens, baths, decks.</p>
-      </div>
-      <div class="card span-4">
-        <h3>Alteration + repair</h3>
-        <p>Design-sensitive upgrades to existing buildings—constraints, continuity, and good details.</p>
-      </div>
-      <div class="card span-4">
-        <h3>Larger scope</h3>
-        <p>Renovations, additions, and phased projects with clear scope, pacing, and documentation.</p>
-      </div>
+    <p class="lede">
+      Studio Apposite takes on small projects (entries, decks, bathrooms) and larger renovations or additions—
+      with particular attention to repair and alteration that integrates carefully with what exists.
+    </p>
+
+    <div class="cta">
+      <a class="button" href="contact.html">Start a conversation</a>
+      <a class="button secondary" href="press.html">Publication series</a>
+    </div>
+
+    <hr />
+
+    <section>
+      <div class="kicker">Practice</div>
+      <p class="lede" style="margin-top:10px;">
+        We work with existing buildings as material, evidence, and constraint. The goal is not novelty.
+        The goal is fit: proportion, continuity, and buildability—decisions that hold up over time.
+      </p>
+
+      <p class="small">
+        Typical work: entries + stairs · built-ins · kitchens/baths · decks · envelope/upgrade strategies · renovations/additions
+      </p>
     </section>
 
     <hr />
 
-    <section class="grid" aria-label="Selected work">
-      <div class="span-12">
-        <div class="kicker">Selected work</div>
+    <section>
+      <div class="kicker">Selected work</div>
+
+      <div class="grid">
+        <div class="card span-6">
+          <h2>(Project)</h2>
+          <p class="small">Victoria, BC · Year · Scope</p>
+          <p class="small" style="margin-top:10px;">One sentence about what changed and what you delivered.</p>
+        </div>
+
+        <div class="card span-6">
+          <h2>(Project)</h2>
+          <p class="small">Victoria, BC · Year · Scope</p>
+          <p class="small" style="margin-top:10px;">One sentence about what changed and what you delivered.</p>
+        </div>
       </div>
 
-      <article class="card span-6">
-        <h3>(Project)</h3>
-        <p class="small">Victoria, BC · Year · Scope</p>
-        <p style="margin-top:10px;">Short description (keep it modest; we can expand later).</p>
-      </article>
-
-      <article class="card span-6">
-        <h3>(Project)</h3>
-        <p class="small">Victoria, BC · Year · Scope</p>
-        <p style="margin-top:10px;">Short description.</p>
-      </article>
-
-      <div class="span-12">
-        <p class="small">More → <a href="work.html">Work</a></p>
-      </div>
+      <p class="small" style="margin-top:16px;">More → <a href="work.html">Work</a></p>
     </section>
+
   </main>
 
   <footer class="footer">
