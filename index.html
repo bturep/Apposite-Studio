@@ -19,9 +19,8 @@
       font-family: "Lato", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       font-size: 16px;
       line-height: 1.55;
-      color: var(--ink);
-      background: var(--paper);
-
+      color: #000;
+      background: #fff;
     }
 
     :root{
@@ -29,10 +28,6 @@
       --label-col: 150px;
       --gap: 36px;
       --page-pad: 44px;
-      --ink: #111111;     /* warm black */
-      --paper: #fafafa;   /* off-white */
-      --line: #bdbdbd;    /* paper grey for rules + UI */
-
     }
 
     .wrap{
@@ -47,7 +42,7 @@
     .i{ font-style: italic; }
 
     a{
-      color: var(--ink);
+      color:#000;
       text-decoration: underline;
       text-underline-offset: 3px;
       text-decoration-thickness: 1px;
@@ -55,7 +50,7 @@
 
     @media (hover:hover){
       a{
-        background-image: linear-gradient(var(--ink), var(--ink));
+        background-image: linear-gradient(#000,#000);
         background-size: 0% 1px;
         background-position: 0 100%;
         background-repeat: no-repeat;
@@ -87,11 +82,11 @@
       width: 100%;
       background-image: repeating-linear-gradient(
         to right,
-        var(--line) 0,
-        var(--line) 2px,
+        #000 0,
+        #000 2px,
         transparent 2px,
         transparent 7px
-  );
+      );
       transform-origin: 0 50%;
       transform: scaleX(0);
       transition: transform 180ms linear;
@@ -132,7 +127,7 @@
 
     .emailfield{
       position: relative;
-      border: 1px dotted var(--line);
+      border: 1px dotted #000;
       width: min(760px, 100%);
       height: 38px;
       display: block;
@@ -199,11 +194,9 @@
 
     /* Colophon (smaller + closer) */
     .colophon{
-      margin-top: 7px;
+      margin-top: 10px;
       font-size: 13px;
       line-height: 1.4;
-      color: #666;
-
     }
 
     /* Mobile */
@@ -341,44 +334,48 @@
   </section>
 
   <section class="row newsletter-section" id="newsletter">
-    <div class="label">Newsletter</div>
-    <div class="content">
-      <form
-        class="newsletter-form"
-        action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
-        method="post"
-      >
-        <input type="hidden" name="tag" value="research" />
-        <input type="hidden" name="metadata[source]" value="index" />
+  <div class="label">Newsletter</div>
+  <div class="content">
+    <form
+      class="newsletter-form"
+      action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
+      method="post"
+    >
+      <input type="hidden" name="tag" value="research" />
+      <input type="hidden" name="metadata[source]" value="index" />
 
-        <!-- Honeypot -->
-        <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
-               style="position:absolute;left:-5000px;" aria-hidden="true">
+      <!-- Honeypot -->
+      <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
+             style="position:absolute;left:-5000px;" aria-hidden="true">
 
-        <div class="newsletter-row">
-          <div class="emailfield">
-            <span class="emailfield-left">Email</span>
-            <input
-              id="bd-email"
-              type="email"
-              name="email"
-              required
-              aria-label="Email address"
-              autocomplete="email"
-              inputmode="email"
-            />
-          </div>
+      <div class="newsletter-row">
+        <div class="emailfield">
+          <span class="emailfield-left">Email</span>
+          <span class="emailfield-right">Updates on research and publications.</span>
+
+          <input
+            id="bd-email"
+            type="email"
+            name="email"
+            required
+            aria-label="Email address"
+            autocomplete="email"
+            inputmode="email"
+          />
         </div>
+      </div>
 
-        <div class="newsletter-actions">
-          <button type="submit" class="b">Subscribe</button>
-        </div>
+      <div class="newsletter-actions">
+        <button type="submit" class="b">Subscribe</button>
+      </div>
 
-        <!-- line break after subscribe is naturally created by this paragraph -->
-        <br><br><p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
-      </form>
-    </div>
-  </section>
+      <!-- line break after subscribe is naturally created by this paragraph -->
+      <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
+    </form>
+  </div>
+</section>
+
+
 </main>
 
 <script>
