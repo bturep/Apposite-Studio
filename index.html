@@ -6,7 +6,6 @@
   <title>Studio Apposite</title>
   <meta name="description" content="Studio Apposite — design-sensitive architectural work and expanded research." />
 
-  <!-- Lato (simple external load). If you want self-hosted later, we can swap this out. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -17,14 +16,14 @@
 
     body{
       font-family: "Lato", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      font-size: 16px;           /* single size everywhere */
+      font-size: 16px;            /* one size everywhere */
       line-height: 1.55;
-      color: #000;              /* full black only */
+      color: #000;                /* full black */
       background: #fff;
     }
 
     a{
-      color:#000;               /* full black only */
+      color:#000;
       text-decoration: underline;
       text-underline-offset: 3px;
     }
@@ -35,49 +34,45 @@
       margin: 0 auto;
     }
 
-    .spacer{ height: 22px; }
+    /* One consistent spacing rule */
+    p{
+      margin: 0 0 14px 0;         /* adjust this one number to taste */
+    }
+
+    /* “Titles” become bold lines with a slightly tighter bottom */
+    .t{
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .i{ font-style: italic; }
 
     .rule{
       border-top: 1px solid #000;
-      margin: 28px 0;
+      margin: 18px 0 18px;        /* tightened */
     }
-
-    .b{ font-weight: 700; }
-    .i{ font-style: italic; }
   </style>
 </head>
 
 <body>
   <main class="wrap">
-    <p class="b">Studio Apposite</p>
+    <p class="t">Studio Apposite</p>
 
-    <div class="spacer"></div>
+    <p class="t">Architecture + Research</p>
 
-    <p class="b">Architecture + Research</p>
-
-    <div class="spacer"></div>
-
-    <p class="b">Design-sensitive work at any scale.</p>
-
-    <div class="spacer"></div>
+    <p class="t">Design-sensitive work at any scale.</p>
 
     <p>
       Studio Apposite takes on small projects (entries, decks, bathrooms) and larger renovations or additions,
       with particular attention to repair and alteration that integrates carefully with what exists.
     </p>
 
-    <div class="spacer"></div>
-
-    <p class="b">Practice</p>
-
-    <div class="spacer"></div>
+    <p class="t">Practice</p>
 
     <p>
       We work with existing buildings as <span class="i">material</span>, <span class="i">evidence</span>, and <span class="i">constraint</span>.
       The goal is not novelty. The goal is fit: proportion, continuity, and buildability—decisions that hold up over time.
     </p>
-
-    <div class="spacer"></div>
 
     <p>
       Typical work includes entries and stairs, built-ins, kitchens and bathrooms, decks,
@@ -86,19 +81,15 @@
 
     <div class="rule"></div>
 
-    <p class="b">Expanded Research</p>
-
-    <div class="spacer"></div>
+    <p class="t">Expanded Research</p>
 
     <p>
       Alongside client work, Studio Apposite is developing a small publication series focused on specific buildings and practices.
       Each issue assembles drawings, photographs, and archival research into a compact object.
     </p>
 
-    <div class="spacer"></div>
-
     <p>
-      <span class="b">Publication series (in development):</span><br>
+      <span style="font-weight:700;">Publication series (in development):</span><br>
       Issue 01 — Alan Hodgson · Mayhew Studio<br>
       Issue 02 — Richard Hunter · Hunter House<br>
       Issue 03 — Claude Maurice · Maurice House<br>
@@ -108,11 +99,9 @@
     <div class="rule"></div>
 
     <p>
-      <a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a><br>
+      <a href="mailto:mail@apposite.studio"><span style="font-weight:700;">mail@apposite.studio</span></a><br>
       <a href="#"><span class="i">Press</span></a>
     </p>
-
-    <div class="spacer"></div>
 
     <p>© <span id="y"></span> Studio Apposite · Victoria, BC</p>
   </main>
