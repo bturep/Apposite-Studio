@@ -6,62 +6,83 @@
   <title>Studio Apposite</title>
   <meta name="description" content="Studio Apposite — design-sensitive architectural work and expanded research." />
 
+  <!-- Lato -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
   <style>
-    *{ box-sizing: border-box; }
-    html, body{ margin:0; padding:0; }
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; padding:0; }
 
     body{
-      font-family: "Lato", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      font-size: 16px;     /* one size everywhere */
-      line-height: 1.55;
-      color: #000;         /* full black only */
-      background: #fff;
+      font-family:"Lato", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-size:16px;              /* one size everywhere */
+      line-height:1.55;
+      color:#000;                  /* full black only */
+      background:#fff;
     }
 
     a{
-      color:#000;
-      text-decoration: underline;
-      text-underline-offset: 3px;
+      color:#000;                  /* full black only */
+      text-decoration:underline;   /* underline is allowed */
+      text-underline-offset:3px;
     }
 
     .wrap{
-      max-width: 820px;
+      max-width: 980px;
       margin: 0 auto;
-      padding: 56px 22px 88px;   /* ← more top space to fix “top weighted” */
+      padding: 64px 22px 90px;     /* fixes “top-weighted” */
     }
 
-    p{ margin: 0 0 14px 0; }     /* single rhythm */
+    p{ margin: 0 0 14px 0; }       /* single rhythm */
 
-    .t{
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .i{ font-style: italic; }
+    .b{ font-weight:700; }
+    .i{ font-style:italic; }
 
     .rule{
-      border-top: 1px solid #000;
-      margin: 18px 0 18px;
+      border-top:1px solid #000;
+      margin: 20px 0;
     }
 
-    /* in-page menu as a single paragraph (no size/color change) */
+    /* In-page “menu” (integrated) */
+    .toc{
+      margin-bottom: 0;
+    }
     .toc a{ font-weight:700; }
-    .toc span{ font-weight:700; } /* section label */
+
+    /* Two-column sections: left label / right content */
+    .section{
+      display:grid;
+      grid-template-columns: 180px 1fr;
+      column-gap: 30px;
+      padding: 6px 0;
+    }
+
+    .label{
+      font-weight:700;
+    }
+
+    .content p:last-child{
+      margin-bottom:0;
+    }
+
+    @media (max-width: 760px){
+      .wrap{ padding-top: 46px; }
+      .section{
+        grid-template-columns: 1fr;
+        row-gap: 6px;
+      }
+    }
   </style>
 </head>
 
 <body>
   <main class="wrap">
+    <p class="b">Studio Apposite</p>
 
-    <p class="t">Studio Apposite</p>
-
-    <!-- In-page menu (not pinned) -->
     <p class="toc">
-      <span>On this page:</span>
+      <span class="b">On this page:</span>
       <a href="#practice">Practice</a>,
       <a href="#research">Expanded Research</a>,
       <a href="#people">People</a>,
@@ -70,9 +91,8 @@
 
     <div class="rule"></div>
 
-    <p class="t">Architecture + Research</p>
-
-    <p class="t">Design-sensitive work at any scale.</p>
+    <p class="b">Architecture + Research</p>
+    <p class="b">Design-sensitive work at any scale.</p>
 
     <p>
       Studio Apposite takes on small projects (entries, decks, bathrooms) and larger renovations or additions,
@@ -81,65 +101,73 @@
 
     <div class="rule"></div>
 
-    <p id="practice" class="t">Practice</p>
-
-    <p>
-      We work with existing buildings as <span class="i">material</span>, <span class="i">evidence</span>, and <span class="i">constraint</span>.
-      The goal is not novelty. The goal is fit: proportion, continuity, and buildability—decisions that hold up over time.
-    </p>
-
-    <p>
-      Typical work includes entries and stairs, built-ins, kitchens and bathrooms, decks,
-      envelope and upgrade strategies, and renovations or additions.
-    </p>
-
-    <div class="rule"></div>
-
-    <p id="research" class="t">Expanded Research</p>
-
-    <p>
-      Alongside client work, Studio Apposite is developing a small publication series focused on specific buildings and practices.
-      Each issue assembles drawings, photographs, and archival research into a compact object.
-    </p>
-
-    <p>
-      <span class="t" style="margin:0;">Publication series (in development):</span><br>
-      Issue 01 — Alan Hodgson · Mayhew Studio<br>
-      Issue 02 — Richard Hunter · Hunter House<br>
-      Issue 03 — Claude Maurice · Maurice House<br>
-      Issue 04 — Roger Smeeth · Fisher House
-    </p>
+    <section class="section" id="practice">
+      <div class="label">Practice</div>
+      <div class="content">
+        <p>
+          We work with existing buildings as <span class="i">material</span>, <span class="i">evidence</span>, and <span class="i">constraint</span>.
+          The goal is not novelty. The goal is fit: proportion, continuity, and buildability—decisions that hold up over time.
+        </p>
+        <p>
+          Typical work includes entries and stairs, built-ins, kitchens and bathrooms, decks,
+          envelope and upgrade strategies, and renovations or additions.
+        </p>
+      </div>
+    </section>
 
     <div class="rule"></div>
 
-    <p id="people" class="t">People</p>
-
-    <!-- Replace these with your final bios (I’m using your shown structure) -->
-    <p>
-      <span class="t" style="margin:0;">Brandon Poole</span> is a PhD Candidate at the McGill School of Architecture, where he is a Vadasz Scholar and SSHRC Doctoral Fellow.
-      He holds a Master of Visual Studies (MVS) from the University of Toronto’s Faculty of Architecture, Landscape, and Design, and a Bachelor of Fine Arts (BFA, Honours with Distinction)
-      from the University of Victoria. Alongside architectural design, he is an artist, a filmmaker, and a lecturer in the Visual Arts Department at UVic.
-    </p>
-
-    <p>
-      <span class="t" style="margin:0;">Patrick Rollins</span> is a designer, researcher, and curator. Recent projects include contributions to
-      <span class="i">From the Ground, Into the Light: Organic Architecture of the Islands</span> and
-      <span class="i">Centennial Square: A Design History</span>, both at the Wentworth Villa Architectural Museum.
-      Upcoming projects include exhibitions on the furniture of architect and architectural historian Peter Neve Cotton, and a photo-book series beginning with
-      Alan Hodgson’s Elza Mayhew Studio (1969).
-    </p>
+    <section class="section" id="research">
+      <div class="label">Expanded Research</div>
+      <div class="content">
+        <p>
+          Alongside client work, Studio Apposite is developing a small publication series focused on specific buildings and practices.
+          Each issue assembles drawings, photographs, and archival research into a compact object.
+        </p>
+        <p>
+          <span class="b">Publication series (in development):</span><br>
+          Issue 01 — Alan Hodgson · Mayhew Studio<br>
+          Issue 02 — Richard Hunter · Hunter House<br>
+          Issue 03 — Claude Maurice · Maurice House<br>
+          Issue 04 — Roger Smeeth · Fisher House
+        </p>
+      </div>
+    </section>
 
     <div class="rule"></div>
 
-    <p id="contact" class="t">Contact</p>
+    <section class="section" id="people">
+      <div class="label">People</div>
+      <div class="content">
+        <p>
+          <span class="b">Brandon Poole</span> is a PhD Candidate at the McGill School of Architecture, where he is a Vadasz Scholar and SSHRC
+          Doctoral Fellow. He holds a Master of Visual Studies (MVS) from the University of Toronto’s Faculty of Architecture, Landscape, and
+          Design, and a Bachelor of Fine Arts (BFA, Honours with Distinction) from the University of Victoria. Alongside architectural design,
+          he is an artist, a filmmaker, and a lecturer in the Visual Arts Department at UVic.
+        </p>
 
-    <p>
-      <a href="mailto:mail@apposite.studio"><span class="t" style="margin:0;">mail@apposite.studio</span></a><br>
-      <a href="#"><span class="i">Press</span></a>
-    </p>
+        <p>
+          <span class="b">Patrick Rollins</span> is a designer, researcher, and curator. Recent projects include contributions to
+          <span class="i">From the Ground, Into the Light: Organic Architecture of the Islands</span> and
+          <span class="i">Centennial Square: A Design History</span>, both at the Wentworth Villa Architectural Museum. Upcoming projects include
+          exhibitions on the furniture of architect and architectural historian Peter Neve Cotton, and a photo-book series beginning with Alan
+          Hodgson’s Elza Mayhew Studio (1969).
+        </p>
+      </div>
+    </section>
 
-    <p>© <span id="y"></span> Studio Apposite · Victoria, BC</p>
+    <div class="rule"></div>
 
+    <section class="section" id="contact">
+      <div class="label">Contact</div>
+      <div class="content">
+        <p>
+          <a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a><br>
+          <a href="#"><span class="i">Press</span></a>
+        </p>
+        <p>© <span id="y"></span> Studio Apposite · Victoria, BC</p>
+      </div>
+    </section>
   </main>
 
   <script>
