@@ -25,9 +25,9 @@
 
     :root{
       --rhythm: 16px;
-      --label-col: 190px;   /* slightly narrower = headings come in */
+      --label-col: 190px;   /* headings slightly in */
       --gap: 28px;          /* slightly tighter */
-      --page-pad: 44px;     /* more left/right air = headings not hugging edge */
+      --page-pad: 44px;     /* more left/right air */
     }
 
     .wrap{
@@ -36,9 +36,7 @@
       padding: calc(var(--rhythm) * 5) var(--page-pad) calc(var(--rhythm) * 6);
     }
 
-    p{
-      margin: 0 0 calc(var(--rhythm) * 1) 0;
-    }
+    p{ margin: 0 0 calc(var(--rhythm) * 1) 0; }
 
     .b{ font-weight: 700; }
     .i{ font-style: italic; }
@@ -93,10 +91,9 @@
       transition: transform 180ms linear;
     }
 
-    .rulewrap{
-      margin: calc(var(--rhythm) * 1) 0;
-    }
+    .rulewrap{ margin: calc(var(--rhythm) * 1) 0; }
 
+    /* Inputs (global baseline) */
     input, button{
       font: inherit;
       color: #000;
@@ -108,69 +105,55 @@
     button{ cursor: pointer; }
     input{ width: min(520px, 100%); }
 
-    /* Small, quiet footer line without changing size/color */
-    .footerline{
-      margin-top: calc(var(--rhythm) * 0.5);
-    }
-    /* Newsletter refinement */
+    /* Newsletter refinement (robust against global rules) */
     .newsletter-form{
       margin-top: calc(var(--rhythm) * 0.5);
     }
 
     .newsletter-row{
       display: flex;
-      align-items: center;
+      align-items: baseline;   /* typographic alignment */
       gap: 12px;
+      flex-wrap: wrap;         /* prevents overflow */
     }
 
-    /* Email field as light dotted container */
-    .newsletter-row input[type="email"]{
-      border: 1px dotted #000;
+    .newsletter-email{
+      width: auto;             /* override global input width */
+      flex: 1 1 360px;
+      min-width: 240px;
+
+      border: 1px dashed rgba(0,0,0,0.35);  /* “light” dotted/dashed */
+      background: transparent;
       padding: 6px 10px;
-      width: 320px;
+      border-radius: 0;
     }
 
-    /* Button reads as text, not a box */
-    .newsletter-row button{
+    .newsletter-email:focus{
+      outline: none;
+      border-color: #000;      /* focus becomes fully black */
+    }
+
+    .newsletter-submit{
       border: none;
-      padding: 0;
       background: none;
-    }
+      padding: 0;
+      border-radius: 0;
 
-    /* Keep button visually present but quiet */
-    .newsletter-row button.b{
       text-decoration: underline;
       text-underline-offset: 3px;
       text-decoration-thickness: 1px;
     }
 
-    /* Mobile: stack, but keep order */
-    @media (max-width: 760px){
-      .newsletter-row{
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-
-      .newsletter-row input[type="email"]{
-        width: 100%;
-      }
+    .footerline{
+      margin-top: calc(var(--rhythm) * 0.5);
     }
 
+    /* Mobile */
     @media (max-width: 760px){
-      :root{
-        --page-pad: 22px;   /* keep mobile comfortable */
-      }
-      .wrap{
-        padding-top: calc(var(--rhythm) * 4);
-      }
-      .row{
-        grid-template-columns: 1fr;
-      }
-      .label{
-        margin-bottom: 6px;
-        padding-top: 0;
-      }
+      :root{ --page-pad: 22px; }
+      .wrap{ padding-top: calc(var(--rhythm) * 4); }
+      .row{ grid-template-columns: 1fr; }
+      .label{ margin-bottom: 6px; padding-top: 0; }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -187,9 +170,7 @@
   <section class="row">
     <div class="label">Studio Apposite</div>
     <div class="content">
-      <p>
-        <span class="i">Architecture + Research</span> — <span class="b">Design-sensitive work at any scale.</span>
-      </p>
+      <p><span class="i">Architecture + Research</span> — <span class="b">Design-sensitive work at any scale.</span></p>
 
       <p>
         Studio Apposite is the architectural design and research practice of Brandon Poole and Patrick Rollins.
@@ -205,7 +186,6 @@
     </div>
   </section>
 
-  <!-- rule aligned to content column only -->
   <section class="row rulewrap" aria-hidden="true">
     <div class="label"></div>
     <div class="content"><div class="rule"></div></div>
@@ -226,9 +206,7 @@
         and renovations or additions.
       </p>
 
-      <p>
-        <a href="practice.html"><span class="b">View services + portfolio</span></a>
-      </p>
+      <p><a href="practice.html"><span class="b">View services + portfolio</span></a></p>
     </div>
   </section>
 
@@ -245,9 +223,7 @@
         and occasional exhibitions. The aim is to build a local record of buildings and practices, and to carry that material back into client work.
       </p>
 
-      <p>
-        <a href="research.html"><span class="b">View publications + exhibitions</span></a>
-      </p>
+      <p><a href="research.html"><span class="b">View publications + exhibitions</span></a></p>
     </div>
   </section>
 
@@ -284,9 +260,7 @@
   <section class="row" id="contact">
     <div class="label">Contact</div>
     <div class="content">
-      <p>
-        <a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a>
-      </p>
+      <p><a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a></p>
       <p>
         Maquinna St.<br>
         Harling Point, Oak Bay<br>
@@ -307,36 +281,35 @@
       <p><span class="b">Research updates</span></p>
 
       <form
-    action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
-    method="post"
-    class="newsletter-form"
-  >
-    <input type="hidden" name="tag" value="research" />
-    <input type="hidden" name="metadata[source]" value="index" />
+        action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
+        method="post"
+        class="newsletter-form"
+      >
+        <input type="hidden" name="tag" value="research" />
+        <input type="hidden" name="metadata[source]" value="index" />
 
-    <!-- Honeypot -->
-    <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
-           style="position:absolute;left:-5000px;" aria-hidden="true">
+        <!-- Honeypot -->
+        <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
+               style="position:absolute;left:-5000px;" aria-hidden="true">
 
-    <div class="newsletter-row">
-      <input
-        id="bd-email"
-        type="email"
-        name="email"
-        placeholder="Email"
-        required
-        aria-label="Email address"
-      />
-
-      <button type="submit" class="b">Subscribe</button>
-    </div>
-  </form>
+        <div class="newsletter-row">
+          <input
+            id="bd-email"
+            class="newsletter-email"
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+            aria-label="Email address"
+          />
+          <button type="submit" class="newsletter-submit b">Subscribe</button>
+        </div>
+      </form>
 
       <p class="i">Occasional emails: publication progress, archival finds, and releases.</p>
     </div>
   </section>
 
-  <!-- Separator + inline copyright (keeps the grid rhythm) -->
   <section class="row rulewrap" aria-hidden="true">
     <div class="label"></div>
     <div class="content"><div class="rule"></div></div>
