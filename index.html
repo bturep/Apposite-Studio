@@ -25,9 +25,9 @@
 
     :root{
       --rhythm: 16px;
-      --label-col: 150px;   /* headings slightly in */
-      --gap: 36px;          /* slightly tighter */
-      --page-pad: 44px;     /* more left/right air */
+      --label-col: 150px;
+      --gap: 36px;
+      --page-pad: 44px;
     }
 
     .wrap{
@@ -72,7 +72,7 @@
     .label{
       font-weight: 700;
       text-align: right;
-      padding-top: 0px;
+      padding-top: 0;
     }
 
     .content p:last-child{ margin-bottom: 0; }
@@ -106,112 +106,102 @@
     button{ cursor: pointer; }
     input{ width: min(520px, 100%); }
 
-    //* Newsletter refinement */
-.newsletter-row{
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
+    /* Newsletter */
+    .newsletter-row{
+      display: flex;
+      align-items: baseline;   /* keeps Subscribe aligned with the box text baseline */
+      gap: 18px;
+    }
 
-.emailfield{
-  position: relative;
-  border: 1px dotted #000;
-  padding: 6px 10px;
-  width: min(760px, 100%);
-  height: 38px;              /* keeps the box steady */
-  display: flex;
-  align-items: center;
-}
+    .emailfield{
+      position: relative;
+      border: 1px dotted #000;
+      width: min(760px, 100%);
+      height: 38px;
+      display: block;
+    }
 
-/* The “Email” + the right-side hint */
-.emailfield-left,
-.emailfield-right{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  white-space: nowrap;
-}
+    /* Left “Email” + right hint, both sit on the same baseline */
+    .emailfield-left,
+    .emailfield-right{
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      white-space: nowrap;
+      font: inherit;
+    }
 
-.emailfield-left{
-  left: 10px;
-}
+    .emailfield-left{
+      left: 10px;
+    }
 
-.emailfield-right{
-  right: 10px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 65%;            /* prevents collisions */
-}
+    .emailfield-right{
+      right: 10px;
+      max-width: 65%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-style: italic; /* make the hint italic */
+    }
 
-/* Actual input sits on top, but looks invisible */
-.emailfield input{
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  background: transparent;
-  padding: 6px 10px;
-  font: inherit;
-  color: #000;
-  outline: none;
-}
+    /* Invisible input overlay */
+    .emailfield input{
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: transparent;
+      padding: 6px 10px;
+      font: inherit;
+      color: #000;
+      outline: none;
+      padding-left: 70px; /* starts after “Email” */
+    }
 
-/* When typing, hide the right-side hint */
-.emailfield input:not(:placeholder-shown) ~ .emailfield-right{
-  display: none;
-}
+    /* Hide right hint once user types */
+    .emailfield.has-value .emailfield-right{
+      display: none;
+    }
 
-/* But we aren’t using placeholder, so use a class toggle instead (JS below) */
-.emailfield.has-value .emailfield-right{
-  display: none;
-}
+    /* Subscribe as underlined text, stays on same line */
+    .newsletter-row button{
+      border: none;
+      padding: 0;
+      background: none;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      line-height: 1;          /* reduces baseline wobble */
+      margin-top: 2px;         /* tiny optical align (optional) */
+    }
 
-/* Make typing start after “Email” label */
-.emailfield input{
-  padding-left: 70px; /* adjust if you change “Email” */
-}
-
-/* Button reads as underlined text */
-.newsletter-row button{
-  border: none;
-  padding: 0;
-  background: none;
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 1px;
-}
-
-/* Mobile: stack */
-@media (max-width: 760px){
-  .newsletter-row{
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .emailfield{
-    width: 100%;
-  }
-
-  .emailfield-right{
-    max-width: 55%;
-  }
-
-  .newsletter-row button{
-    margin-left: 0;
-  }
-}
-
+    /* Colophon (smaller) */
+    .colophon{
+      margin-top: calc(var(--rhythm) * 0.75);
+      font-size: 13px;
+      line-height: 1.4;
+    }
 
     /* Mobile */
     @media (max-width: 760px){
       :root{ --page-pad: 22px; }
       .wrap{ padding-top: calc(var(--rhythm) * 4); }
+
       .row{ grid-template-columns: 1fr; }
       .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
+
+      /* Keep subscribe on the same line on mobile too */
+      .newsletter-row{
+        gap: 12px;
+      }
+      .emailfield{
+        width: 100%;
+      }
+      .emailfield-right{
+        max-width: 52%;
+      }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -290,7 +280,7 @@
     <div class="content"><div class="rule"></div></div>
   </section>
 
-  <section class="row" id="people">
+  <section class="row" id="studio">
     <div class="label">Studio</div>
     <div class="content">
       <p>
@@ -330,11 +320,9 @@
   <section class="row" id="newsletter">
     <div class="label">Newsletter</div>
     <div class="content">
-
       <form
         action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
         method="post"
-        class="newsletter-form"
       >
         <input type="hidden" name="tag" value="research" />
         <input type="hidden" name="metadata[source]" value="index" />
@@ -343,31 +331,32 @@
         <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
                style="position:absolute;left:-5000px;" aria-hidden="true">
 
-               <div class="newsletter-row">
-           <div class="emailfield">
-             <span class="emailfield-left">Email</span>
-             <span class="emailfield-right">Updates on research and publications.</span>
+        <div class="newsletter-row">
+          <div class="emailfield">
+            <span class="emailfield-left">Email</span>
+            <span class="emailfield-right">Updates on research and publications.</span>
 
-             <input
-               id="bd-email"
-               type="email"
-               name="email"
-               required
-               aria-label="Email address"
-               autocomplete="email"
-               inputmode="email"
-             />
-           </div>
+            <input
+              id="bd-email"
+              type="email"
+              name="email"
+              required
+              aria-label="Email address"
+              autocomplete="email"
+              inputmode="email"
+            />
+          </div>
 
-           <button type="submit" class="b">Subscribe</button>
-         </div>
+          <button type="submit" class="b">Subscribe</button>
+        </div>
+
+        <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
       </form>
-
-      <p class="i">Updates on research and publications.</p>
-      © <span id="y"></span> Studio Apposite · Victoria, BC
     </div>
   </section>
+
 </main>
+
 <script>
   // Year
   document.getElementById("y").textContent = new Date().getFullYear();
@@ -400,8 +389,8 @@
       if (hp.value) e.preventDefault();
     });
   })();
-</script>
-<script>
+
+  // Hide the right-side hint when user types
   (function(){
     const input = document.getElementById("bd-email");
     if (!input) return;
@@ -415,5 +404,6 @@
     sync();
   })();
 </script>
+
 </body>
 </html>
