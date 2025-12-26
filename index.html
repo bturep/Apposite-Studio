@@ -112,6 +112,50 @@
     .footerline{
       margin-top: calc(var(--rhythm) * 0.5);
     }
+    /* Newsletter refinement */
+    .newsletter-form{
+      margin-top: calc(var(--rhythm) * 0.5);
+    }
+
+    .newsletter-row{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Email field as light dotted container */
+    .newsletter-row input[type="email"]{
+      border: 1px dotted #000;
+      padding: 6px 10px;
+      width: 320px;
+    }
+
+    /* Button reads as text, not a box */
+    .newsletter-row button{
+      border: none;
+      padding: 0;
+      background: none;
+    }
+
+    /* Keep button visually present but quiet */
+    .newsletter-row button.b{
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+    }
+
+    /* Mobile: stack, but keep order */
+    @media (max-width: 760px){
+      .newsletter-row{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .newsletter-row input[type="email"]{
+        width: 100%;
+      }
+    }
 
     @media (max-width: 760px){
       :root{
@@ -263,24 +307,30 @@
       <p><span class="b">Research updates</span></p>
 
       <form
-        action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
-        method="post"
-      >
-        <input type="hidden" name="tag" value="research" />
-        <input type="hidden" name="metadata[source]" value="index" />
+    action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
+    method="post"
+    class="newsletter-form"
+  >
+    <input type="hidden" name="tag" value="research" />
+    <input type="hidden" name="metadata[source]" value="index" />
 
-        <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
-               style="position:absolute;left:-5000px;" aria-hidden="true">
+    <!-- Honeypot -->
+    <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
+           style="position:absolute;left:-5000px;" aria-hidden="true">
 
-        <p>
-          <label class="b" for="bd-email">Email</label><br>
-          <input id="bd-email" type="email" name="email" required />
-        </p>
+    <div class="newsletter-row">
+      <input
+        id="bd-email"
+        type="email"
+        name="email"
+        placeholder="Email"
+        required
+        aria-label="Email address"
+      />
 
-        <p>
-          <button type="submit" class="b">Subscribe</button>
-        </p>
-      </form>
+      <button type="submit" class="b">Subscribe</button>
+    </div>
+  </form>
 
       <p class="i">Occasional emails: publication progress, archival finds, and releases.</p>
     </div>
