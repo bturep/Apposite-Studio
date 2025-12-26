@@ -155,7 +155,7 @@
       :root{ --page-pad: 22px; }
       .wrap{ padding-top: calc(var(--rhythm) * 4); }
       .row{ grid-template-columns: 1fr; }
-      .label{ margin-bottom: 6px; padding-top: 0; }
+      .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -308,21 +308,9 @@
       </form>
 
       <p class="i">Updates on research and publications.</p>
+      © <span id="y"></span> Studio Apposite · Victoria, BC
     </div>
   </section>
-
-  <section class="row rulewrap" aria-hidden="true">
-    <div class="label"></div>
-    <div class="content"><div class="rule"></div></div>
-  </section>
-
-  <section class="row" aria-label="Footer">
-    <div class="label"></div>
-    <div class="content">
-      <p class="footerline">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
-    </div>
-  </section>
-
 </main>
 
 <script>
