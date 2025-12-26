@@ -23,6 +23,26 @@
       background: #fff;
     }
 
+    /* PRINT-LIKE RHYTHM */
+    :root{
+      --rhythm: 16px;      /* baseline unit */
+      --label-col: 210px;
+      --gap: 34px;
+    }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: calc(var(--rhythm) * 5) 22px calc(var(--rhythm) * 6); /* 80px / 96px */
+    }
+
+    p{
+      margin: 0 0 calc(var(--rhythm) * 1) 0; /* consistent paragraph spacing */
+    }
+
+    .b{ font-weight: 700; }
+    .i{ font-style: italic; }
+
     a{
       color:#000;
       text-decoration: underline;
@@ -30,7 +50,7 @@
       text-decoration-thickness: 1px;
     }
 
-    /* Hover-only underline motion (kept restrained) */
+    /* Hover-only underline micro-motion (no opacity tricks) */
     @media (hover:hover){
       a{
         background-image: linear-gradient(#000,#000);
@@ -44,38 +64,18 @@
       a:hover{ background-size: 100% 1px; }
     }
 
-    /* PRINT-LIKE RHYTHM */
-    :root{
-      --rhythm: 16px;      /* baseline unit */
-      --label-col: 210px;
-      --gap: 34px;
-    }
-
-    .wrap{
-      max-width: 980px;
-      margin: 0 auto;
-      padding: calc(var(--rhythm) * 5) 22px calc(var(--rhythm) * 6); /* 80px top / 96px bottom */
-    }
-
-    p{
-      margin: 0 0 calc(var(--rhythm) * 1) 0; /* consistent paragraph spacing */
-    }
-
-    .b{ font-weight: 700; }
-    .i{ font-style: italic; }
-
     /* Two-column system */
     .row{
       display: grid;
       grid-template-columns: var(--label-col) 1fr;
       column-gap: var(--gap);
-      padding: calc(var(--rhythm) * 0.5) 0; /* 8px */
+      padding: calc(var(--rhythm) * 0.5) 0; /* 8px (kept tight; no extra section spacing) */
     }
 
     .label{
       font-weight: 700;
-      text-align: left;          /* left-justify entire site */
-      padding-top: 3px;          /* optical alignment */
+      text-align: left;     /* left-justify entire site */
+      padding-top: 3px;     /* optical alignment */
     }
 
     .content p:last-child{ margin-bottom: 0; }
@@ -92,22 +92,51 @@
         transparent 7px
       );
       transform-origin: 0 50%;
-      transform: scaleX(0);      /* motion: reveal on scroll */
+      transform: scaleX(0);                 /* motion only; no opacity changes */
+      transition: transform 180ms linear;
     }
 
+    /* Keep divider rhythm, but remove “extra” spacing between sections */
     .rulewrap{
-      margin: calc(var(--rhythm) * 2) 0; /* 32px consistent pacing */
+      margin: calc(var(--rhythm) * 1) 0;    /* 16px (tighter than earlier) */
     }
 
-    /* Motion: reveal content (opacity only) */
-    .reveal{ transition: opacity 140ms linear; }
-    .js .reveal{ opacity: 0; }
-    .js .reveal.is-visible{ opacity: 1; }
+    /* Thumbnail preview system (composed, not tooltip-y) */
+    .thumbgrid{
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      column-gap: calc(var(--rhythm) * 2);
+      align-items: start;
+      margin-bottom: calc(var(--rhythm) * 1);
+    }
+
+    .thumblist p{
+      margin-bottom: calc(var(--rhythm) * 0.5);
+    }
+
+    .thumbwell{
+      margin: 0;
+      border: 1px dashed #000;
+      padding: calc(var(--rhythm) * 0.75);
+      min-height: 180px;
+    }
+
+    .thumbwell img{
+      width: 100%;
+      height: auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 140ms linear;
+    }
+
+    .thumbwell img.is-visible{
+      opacity: 1;
+    }
 
     @media (prefers-reduced-motion: reduce){
-      .rule{ transform: none !important; }
-      .js .reveal{ opacity: 1 !important; }
+      .rule{ transform: none !important; transition: none !important; }
       a{ transition: none !important; }
+      .thumbwell img{ transition: none !important; }
     }
 
     /* Mobile */
@@ -122,6 +151,10 @@
         margin-bottom: 6px;
         padding-top: 0;
       }
+      .thumbgrid{
+        grid-template-columns: 1fr;
+        row-gap: calc(var(--rhythm) * 1);
+      }
     }
   </style>
 </head>
@@ -132,7 +165,7 @@
   <!-- Top block -->
   <section class="row">
     <div class="label">Studio Apposite</div>
-    <div class="content reveal">
+    <div class="content">
       <p>
         <span class="i">Architecture + Research</span> — <span class="b">Design-sensitive work at any scale.</span>
       </p>
@@ -159,7 +192,7 @@
 
   <section class="row" id="practice">
     <div class="label">Practice</div>
-    <div class="content reveal">
+    <div class="content">
       <p>
         Studio Apposite works primarily with existing buildings, treating them as <span class="i">material</span>, <span class="i">evidence</span>, and <span class="i">constraint</span>.
         Projects are approached through careful measurement, proportion, and construction logic, with particular attention to repair,
@@ -171,6 +204,21 @@
         Typical work includes entries and stairs, built-ins, kitchens and bathrooms, decks, envelope and upgrade strategies,
         and renovations or additions.
       </p>
+
+      <p class="b">Selected projects (forthcoming):</p>
+
+      <div class="thumbgrid" aria-label="Selected projects with thumbnail preview">
+        <div class="thumblist">
+          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Entry renovation (placeholder)">Entry renovation</a></p>
+          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Deck (placeholder)">Deck</a></p>
+          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Bathroom (placeholder)">Bathroom</a></p>
+          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Custom millwork (placeholder)">Custom millwork</a></p>
+        </div>
+
+        <figure class="thumbwell" aria-live="polite">
+          <img id="thumbPreviewProjects" alt="" />
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -181,20 +229,26 @@
 
   <section class="row" id="research">
     <div class="label">Expanded Research</div>
-    <div class="content reveal">
+    <div class="content">
       <p>
         Alongside client work, Studio Apposite is developing a small publication series focused on specific buildings and practices.
         Each issue assembles drawings, photographs, and archival research into a compact object.
       </p>
 
-      <p class="b">Publication series (in development):</p>
+      <p class="b">Publications (in development):</p>
 
-      <p>
-        Issue 01 — Alan Hodgson · Mayhew Studio<br>
-        Issue 02 — Richard Hunter · Hunter House<br>
-        Issue 03 — Claude Maurice · Maurice House<br>
-        Issue 04 — Roger Smeeth · Fisher House
-      </p>
+      <div class="thumbgrid" aria-label="Publications with thumbnail preview">
+        <div class="thumblist">
+          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Alan Hodgson — Mayhew Studio (cover placeholder)">Issue 01 — Alan Hodgson · Mayhew Studio</a></p>
+          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Richard Hunter — Hunter House (cover placeholder)">Issue 02 — Richard Hunter · Hunter House</a></p>
+          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Claude Maurice — Maurice House (cover placeholder)">Issue 03 — Claude Maurice · Maurice House</a></p>
+          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Roger Smeeth — Fisher House (cover placeholder)">Issue 04 — Roger Smeeth · Fisher House</a></p>
+        </div>
+
+        <figure class="thumbwell" aria-live="polite">
+          <img id="thumbPreviewResearch" alt="" />
+        </figure>
+      </div>
 
       <p>
         <span class="b">Newsletter:</span> <a href="#newsletter">research updates</a>
@@ -209,7 +263,7 @@
 
   <section class="row" id="people">
     <div class="label">People</div>
-    <div class="content reveal">
+    <div class="content">
       <p>
         <span class="b">Brandon Poole</span> is a PhD Candidate at the McGill School of Architecture, where he is a Vadasz Scholar and SSHRC
         Doctoral Fellow. He holds a Master of Visual Studies (MVS) from the University of Toronto’s Faculty of Architecture, Landscape,
@@ -234,7 +288,7 @@
 
   <section class="row" id="contact">
     <div class="label">Contact</div>
-    <div class="content reveal">
+    <div class="content">
       <p>
         <a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a>
       </p>
@@ -244,7 +298,7 @@
 
   <section class="row" id="newsletter">
     <div class="label">Newsletter</div>
-    <div class="content reveal">
+    <div class="content">
       <p>
         <span class="b">Research updates</span><br>
         (Subscription form to be added.)
@@ -255,40 +309,76 @@
 </main>
 
 <script>
-  document.documentElement.classList.add("js");
+  // Year
   document.getElementById("y").textContent = new Date().getFullYear();
 
+  // Animate only the dashed rules on first view (no content opacity changes)
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  const revealEls = Array.from(document.querySelectorAll(".reveal"));
   const ruleEls = Array.from(document.querySelectorAll(".rule"));
 
   if (!prefersReduced && "IntersectionObserver" in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-
         const el = entry.target;
-
-        if (el.classList.contains("reveal")) {
-          el.classList.add("is-visible"); // opacity only
-        }
-
-        if (el.classList.contains("rule")) {
-          el.style.transition = "transform 180ms linear";
-          el.style.transform = "scaleX(1)"; // rule reveal
-        }
-
+        el.style.transform = "scaleX(1)";
         io.unobserve(el);
       });
     }, { root: null, rootMargin: "0px 0px -12% 0px", threshold: 0.01 });
 
-    revealEls.forEach(el => io.observe(el));
     ruleEls.forEach(el => io.observe(el));
   } else {
-    revealEls.forEach(el => el.classList.add("is-visible"));
     ruleEls.forEach(el => { el.style.transform = "scaleX(1)"; });
   }
+
+  // Thumbnail preview system (hover/focus; tap on mobile)
+  function setupThumbPreview(containerSelector, imgSelector){
+    const container = document.querySelector(containerSelector);
+    if (!container) return;
+
+    const imgEl = container.querySelector(imgSelector);
+    const links = container.querySelectorAll(".thumblink");
+    if (!imgEl || !links.length) return;
+
+    function show(src, alt){
+      if (!src) return;
+      imgEl.src = src;
+      imgEl.alt = alt || "";
+      imgEl.classList.add("is-visible");
+    }
+
+    function clear(){
+      imgEl.classList.remove("is-visible");
+    }
+
+    links.forEach((a, idx) => {
+      const src = a.getAttribute("data-img");
+      const alt = a.getAttribute("data-alt") || a.textContent.trim();
+
+      // Desktop hover
+      a.addEventListener("mouseenter", () => show(src, alt));
+      a.addEventListener("mouseleave", () => clear());
+
+      // Keyboard accessibility
+      a.addEventListener("focus", () => show(src, alt));
+      a.addEventListener("blur", () => clear());
+
+      // Touch / click: if href is #, prevent navigation and just preview
+      a.addEventListener("click", (e) => {
+        const href = a.getAttribute("href") || "#";
+        if (href === "#") {
+          e.preventDefault();
+          show(src, alt);
+        }
+      });
+
+      // Preload a “resting” state (first item)
+      if (idx === 0 && src) show(src, alt);
+    });
+  }
+
+  setupThumbPreview('[aria-label="Selected projects with thumbnail preview"]', "#thumbPreviewProjects");
+  setupThumbPreview('[aria-label="Publications with thumbnail preview"]', "#thumbPreviewResearch");
 </script>
 </body>
 </html>
