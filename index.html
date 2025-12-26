@@ -14,7 +14,6 @@
   <style>
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
-
     body{
       font-family: "Lato", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       font-size: 16px;
@@ -25,10 +24,16 @@
 
     :root{
       --rhythm: 16px;
-      --label-col: 210px;
+
+      /* Fix: enforce a real reading measure */
+      --label-col: 190px;     /* headings field */
+      --text-col: 600px;      /* primary text field (key) */
+      --preview-col: 280px;   /* secondary preview field */
       --gap: 34px;
-      --preview-col: 300px;          /* width of the global thumbnail well */
-      --preview-gap: 32px;           /* space between content and preview well */
+
+      --page-pad-x: 22px;
+      --page-pad-top: calc(var(--rhythm) * 5);  /* 80px */
+      --page-pad-bot: calc(var(--rhythm) * 6);  /* 96px */
     }
 
     a{
@@ -38,7 +43,7 @@
       text-decoration-thickness: 1px;
     }
 
-    /* Hover-only underline micro-motion */
+    /* subtle, print-like hover underline (no opacity tricks) */
     @media (hover:hover){
       a{
         background-image: linear-gradient(#000,#000);
@@ -57,124 +62,147 @@
 
     p{ margin: 0 0 var(--rhythm) 0; }
 
-    /* Page scaffold: content + persistent preview */
+    /* Page: three-field system (label / text / preview) */
     .page{
-      max-width: 1180px; /* slightly wider to accommodate preview well */
+      max-width: calc(var(--label-col) + var(--text-col) + var(--preview-col) + (var(--gap) * 2));
       margin: 0 auto;
-      padding: calc(var(--rhythm) * 5) 22px calc(var(--rhythm) * 6);
+      padding: var(--page-pad-top) var(--page-pad-x) var(--page-pad-bot);
       display: grid;
-      grid-template-columns: 1fr var(--preview-col);
-      column-gap: var(--preview-gap);
+      grid-template-columns: var(--label-col) var(--text-col) var(--preview-col);
+      column-gap: var(--gap);
       align-items: start;
     }
 
-    /* Main content area retains your two-column label/content system */
-    .main{
-      min-width: 0;
-    }
-
+    /* Rows live across label+text only */
     .row{
+      grid-column: 1 / 3;
       display: grid;
-      grid-template-columns: var(--label-col) 1fr;
+      grid-template-columns: var(--label-col) var(--text-col);
       column-gap: var(--gap);
-      padding: calc(var(--rhythm) * 0.5) 0;
+      padding: calc(var(--rhythm) * 0.5) 0; /* tight; no extra section spacing */
     }
 
     .label{
       font-weight: 700;
-      text-align: left;
-      padding-top: 3px;
+      text-align: left; /* your site-wide left justification */
+      padding-top: 3px; /* optical alignment */
     }
 
+    .content{ min-width: 0; }
     .content p:last-child{ margin-bottom: 0; }
 
-    /* Divider aligned to content column */
-    .rulewrap{ margin: var(--rhythm) 0; }
+    /* Divider aligned to content start (no bleed left) */
+    .rulewrap{
+      grid-column: 1 / 3;
+      display: grid;
+      grid-template-columns: var(--label-col) var(--text-col);
+      column-gap: var(--gap);
+      margin: var(--rhythm) 0;  /* restrained rhythm */
+    }
     .rule{
+      grid-column: 2;
       height: 1px;
       width: 100%;
       background-image: repeating-linear-gradient(
         to right,
-        #000 0,
-        #000 2px,
-        transparent 2px,
-        transparent 7px
+        #000 0, #000 2px,
+        transparent 2px, transparent 7px
       );
       transform-origin: 0 50%;
       transform: scaleX(0);
       transition: transform 180ms linear;
     }
 
-    /* Global preview well: sticky and vertically centered in viewport */
+    /* Global preview: sticky + centered in viewport */
     .preview{
+      grid-column: 3;
       position: sticky;
       top: 50%;
-      transform: translateY(-50%);   /* centered “plate” */
+      transform: translateY(-50%);
       align-self: start;
     }
 
-    .preview .plate{
+    .plate{
       border: 1px dashed #000;
       padding: calc(var(--rhythm) * 0.75);
       min-height: 220px;
     }
 
-    .preview img{
+    .plate img{
       width: 100%;
       height: auto;
       display: block;
       opacity: 0;
       transition: opacity 140ms linear;
     }
-    .preview img.is-visible{ opacity: 1; }
+    .plate img.is-visible{ opacity: 1; }
 
-    .preview .caption{
+    .caption{
       margin-top: calc(var(--rhythm) * 0.75);
       line-height: 1.4;
     }
 
-    /* Mobile: remove sticky column; preview becomes inline at top */
+    /* Keep preview visually secondary */
+    .caption{ font-size: 16px; } /* same size, per your rule */
+
+    /* Mobile: collapse preview to top (no sticky sidebar) */
+    @media (max-width: 1120px){
+      :root{
+        --text-col: 560px;
+        --preview-col: 260px;
+        --label-col: 180px;
+      }
+    }
+
     @media (max-width: 980px){
       .page{
         max-width: 980px;
         grid-template-columns: 1fr;
+        row-gap: calc(var(--rhythm) * 2);
       }
+
       .preview{
+        grid-column: 1;
         position: relative;
         top: auto;
         transform: none;
-        margin-bottom: calc(var(--rhythm) * 2);
       }
-    }
 
-    @media (max-width: 760px){
-      .page{ padding-top: calc(var(--rhythm) * 4); }
-      .row{ grid-template-columns: 1fr; }
-      .label{ margin-bottom: 6px; padding-top: 0; }
+      .row, .rulewrap{
+        grid-column: 1;
+        grid-template-columns: 1fr;
+      }
+
+      .label{
+        margin-bottom: 6px;
+        padding-top: 0;
+      }
+
+      .rule{
+        grid-column: 1;
+      }
     }
 
     @media (prefers-reduced-motion: reduce){
       .rule{ transform: none !important; transition: none !important; }
       a{ transition: none !important; }
-      .preview img{ transition: none !important; }
+      .plate img{ transition: none !important; }
     }
   </style>
 </head>
 
 <body>
-<div class="page">
+  <div class="page">
 
-  <!-- GLOBAL PREVIEW WELL -->
-  <aside class="preview" aria-label="Preview">
-    <div class="plate">
-      <img id="globalPreviewImg" alt="" />
-      <div class="caption" id="globalPreviewCaption"></div>
-    </div>
-  </aside>
+    <!-- GLOBAL PREVIEW WELL -->
+    <aside class="preview" aria-label="Preview">
+      <div class="plate">
+        <img id="globalPreviewImg" alt="" />
+        <div class="caption" id="globalPreviewCaption"></div>
+      </div>
+    </aside>
 
-  <!-- MAIN CONTENT -->
-  <main class="main">
-
+    <!-- TOP BLOCK (title moved into label system) -->
     <section class="row">
       <div class="label">Studio Apposite</div>
       <div class="content">
@@ -194,10 +222,10 @@
       </div>
     </section>
 
-    <section class="row rulewrap" aria-hidden="true">
-      <div class="label"></div>
-      <div class="content"><div class="rule"></div></div>
-    </section>
+    <div class="rulewrap" aria-hidden="true">
+      <div></div>
+      <div class="rule"></div>
+    </div>
 
     <section class="row" id="practice">
       <div class="label">Practice</div>
@@ -228,10 +256,10 @@
       </div>
     </section>
 
-    <section class="row rulewrap" aria-hidden="true">
-      <div class="label"></div>
-      <div class="content"><div class="rule"></div></div>
-    </section>
+    <div class="rulewrap" aria-hidden="true">
+      <div></div>
+      <div class="rule"></div>
+    </div>
 
     <section class="row" id="research">
       <div class="label">Expanded Research</div>
@@ -262,10 +290,10 @@
       </div>
     </section>
 
-    <section class="row rulewrap" aria-hidden="true">
-      <div class="label"></div>
-      <div class="content"><div class="rule"></div></div>
-    </section>
+    <div class="rulewrap" aria-hidden="true">
+      <div></div>
+      <div class="rule"></div>
+    </div>
 
     <section class="row" id="people">
       <div class="label">People</div>
@@ -287,10 +315,10 @@
       </div>
     </section>
 
-    <section class="row rulewrap" aria-hidden="true">
-      <div class="label"></div>
-      <div class="content"><div class="rule"></div></div>
-    </section>
+    <div class="rulewrap" aria-hidden="true">
+      <div></div>
+      <div class="rule"></div>
+    </div>
 
     <section class="row" id="contact">
       <div class="label">Contact</div>
@@ -307,70 +335,70 @@
       </div>
     </section>
 
-  </main>
-</div>
+  </div>
 
-<script>
-  // Year
-  document.getElementById("y").textContent = new Date().getFullYear();
+  <script>
+    // Year
+    document.getElementById("y").textContent = new Date().getFullYear();
 
-  // Animate only the dashed rules when they enter view (no opacity changes)
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const ruleEls = Array.from(document.querySelectorAll(".rule"));
+    // Animate only dashed rules (no content opacity)
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const ruleEls = Array.from(document.querySelectorAll(".rule"));
 
-  if (!prefersReduced && "IntersectionObserver" in window) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.style.transform = "scaleX(1)";
-        io.unobserve(entry.target);
+    if (!prefersReduced && "IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.style.transform = "scaleX(1)";
+          io.unobserve(entry.target);
+        });
+      }, { root: null, rootMargin: "0px 0px -12% 0px", threshold: 0.01 });
+
+      ruleEls.forEach(el => io.observe(el));
+    } else {
+      ruleEls.forEach(el => { el.style.transform = "scaleX(1)"; });
+    }
+
+    // Global preview well
+    const imgEl = document.getElementById("globalPreviewImg");
+    const capEl = document.getElementById("globalPreviewCaption");
+    const links = Array.from(document.querySelectorAll(".previewlink"));
+
+    function showPreview(src, caption){
+      if (!src) return;
+      imgEl.src = src;
+      imgEl.alt = caption || "";
+      capEl.textContent = caption || "";
+      imgEl.classList.add("is-visible");
+    }
+
+    function clearPreview(){
+      imgEl.classList.remove("is-visible");
+      capEl.textContent = "";
+    }
+
+    links.forEach((a, idx) => {
+      const src = a.getAttribute("data-img");
+      const caption = a.getAttribute("data-caption") || a.textContent.trim();
+
+      a.addEventListener("mouseenter", () => showPreview(src, caption));
+      a.addEventListener("mouseleave", () => clearPreview());
+
+      a.addEventListener("focus", () => showPreview(src, caption));
+      a.addEventListener("blur", () => clearPreview());
+
+      // If href is '#', preview on click (mobile/touch) without navigating
+      a.addEventListener("click", (e) => {
+        const href = a.getAttribute("href") || "#";
+        if (href === "#") {
+          e.preventDefault();
+          showPreview(src, caption);
+        }
       });
-    }, { root: null, rootMargin: "0px 0px -12% 0px", threshold: 0.01 });
 
-    ruleEls.forEach(el => io.observe(el));
-  } else {
-    ruleEls.forEach(el => { el.style.transform = "scaleX(1)"; });
-  }
-
-  // Global preview well
-  const imgEl = document.getElementById("globalPreviewImg");
-  const capEl = document.getElementById("globalPreviewCaption");
-  const links = Array.from(document.querySelectorAll(".previewlink"));
-
-  function showPreview(src, caption){
-    if (!src) return;
-    imgEl.src = src;
-    imgEl.alt = caption || "";
-    capEl.textContent = caption || "";
-    imgEl.classList.add("is-visible");
-  }
-
-  function clearPreview(){
-    imgEl.classList.remove("is-visible");
-    capEl.textContent = "";
-  }
-
-  links.forEach((a, idx) => {
-    const src = a.getAttribute("data-img");
-    const caption = a.getAttribute("data-caption") || a.textContent.trim();
-
-    a.addEventListener("mouseenter", () => showPreview(src, caption));
-    a.addEventListener("mouseleave", () => clearPreview());
-
-    a.addEventListener("focus", () => showPreview(src, caption));
-    a.addEventListener("blur", () => clearPreview());
-
-    a.addEventListener("click", (e) => {
-      const href = a.getAttribute("href") || "#";
-      if (href === "#") {
-        e.preventDefault();
-        showPreview(src, caption);
-      }
+      // Resting state: first item populates the plate
+      if (idx === 0 && src) showPreview(src, caption);
     });
-
-    // resting state: first link populates the plate
-    if (idx === 0 && src) showPreview(src, caption);
-  });
-</script>
+  </script>
 </body>
 </html>
