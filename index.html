@@ -101,44 +101,6 @@
       margin: calc(var(--rhythm) * 1) 0;    /* 16px (tighter than earlier) */
     }
 
-    /* Thumbnail preview system (composed, not tooltip-y) */
-    .thumbgrid{
-      display: grid;
-      grid-template-columns: 1fr 260px;
-      column-gap: calc(var(--rhythm) * 2);
-      align-items: start;
-      margin-bottom: calc(var(--rhythm) * 1);
-    }
-
-    .thumblist p{
-      margin-bottom: calc(var(--rhythm) * 0.5);
-    }
-
-    .thumbwell{
-      margin: 0;
-      border: 1px dashed #000;
-      padding: calc(var(--rhythm) * 0.75);
-      min-height: 180px;
-    }
-
-    .thumbwell img{
-      width: 100%;
-      height: auto;
-      display: block;
-      opacity: 0;
-      transition: opacity 140ms linear;
-    }
-
-    .thumbwell img.is-visible{
-      opacity: 1;
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      .rule{ transform: none !important; transition: none !important; }
-      a{ transition: none !important; }
-      .thumbwell img{ transition: none !important; }
-    }
-
     /* Mobile */
     @media (max-width: 760px){
       .wrap{
@@ -151,10 +113,11 @@
         margin-bottom: 6px;
         padding-top: 0;
       }
-      .thumbgrid{
-        grid-template-columns: 1fr;
-        row-gap: calc(var(--rhythm) * 1);
-      }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .rule{ transform: none !important; transition: none !important; }
+      a{ transition: none !important; }
     }
   </style>
 </head>
@@ -205,20 +168,9 @@
         and renovations or additions.
       </p>
 
-      <p class="b">Selected projects (forthcoming):</p>
-
-      <div class="thumbgrid" aria-label="Selected projects with thumbnail preview">
-        <div class="thumblist">
-          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Entry renovation (placeholder)">Entry renovation</a></p>
-          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Deck (placeholder)">Deck</a></p>
-          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Bathroom (placeholder)">Bathroom</a></p>
-          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Custom millwork (placeholder)">Custom millwork</a></p>
-        </div>
-
-        <figure class="thumbwell" aria-live="polite">
-          <img id="thumbPreviewProjects" alt="" />
-        </figure>
-      </div>
+      <p>
+        <a href="practice.html"><span class="b">Practice</span> (services + portfolio)</a>
+      </p>
     </div>
   </section>
 
@@ -231,24 +183,14 @@
     <div class="label">Expanded Research</div>
     <div class="content">
       <p>
-        Alongside client work, Studio Apposite is developing a small publication series focused on specific buildings and practices.
-        Each issue assembles drawings, photographs, and archival research into a compact object.
+        Alongside client work, Studio Apposite operates as a hybrid research platform, producing exhibitions, publications,
+        and archival studies focused on the architecture of Vancouver Island and the Gulf Islands. This research directly informs
+        the design practice, providing spatial and cultural context for each project.
       </p>
 
-      <p class="b">Publications (in development):</p>
-
-      <div class="thumbgrid" aria-label="Publications with thumbnail preview">
-        <div class="thumblist">
-          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Alan Hodgson — Mayhew Studio (cover placeholder)">Issue 01 — Alan Hodgson · Mayhew Studio</a></p>
-          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Richard Hunter — Hunter House (cover placeholder)">Issue 02 — Richard Hunter · Hunter House</a></p>
-          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Claude Maurice — Maurice House (cover placeholder)">Issue 03 — Claude Maurice · Maurice House</a></p>
-          <p><a href="#" class="thumblink" data-img="assets/images/placeholder.jpg" data-alt="Roger Smeeth — Fisher House (cover placeholder)">Issue 04 — Roger Smeeth · Fisher House</a></p>
-        </div>
-
-        <figure class="thumbwell" aria-live="polite">
-          <img id="thumbPreviewResearch" alt="" />
-        </figure>
-      </div>
+      <p>
+        <a href="research.html"><span class="b">Expanded Research</span> (publications + archive)</a>
+      </p>
 
       <p>
         <span class="b">Newsletter:</span> <a href="#newsletter">research updates</a>
@@ -330,55 +272,6 @@
   } else {
     ruleEls.forEach(el => { el.style.transform = "scaleX(1)"; });
   }
-
-  // Thumbnail preview system (hover/focus; tap on mobile)
-  function setupThumbPreview(containerSelector, imgSelector){
-    const container = document.querySelector(containerSelector);
-    if (!container) return;
-
-    const imgEl = container.querySelector(imgSelector);
-    const links = container.querySelectorAll(".thumblink");
-    if (!imgEl || !links.length) return;
-
-    function show(src, alt){
-      if (!src) return;
-      imgEl.src = src;
-      imgEl.alt = alt || "";
-      imgEl.classList.add("is-visible");
-    }
-
-    function clear(){
-      imgEl.classList.remove("is-visible");
-    }
-
-    links.forEach((a, idx) => {
-      const src = a.getAttribute("data-img");
-      const alt = a.getAttribute("data-alt") || a.textContent.trim();
-
-      // Desktop hover
-      a.addEventListener("mouseenter", () => show(src, alt));
-      a.addEventListener("mouseleave", () => clear());
-
-      // Keyboard accessibility
-      a.addEventListener("focus", () => show(src, alt));
-      a.addEventListener("blur", () => clear());
-
-      // Touch / click: if href is #, prevent navigation and just preview
-      a.addEventListener("click", (e) => {
-        const href = a.getAttribute("href") || "#";
-        if (href === "#") {
-          e.preventDefault();
-          show(src, alt);
-        }
-      });
-
-      // Preload a “resting” state (first item)
-      if (idx === 0 && src) show(src, alt);
-    });
-  }
-
-  setupThumbPreview('[aria-label="Selected projects with thumbnail preview"]', "#thumbPreviewProjects");
-  setupThumbPreview('[aria-label="Publications with thumbnail preview"]', "#thumbPreviewResearch");
 </script>
 </body>
 </html>
