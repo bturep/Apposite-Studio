@@ -2,38 +2,305 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Studio Apposite</title>
-  <meta name="description" content="Design-sensitive repair, alterations, and new work — from small-scale interventions to full renovations." />
-  <link rel="stylesheet" href="assets/styles.css" />
-</head>
-<body>
+  <meta name="description" content="Design-sensitive architectural work at any scale, alongside expanded research and publication." />
+  <style>
+    :root{
+      --bg:#fff;
+      --fg:#111;
+      --muted:#666;
+      --line:#e6e6e6;
+      --max: 1120px;
+      --pad: 22px;
 
+      /* spacing rhythm (subtle) */
+      --s1: 10px;
+      --s2: 16px;
+      --s3: 24px;
+      --s4: 32px;
+      --s5: 46px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; padding:0; }
+    body{
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:var(--bg);
+      color:var(--fg);
+      line-height:1.5;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    a:hover{ text-decoration:underline; text-underline-offset: 3px; }
+
+    .wrap{ max-width:var(--max); margin:0 auto; padding:0 var(--pad); }
+
+    header{
+      position:sticky; top:0; z-index:10;
+      background:rgba(255,255,255,0.92);
+      backdrop-filter:saturate(180%) blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+
+    .top{
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap:18px;
+      padding:16px 0;
+    }
+
+    .brand{
+      font-weight:650;
+      letter-spacing:0.2px;
+      line-height:1;
+      white-space:nowrap;
+    }
+
+    nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:18px;
+      align-items:baseline;
+      justify-content:flex-end;
+    }
+
+    .navgroup{
+      display:flex;
+      gap:12px;
+      align-items:baseline;
+      flex-wrap:wrap;
+    }
+
+    .navlabel{
+      color:var(--muted);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      font-weight:650;
+      margin-right:2px;
+    }
+
+    .navsep{
+      width:1px;
+      background:var(--line);
+      align-self:stretch;
+      margin:0 6px;
+    }
+
+    /* Slightly quieter utility links (minimal change) */
+    nav a{
+      color:var(--muted);
+      font-size:14px;
+    }
+    nav a:hover{
+      color:var(--fg);
+    }
+
+    main{ padding:52px 0 76px; }
+
+    .kicker{
+      color:var(--muted);
+      font-weight:650;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      font-size:12px;
+      margin-bottom:var(--s1);
+    }
+
+    h1{
+      font-size: clamp(34px, 5vw, 58px);
+      letter-spacing:-0.7px;
+      margin:0 0 14px;
+      line-height:1.05;
+      max-width: 22ch;
+    }
+
+    .lede{
+      font-size: clamp(16px, 2.1vw, 20px);
+      color:var(--muted);
+      margin:0 0 var(--s2);
+      max-width: 78ch;
+    }
+
+    .cta{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      margin-top:var(--s2);
+    }
+
+    /* Keep as links; just make primary slightly clearer */
+    .linkbtn{
+      display:inline-block;
+      font-weight:650;
+      text-decoration:underline;
+      text-underline-offset: 3px;
+    }
+    .linkbtn.secondary{
+      color:var(--muted);
+      font-weight:600;
+    }
+
+    hr{
+      border:none;
+      border-top:1px solid var(--line);
+      margin:var(--s5) 0;
+    }
+
+    /* Chapter headers (same style as kicker, but spaced better) */
+    .chapter{
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap:16px;
+      padding-top:2px;
+      margin-bottom: var(--s3);
+    }
+    .chapter .title{
+      color:var(--muted);
+      font-weight:650;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      font-size:12px;
+      margin:0;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:18px;
+      align-items:start;
+    }
+
+    .col-7{ grid-column: span 7; }
+    .col-5{ grid-column: span 5; }
+    .col-12{ grid-column: span 12; }
+
+    .ruleblock{
+      border-top:1px solid var(--line);
+      padding-top:14px;
+      margin-top:14px;
+    }
+
+    /* Keep headings essentially same, but a touch more consistent */
+    .item h2{
+      font-size:20px;
+      letter-spacing:-0.3px;
+      margin:0 0 8px;
+      line-height:1.2;
+    }
+
+    .meta{
+      color:var(--muted);
+      font-size:14px;
+      margin:0 0 10px;
+    }
+
+    .text{
+      color:var(--muted);
+      font-size:15px;
+      margin:0;
+      max-width: 72ch;
+    }
+
+    .aside{
+      border-top:1px solid var(--line);
+      padding-top:14px;
+    }
+
+    .note{
+      color:var(--muted);
+      font-size:14px;
+      margin:0 0 12px;
+    }
+
+    .list{
+      margin:0;
+      padding-left: 0;
+      list-style:none;
+    }
+
+    .list li{
+      border-top:1px solid var(--line);
+      padding:10px 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    /* “Selected work” items: no boxes, just ruled entries */
+    .workgrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:26px;
+    }
+    .workitem{
+      border-top:1px solid var(--line);
+      padding-top:14px;
+    }
+    .workitem h3{
+      font-size:22px;
+      letter-spacing:-0.3px;
+      margin:0 0 8px;
+      line-height:1.2;
+    }
+    .workitem p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .workitem p + p{ margin-top:10px; }
+
+    .more{
+      margin-top: var(--s4);
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    footer{
+      border-top:1px solid var(--line);
+      padding:22px 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    @media (max-width: 920px){
+      .col-7, .col-5{ grid-column: span 12; }
+      .navsep{ display:none; }
+      h1{ max-width: 28ch; }
+      .workgrid{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
   <header>
-    <div class="container nav">
+    <div class="wrap top">
       <a class="brand" href="index.html">Studio Apposite</a>
 
-      <nav class="navlinks" aria-label="Primary">
+      <nav aria-label="Primary">
         <div class="navgroup" aria-label="Practice">
           <span class="navlabel">Practice</span>
-          <a data-nav href="studio.html">Studio</a>
-          <a data-nav href="services.html">Services</a>
-          <a data-nav href="work.html">Work</a>
-          <a data-nav href="contact.html">Contact</a>
+          <a href="#">Studio</a>
+          <a href="#">Services</a>
+          <a href="#">Work</a>
+          <a href="#">Contact</a>
         </div>
 
         <div class="navsep" aria-hidden="true"></div>
 
         <div class="navgroup" aria-label="Expanded Research">
           <span class="navlabel">Expanded Research</span>
-          <a data-nav href="press.html">Press</a>
+          <a href="#">Press</a>
         </div>
       </nav>
     </div>
   </header>
 
-  <main class="container">
+  <main class="wrap">
     <div class="kicker">Architecture + Research</div>
+
     <h1>Design-sensitive work at any scale.</h1>
 
     <p class="lede">
@@ -42,20 +309,23 @@
     </p>
 
     <div class="cta">
-      <a class="button" href="contact.html">Start a conversation</a>
-      <a class="button secondary" href="press.html">Publication series</a>
+      <a class="linkbtn" href="mailto:mail@apposite.studio">Start a conversation</a>
+      <a class="linkbtn secondary" href="#">Publication series</a>
     </div>
 
     <hr />
 
     <section>
-      <div class="kicker">Practice</div>
-      <p class="lede" style="margin-top:10px;">
-        We work with existing buildings as material, evidence, and constraint. The goal is not novelty.
-        The goal is fit: proportion, continuity, and buildability—decisions that hold up over time.
+      <div class="chapter">
+        <p class="title">Practice</p>
+      </div>
+
+      <p class="lede" style="margin-bottom:0;">
+        We work with existing buildings as material, evidence, and constraint. The goal is not novelty. The goal is fit:
+        proportion, continuity, and buildability—decisions that hold up over time.
       </p>
 
-      <p class="small">
+      <p class="note" style="margin-top:14px;">
         Typical work: entries + stairs · built-ins · kitchens/baths · decks · envelope/upgrade strategies · renovations/additions
       </p>
     </section>
@@ -63,35 +333,38 @@
     <hr />
 
     <section>
-      <div class="kicker">Selected work</div>
+      <div class="chapter">
+        <p class="title">Selected work</p>
+      </div>
 
-      <div class="grid">
-        <div class="card span-6">
-          <h2>(Project)</h2>
-          <p class="small">Victoria, BC · Year · Scope</p>
-          <p class="small" style="margin-top:10px;">One sentence about what changed and what you delivered.</p>
+      <div class="workgrid" aria-label="Selected projects">
+        <div class="workitem">
+          <h3>(Project)</h3>
+          <p>Victoria, BC · Year · Scope</p>
+          <p>One sentence about what changed and what you delivered.</p>
         </div>
 
-        <div class="card span-6">
-          <h2>(Project)</h2>
-          <p class="small">Victoria, BC · Year · Scope</p>
-          <p class="small" style="margin-top:10px;">One sentence about what changed and what you delivered.</p>
+        <div class="workitem">
+          <h3>(Project)</h3>
+          <p>Victoria, BC · Year · Scope</p>
+          <p>One sentence about what changed and what you delivered.</p>
         </div>
       </div>
 
-      <p class="small" style="margin-top:16px;">More → <a href="work.html">Work</a></p>
+      <p class="more">More → <a href="#">Work</a></p>
     </section>
 
   </main>
 
-  <footer class="footer">
-    <div class="container">
-      <div>© <span id="y"></span> Studio Apposite · Victoria, BC</div>
-      <div class="small">Email: <a href="mailto:mail@apposite.studio">mail@apposite.studio</a></div>
+  <footer>
+    <div class="wrap">
+      © <span id="y"></span> Studio Apposite · Victoria, BC<br />
+      Email: <a href="mailto:mail@apposite.studio">mail@apposite.studio</a>
     </div>
   </footer>
 
-  <script src="assets/site.js"></script>
-  <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
