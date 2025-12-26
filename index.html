@@ -106,49 +106,105 @@
     button{ cursor: pointer; }
     input{ width: min(520px, 100%); }
 
-    /* Newsletter refinement (robust against global rules) */
-    .newsletter-form{
-      margin-top: calc(var(--rhythm) * 0.5);
-    }
+    //* Newsletter refinement */
+.newsletter-row{
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
 
-    .newsletter-row{
-      display: flex;
-      align-items: baseline;   /* typographic alignment */
-      gap: 12px;
-      flex-wrap: wrap;         /* prevents overflow */
-    }
+.emailfield{
+  position: relative;
+  border: 1px dotted #000;
+  padding: 6px 10px;
+  width: min(760px, 100%);
+  height: 38px;              /* keeps the box steady */
+  display: flex;
+  align-items: center;
+}
 
-    .newsletter-email{
-      width: auto;             /* override global input width */
-      flex: 1 1 360px;
-      min-width: 240px;
+/* The “Email” + the right-side hint */
+.emailfield-left,
+.emailfield-right{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  white-space: nowrap;
+}
 
-      border: 1px dashed rgba(0,0,0,0.35);  /* “light” dotted/dashed */
-      background: transparent;
-      padding: 6px 10px;
-      border-radius: 0;
-    }
+.emailfield-left{
+  left: 10px;
+}
 
-    .newsletter-email:focus{
-      outline: none;
-      border-color: #000;      /* focus becomes fully black */
-    }
+.emailfield-right{
+  right: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 65%;            /* prevents collisions */
+}
 
-    .newsletter-submit{
-      border: none;
-      background: none;
-      padding: 0;
-      border-radius: 0;
+/* Actual input sits on top, but looks invisible */
+.emailfield input{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  padding: 6px 10px;
+  font: inherit;
+  color: #000;
+  outline: none;
+}
 
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-thickness: 1px;
-    }
+/* When typing, hide the right-side hint */
+.emailfield input:not(:placeholder-shown) ~ .emailfield-right{
+  display: none;
+}
 
-    .footerline{
-      margin-top: 4px;
-      font-weight: 400;
-    }
+/* But we aren’t using placeholder, so use a class toggle instead (JS below) */
+.emailfield.has-value .emailfield-right{
+  display: none;
+}
+
+/* Make typing start after “Email” label */
+.emailfield input{
+  padding-left: 70px; /* adjust if you change “Email” */
+}
+
+/* Button reads as underlined text */
+.newsletter-row button{
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+/* Mobile: stack */
+@media (max-width: 760px){
+  .newsletter-row{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .emailfield{
+    width: 100%;
+  }
+
+  .emailfield-right{
+    max-width: 55%;
+  }
+
+  .newsletter-row button{
+    margin-left: 0;
+  }
+}
+
 
     /* Mobile */
     @media (max-width: 760px){
@@ -287,18 +343,24 @@
         <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
                style="position:absolute;left:-5000px;" aria-hidden="true">
 
-        <div class="newsletter-row">
-          <input
-            id="bd-email"
-            class="newsletter-email"
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-            aria-label="Email address"
-          />
-          <button type="submit" class="newsletter-submit b">Subscribe</button>
-        </div>
+               <div class="newsletter-row">
+           <div class="emailfield">
+             <span class="emailfield-left">Email</span>
+             <span class="emailfield-right">Updates on research and publications.</span>
+
+             <input
+               id="bd-email"
+               type="email"
+               name="email"
+               required
+               aria-label="Email address"
+               autocomplete="email"
+               inputmode="email"
+             />
+           </div>
+
+           <button type="submit" class="b">Subscribe</button>
+         </div>
       </form>
 
       <p class="i">Updates on research and publications.</p>
@@ -306,7 +368,6 @@
     </div>
   </section>
 </main>
-
 <script>
   // Year
   document.getElementById("y").textContent = new Date().getFullYear();
@@ -340,6 +401,19 @@
     });
   })();
 </script>
+<script>
+  (function(){
+    const input = document.getElementById("bd-email");
+    if (!input) return;
+    const wrap = input.closest(".emailfield");
+    if (!wrap) return;
 
+    function sync(){
+      wrap.classList.toggle("has-value", !!input.value.trim());
+    }
+    input.addEventListener("input", sync);
+    sync();
+  })();
+</script>
 </body>
 </html>
