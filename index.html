@@ -4,9 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Studio Apposite</title>
-  <meta name="description" content="Studio Apposite — Architecture + Research. Design-sensitive work at any scale." />
 
-  <!-- Lato -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -17,7 +15,7 @@
 
     body{
       font-family: "Lato", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      font-size: 16px;     /* one size everywhere */
+      font-size: 16px;
       line-height: 1.55;
       color: #000;
       background: #fff;
@@ -32,22 +30,20 @@
     .wrap{
       max-width: 980px;
       margin: 0 auto;
-      padding: 78px 22px 96px; /* more top air; less top-weight */
+      padding: 78px 22px 96px;
     }
 
     p{ margin: 0 0 14px 0; }
-
     .b{ font-weight: 700; }
     .i{ font-style: italic; }
 
-    /* Layout */
     :root{
-      --label-col: 190px;
+      --label-col: 210px;
       --gap: 34px;
     }
 
-    .section{
-      display:grid;
+    .row{
+      display: grid;
       grid-template-columns: var(--label-col) 1fr;
       column-gap: var(--gap);
       padding: 8px 0;
@@ -56,22 +52,19 @@
     .label{
       font-weight: 700;
       text-align: right;
-      padding-top: 3px;       /* optical alignment to first text line */
+      padding-top: 3px; /* optical baseline alignment */
     }
 
-    .content p:last-child{
-      margin-bottom: 0;
-    }
+    .content p:last-child{ margin-bottom: 0; }
 
-    /* Dashed divider aligned to content only (softer pattern) */
+    /* Divider: lives ONLY in content column */
     .divider{
-      display:grid;
+      display: grid;
       grid-template-columns: var(--label-col) 1fr;
+      column-gap: var(--gap);
       margin: 22px 0;
     }
-
-    .divider::after{
-      content:"";
+    .divider .dash{
       grid-column: 2;
       height: 1px;
       background-image: repeating-linear-gradient(
@@ -80,41 +73,27 @@
         #000 2px,
         transparent 2px,
         transparent 7px
-      ); /* longer gap = softer, less “loud” */
+      );
+      /* critical: no centering, no width tricks */
+      width: 100%;
+      justify-self: stretch;
     }
 
-    /* Top block: treat as one typographic object */
-    .topblock{
-      max-width: 900px;
-    }
-
-    .topblock p{ margin-bottom: 10px; }
-    .topblock p:last-child{ margin-bottom: 0; }
-
-    /* Responsive */
     @media (max-width: 760px){
-      .wrap{ padding-top: 54px; }
-      .section, .divider{
-        grid-template-columns: 1fr;
-      }
-      .label{
-        text-align: left;
-        padding-top: 0;
-        margin-bottom: 6px;
-      }
-      .divider::after{
-        grid-column: 1;
-      }
+      .row, .divider{ grid-template-columns: 1fr; }
+      .label{ text-align: left; padding-top: 0; margin-bottom: 6px; }
+      .divider .dash{ grid-column: 1; }
     }
   </style>
 </head>
 
 <body>
-  <main class="wrap">
+<main class="wrap">
 
-    <!-- Re-composed top block (less top-heavy; clearer reading order) -->
-    <div class="topblock">
-      <p class="b">Studio Apposite</p>
+  <!-- Top block now obeys the same system -->
+  <section class="row">
+    <div class="label">Studio Apposite</div>
+    <div class="content">
       <p>
         <span class="i">Architecture + Research</span> — <span class="b">Design-sensitive work at any scale.</span>
       </p>
@@ -123,87 +102,100 @@
         with particular attention to repair and alteration that integrates carefully with what exists.
       </p>
     </div>
+  </section>
 
-    <div class="divider"></div>
+  <div class="divider"><div class="dash"></div></div>
 
-    <!-- Practice -->
-    <section class="section" id="practice">
-      <div class="label">Practice</div>
-      <div class="content">
-        <p>
-          We work with existing buildings as <span class="i">material</span>, <span class="i">evidence</span>, and <span class="i">constraint</span>.
-          The goal is not novelty. The goal is fit: proportion, continuity, and buildability—decisions that hold up over time.
-        </p>
-        <p>
-          Typical work includes entries and stairs, built-ins, kitchens and bathrooms, decks,
-          envelope and upgrade strategies, and renovations or additions.
-        </p>
-      </div>
-    </section>
+  <section class="row" id="practice">
+    <div class="label">Practice</div>
+    <div class="content">
+      <p>
+        We work with existing buildings as <span class="i">material</span>, <span class="i">evidence</span>, and <span class="i">constraint</span>.
+        The goal is not novelty. The goal is fit: proportion, continuity, and buildability—decisions that hold up over time.
+      </p>
+      <p>
+        Typical work includes entries and stairs, built-ins, kitchens and bathrooms, decks,
+        envelope and upgrade strategies, and renovations or additions.
+      </p>
+    </div>
+  </section>
 
-    <div class="divider"></div>
+  <div class="divider"><div class="dash"></div></div>
 
-    <!-- Expanded Research -->
-    <section class="section" id="research">
-      <div class="label">Expanded Research</div>
-      <div class="content">
-        <p>
-          Alongside client work, Studio Apposite is developing a small publication series focused on specific
-          buildings and practices. Each issue assembles drawings, photographs, and archival research into a compact object.
-        </p>
+  <section class="row" id="research">
+    <div class="label">Expanded Research</div>
+    <div class="content">
+      <p>
+        Alongside client work, Studio Apposite is developing a small publication series focused on specific buildings and practices.
+        Each issue assembles drawings, photographs, and archival research into a compact object.
+      </p>
 
-        <p class="b">Publication series (in development):</p>
+      <p class="b">Publication series (in development):</p>
 
-        <p>
-          Issue 01 — Alan Hodgson · Mayhew Studio<br>
-          Issue 02 — Richard Hunter · Hunter House<br>
-          Issue 03 — Claude Maurice · Maurice House<br>
-          Issue 04 — Roger Smeeth · Fisher House
-        </p>
-      </div>
-    </section>
+      <p>
+        Issue 01 — Alan Hodgson · Mayhew Studio<br>
+        Issue 02 — Richard Hunter · Hunter House<br>
+        Issue 03 — Claude Maurice · Maurice House<br>
+        Issue 04 — Roger Smeeth · Fisher House
+      </p>
 
-    <div class="divider"></div>
+      <p>
+        <span class="b">Newsletter:</span>
+        <a href="#newsletter">research updates</a>
+      </p>
+    </div>
+  </section>
 
-    <!-- People -->
-    <section class="section" id="people">
-      <div class="label">People</div>
-      <div class="content">
-        <p>
-          <span class="b">Brandon Poole</span> is a PhD Candidate at the McGill School of Architecture, where he is a Vadasz Scholar and SSHRC
-          Doctoral Fellow. He holds a Master of Visual Studies (MVS) from the University of Toronto’s Faculty of Architecture, Landscape,
-          and Design, and a Bachelor of Fine Arts (BFA, Honours with Distinction) from the University of Victoria. Alongside architectural design,
-          he is an artist, a filmmaker, and a lecturer in the Visual Arts Department at UVic.
-        </p>
+  <div class="divider"><div class="dash"></div></div>
 
-        <p>
-          <span class="b">Patrick Rollins</span> is a designer, researcher, and curator. Recent projects include contributions to
-          <span class="i">From the Ground, Into the Light: Organic Architecture of the Islands</span> and
-          <span class="i">Centennial Square: A Design History</span>, both at the Wentworth Villa Architectural Museum. Upcoming projects include
-          exhibitions on the furniture of architect and architectural historian Peter Neve Cotton, and a photo-book series beginning with Alan
-          Hodgson’s Elza Mayhew Studio (1969).
-        </p>
-      </div>
-    </section>
+  <section class="row" id="people">
+    <div class="label">People</div>
+    <div class="content">
+      <p>
+        <span class="b">Brandon Poole</span> is a PhD Candidate at the McGill School of Architecture, where he is a Vadasz Scholar and SSHRC
+        Doctoral Fellow. He holds a Master of Visual Studies (MVS) from the University of Toronto’s Faculty of Architecture, Landscape,
+        and Design, and a Bachelor of Fine Arts (BFA, Honours with Distinction) from the University of Victoria. Alongside architectural design,
+        he is an artist, a filmmaker, and a lecturer in the Visual Arts Department at UVic.
+      </p>
 
-    <div class="divider"></div>
+      <p>
+        <span class="b">Patrick Rollins</span> is a designer, researcher, and curator. Recent projects include contributions to
+        <span class="i">From the Ground, Into the Light: Organic Architecture of the Islands</span> and
+        <span class="i">Centennial Square: A Design History</span>, both at the Wentworth Villa Architectural Museum. Upcoming projects include
+        exhibitions on the furniture of architect and architectural historian Peter Neve Cotton, and a photo-book series beginning with Alan
+        Hodgson’s Elza Mayhew Studio (1969).
+      </p>
+    </div>
+  </section>
 
-    <!-- Contact -->
-    <section class="section" id="contact">
-      <div class="label">Contact</div>
-      <div class="content">
-        <p>
-          <a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a><br>
-          <span class="i">Press</span>
-        </p>
-        <p>© <span id="y"></span> Studio Apposite · Victoria, BC</p>
-      </div>
-    </section>
+  <div class="divider"><div class="dash"></div></div>
 
-  </main>
+  <section class="row" id="contact">
+    <div class="label">Contact</div>
+    <div class="content">
+      <p>
+        <a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a><br>
+        <span class="i">Press</span>
+      </p>
+      <p>© <span id="y"></span> Studio Apposite · Victoria, BC</p>
+    </div>
+  </section>
 
-  <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
-  </script>
+  <!-- Newsletter anchor placeholder (for later form embed) -->
+  <section class="row" id="newsletter">
+    <div class="label">Newsletter</div>
+    <div class="content">
+      <p>
+        <span class="b">Research updates</span><br>
+        (Subscription form to be added.)
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  document.getElementById("y").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
