@@ -30,10 +30,9 @@
       text-decoration-thickness: 1px;
     }
 
-    /* Hover-only micro-motion for underline */
+    /* Hover-only underline motion (kept restrained) */
     @media (hover:hover){
       a{
-        text-decoration-thickness: 1px;
         background-image: linear-gradient(#000,#000);
         background-size: 0% 1px;
         background-position: 0 100%;
@@ -42,54 +41,49 @@
         padding-bottom: 1px;
         transition: background-size 140ms linear;
       }
-      a:hover{
-        background-size: 100% 1px;
-      }
+      a:hover{ background-size: 100% 1px; }
+    }
+
+    /* PRINT-LIKE RHYTHM */
+    :root{
+      --rhythm: 16px;      /* baseline unit */
+      --label-col: 210px;
+      --gap: 34px;
     }
 
     .wrap{
       max-width: 980px;
       margin: 0 auto;
-      padding: 78px 22px 96px;
+      padding: calc(var(--rhythm) * 5) 22px calc(var(--rhythm) * 6); /* 80px top / 96px bottom */
     }
 
-    p{ margin: 0 0 14px 0; }
+    p{
+      margin: 0 0 calc(var(--rhythm) * 1) 0; /* consistent paragraph spacing */
+    }
+
     .b{ font-weight: 700; }
     .i{ font-style: italic; }
 
-    :root{
-      --label-col: 210px;
-      --gap: 34px;
-    }
-
+    /* Two-column system */
     .row{
       display: grid;
       grid-template-columns: var(--label-col) 1fr;
       column-gap: var(--gap);
-      padding: 8px 0;
+      padding: calc(var(--rhythm) * 0.5) 0; /* 8px */
     }
 
     .label{
       font-weight: 700;
-      text-align: left;
-      padding-top: 3px; /* optical baseline alignment */
+      text-align: left;          /* left-justify entire site */
+      padding-top: 3px;          /* optical alignment */
     }
 
     .content p:last-child{ margin-bottom: 0; }
 
-    /* Divider aligned ONLY to content column */
-    .divider{
-      display: grid;
-      grid-template-columns: var(--label-col) 1fr;
-      column-gap: var(--gap);
-      margin: 22px 0;
-    }
-
-    .divider .dash{
-      grid-column: 2;
+    /* Divider that begins exactly at content column */
+    .rule{
       height: 1px;
       width: 100%;
-      justify-self: stretch;
       background-image: repeating-linear-gradient(
         to right,
         #000 0,
@@ -98,35 +92,36 @@
         transparent 7px
       );
       transform-origin: 0 50%;
-      transform: scaleX(0);     /* motion: rule reveals on scroll */
-      opacity: 1;
+      transform: scaleX(0);      /* motion: reveal on scroll */
     }
 
-    /* Motion: section content reveals (opacity only) */
-    .reveal{
-      opacity: 1;
-      transition: opacity 140ms linear;
-    }
-    .js .reveal{
-      opacity: 0;
-    }
-    .js .reveal.is-visible{
-      opacity: 1;
+    .rulewrap{
+      margin: calc(var(--rhythm) * 2) 0; /* 32px consistent pacing */
     }
 
-    /* Respect reduced motion */
+    /* Motion: reveal content (opacity only) */
+    .reveal{ transition: opacity 140ms linear; }
+    .js .reveal{ opacity: 0; }
+    .js .reveal.is-visible{ opacity: 1; }
+
     @media (prefers-reduced-motion: reduce){
-      .divider .dash{ transform: none !important; }
+      .rule{ transform: none !important; }
       .js .reveal{ opacity: 1 !important; }
       a{ transition: none !important; }
     }
 
-    /* Mobile fallback */
+    /* Mobile */
     @media (max-width: 760px){
-      .wrap{ padding-top: 54px; }
-      .row, .divider{ grid-template-columns: 1fr; }
-      .label{ text-align: left; padding-top: 0; margin-bottom: 6px; }
-      .divider .dash{ grid-column: 1; }
+      .wrap{
+        padding-top: calc(var(--rhythm) * 4); /* 64px */
+      }
+      .row{
+        grid-template-columns: 1fr;
+      }
+      .label{
+        margin-bottom: 6px;
+        padding-top: 0;
+      }
     }
   </style>
 </head>
@@ -134,7 +129,7 @@
 <body>
 <main class="wrap">
 
-  <!-- Top block obeys the system -->
+  <!-- Top block -->
   <section class="row">
     <div class="label">Studio Apposite</div>
     <div class="content reveal">
@@ -156,14 +151,20 @@
     </div>
   </section>
 
-  <div class="divider" aria-hidden="true"><div class="dash"></div></div>
+  <!-- rule aligned to content column only -->
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
   <section class="row" id="practice">
     <div class="label">Practice</div>
     <div class="content reveal">
       <p>
-        We work with existing buildings as <span class="i">material</span>, <span class="i">evidence</span>, and <span class="i">constraint</span>.
-        The goal is not novelty. The goal is fit: proportion, continuity, and buildability—decisions that hold up over time.
+        Studio Apposite works primarily with existing buildings, treating them as <span class="i">material</span>, <span class="i">evidence</span>, and <span class="i">constraint</span>.
+        Projects are approached through careful measurement, proportion, and construction logic, with particular attention to repair,
+        alteration, and integration rather than replacement. The aim is not novelty, but fit: work that is buildable, legible,
+        and continuous with what already exists.
       </p>
 
       <p>
@@ -173,7 +174,10 @@
     </div>
   </section>
 
-  <div class="divider" aria-hidden="true"><div class="dash"></div></div>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
   <section class="row" id="research">
     <div class="label">Expanded Research</div>
@@ -198,7 +202,10 @@
     </div>
   </section>
 
-  <div class="divider" aria-hidden="true"><div class="dash"></div></div>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
   <section class="row" id="people">
     <div class="label">People</div>
@@ -220,14 +227,16 @@
     </div>
   </section>
 
-  <div class="divider" aria-hidden="true"><div class="dash"></div></div>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
   <section class="row" id="contact">
     <div class="label">Contact</div>
     <div class="content reveal">
       <p>
-        <a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a><br>
-        <span class="i">Press</span>
+        <a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a>
       </p>
       <p>© <span id="y"></span> Studio Apposite · Victoria, BC</p>
     </div>
@@ -246,42 +255,39 @@
 </main>
 
 <script>
-  // Mark JS mode so we can start hidden, then reveal.
   document.documentElement.classList.add("js");
-
-  // Year
   document.getElementById("y").textContent = new Date().getFullYear();
 
-  // Reveal content + animate dashed rules when they enter viewport.
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const revealEls = Array.from(document.querySelectorAll(".reveal"));
-  const dashEls = Array.from(document.querySelectorAll(".divider .dash"));
+  const ruleEls = Array.from(document.querySelectorAll(".rule"));
 
   if (!prefersReduced && "IntersectionObserver" in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          if (el.classList.contains("reveal")) {
-            el.classList.add("is-visible");               // opacity only
-          }
-          if (el.classList.contains("dash")) {
-            // rule reveal: linear, quick, no easing
-            el.style.transition = "transform 180ms linear";
-            el.style.transform = "scaleX(1)";
-          }
-          io.unobserve(el);
+        if (!entry.isIntersecting) return;
+
+        const el = entry.target;
+
+        if (el.classList.contains("reveal")) {
+          el.classList.add("is-visible"); // opacity only
         }
+
+        if (el.classList.contains("rule")) {
+          el.style.transition = "transform 180ms linear";
+          el.style.transform = "scaleX(1)"; // rule reveal
+        }
+
+        io.unobserve(el);
       });
     }, { root: null, rootMargin: "0px 0px -12% 0px", threshold: 0.01 });
 
     revealEls.forEach(el => io.observe(el));
-    dashEls.forEach(el => io.observe(el));
+    ruleEls.forEach(el => io.observe(el));
   } else {
-    // No motion / no observer: show everything.
     revealEls.forEach(el => el.classList.add("is-visible"));
-    dashEls.forEach(el => { el.style.transform = "scaleX(1)"; });
+    ruleEls.forEach(el => { el.style.transform = "scaleX(1)"; });
   }
 </script>
 </body>
