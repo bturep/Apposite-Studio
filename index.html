@@ -119,6 +119,22 @@
       .rule{ transform: none !important; transition: none !important; }
       a{ transition: none !important; }
     }
+    input, button{
+  font: inherit;
+  color: #000;
+  background: #fff;
+  border: 1px solid #000;
+  padding: 6px 8px;
+}
+
+button{
+  cursor: pointer;
+}
+
+input{
+  width: min(520px, 100%);
+}
+
   </style>
 </head>
 
@@ -180,7 +196,7 @@
   </section>
 
   <section class="row" id="research">
-    <div class="label">Expanded Research</div>
+    <div class="label">Research</div>
     <div class="content">
       <p>
         Alongside client work, Studio Apposite operates as a hybrid research platform, producing exhibitions, publications,
@@ -189,7 +205,7 @@
       </p>
 
       <p>
-        <a href="research.html"><span class="b">Expanded Research</span> (publications + archive)</a>
+        <a href="research.html"><span class="b">Research</span> (publications + exhibitions)</a>
       </p>
 
       <p>
@@ -239,14 +255,31 @@
   </section>
 
   <section class="row" id="newsletter">
-    <div class="label">Newsletter</div>
-    <div class="content">
+  <div class="label">Newsletter</div>
+  <div class="content">
+    <p><span class="b">Research updates</span></p>
+
+    <form
+      action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
+      method="post"
+    >
+      <!-- Optional: tag these subscribers as research -->
+      <input type="hidden" name="tag" value="research" />
+
       <p>
-        <span class="b">Research updates</span><br>
-        (Subscription form to be added.)
+        <label class="b" for="bd-email">Email</label><br>
+        <input id="bd-email" type="email" name="email" required />
       </p>
-    </div>
-  </section>
+
+      <p>
+        <button type="submit" class="b">Subscribe</button>
+      </p>
+    </form>
+
+    <p class="i">Occasional emails: publication progress, archival finds, and releases.</p>
+  </div>
+</section>
+
 
 </main>
 
