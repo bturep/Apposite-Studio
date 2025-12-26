@@ -34,7 +34,8 @@
     .wrap{
       max-width: 980px;
       margin: 0 auto;
-      padding: calc(var(--rhythm) * 5) var(--page-pad) calc(var(--rhythm) * 6);
+      /* Option A: remove top padding so content/image is flush with top */
+      padding: 0 var(--page-pad) calc(var(--rhythm) * 6);
     }
 
     p{ margin: 0 0 calc(var(--rhythm) * 1) 0; }
@@ -108,25 +109,32 @@
     input{ width: min(520px, 100%); }
 
     /* --- Hook image (single, quiet) --- */
+    .hook-row{
+      padding-top: 0;          /* flush with top */
+      padding-bottom: 0;       /* keeps it tight */
+      align-items: start;
+    }
+
+    .hook-row .label{
+      padding-top: 0;
+    }
+
     .hook-image{
       width: 100%;
       height: auto;
       display: block;
-      margin: calc(var(--rhythm) * 1.25) 0 calc(var(--rhythm) * 1.25);
-      border: 1px dotted #000;          /* optional: remove if you want it borderless */
-      border-radius: 1;
+      margin: 0 0 calc(var(--rhythm) * 1.25);
+      border: 1px dotted #000;  /* optional */
+      border-radius: 0;
       object-fit: cover;
-      
-
     }
 
     /* Slightly reduce margins on small screens */
     @media (max-width: 760px){
       .hook-image{
-        margin: calc(var(--rhythm) * 1) 0 calc(var(--rhythm) * 1);
+        margin: 0 0 calc(var(--rhythm) * 1);
       }
     }
-
 
     /* --- Newsletter (updated) --- */
 
@@ -224,7 +232,8 @@
     /* Mobile */
     @media (max-width: 760px){
       :root{ --page-pad: 22px; }
-      .wrap{ padding-top: calc(var(--rhythm) * 4); }
+      /* Option A companion: keep top padding removed on mobile too */
+      .wrap{ padding-top: 0; }
 
       .row{ grid-template-columns: 1fr; }
       .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
@@ -250,20 +259,21 @@
 </head>
 
 <body>
-  <!-- Hook image (single, quiet) -->
-    <section class="row" aria-label="Maquinna Suite">
-      <div class="label"></div>
-      <div class="content">
-        <img
-          class="hook-image"
-          src="assets/images/Maquinna05.jpg"
-          alt="Architectural detail, Studio Apposite"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-    </section>
 <main class="wrap">
+
+  <!-- Hook image (single, quiet) -->
+  <section class="row hook-row" aria-label="Maquinna Suite">
+    <div class="label"></div>
+    <div class="content">
+      <img
+        class="hook-image"
+        src="assets/images/Maquinna05.jpg"
+        alt="Architectural detail, Studio Apposite"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </section>
 
   <!-- Top block -->
   <section class="row">
@@ -364,47 +374,45 @@
   </section>
 
   <section class="row newsletter-section" id="newsletter">
-  <div class="label">Newsletter</div>
-  <div class="content">
-    <form
-      class="newsletter-form"
-      action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
-      method="post"
-    >
-      <input type="hidden" name="tag" value="research" />
-      <input type="hidden" name="metadata[source]" value="index" />
+    <div class="label">Newsletter</div>
+    <div class="content">
+      <form
+        class="newsletter-form"
+        action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
+        method="post"
+      >
+        <input type="hidden" name="tag" value="research" />
+        <input type="hidden" name="metadata[source]" value="index" />
 
-      <!-- Honeypot -->
-      <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
-             style="position:absolute;left:-5000px;" aria-hidden="true">
+        <!-- Honeypot -->
+        <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
+               style="position:absolute;left:-5000px;" aria-hidden="true">
 
-      <div class="newsletter-row">
-        <div class="emailfield">
-          <span class="emailfield-left">Email</span>
+        <div class="newsletter-row">
+          <div class="emailfield">
+            <span class="emailfield-left">Email</span>
 
-
-          <input
-            id="bd-email"
-            type="email"
-            name="email"
-            required
-            aria-label="Email address"
-            autocomplete="email"
-            inputmode="email"
-          />
+            <input
+              id="bd-email"
+              type="email"
+              name="email"
+              required
+              aria-label="Email address"
+              autocomplete="email"
+              inputmode="email"
+            />
+          </div>
         </div>
-      </div>
 
-      <div class="newsletter-actions">
-        <button type="submit" class="b">Subscribe</button>
-      </div>
+        <div class="newsletter-actions">
+          <button type="submit" class="b">Subscribe</button>
+        </div>
 
-      <!-- line break after subscribe is naturally created by this paragraph -->
-      <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
-    </form>
-  </div>
-</section>
-
+        <!-- line break after subscribe is naturally created by this paragraph -->
+        <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
+      </form>
+    </div>
+  </section>
 
 </main>
 
