@@ -233,41 +233,37 @@
     /* Mobile */
   @media (max-width: 760px){
     :root{ --page-pad: 22px; }
-
-    /* IMPORTANT: this was causing the huge top whitespace */
-    .wrap{ padding-top: var(--page-pad); }
+    .wrap{ padding-top: calc(var(--rhythm) * 4); }
 
     .row{ grid-template-columns: 1fr; }
     .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
 
-    /* Reorder ONLY the top block on mobile, using grid (NOT flex) */
+    /* Reorder ONLY the top block on mobile: IMAGE, then label, then intro text */
     main.wrap > section.row:first-of-type{
+      display: grid;
+      grid-template-columns: 1fr;
       grid-template-areas:
-        "content"
-        "label";
+        "hero"
+        "label"
+        "intro";
     }
-    main.wrap > section.row:first-of-type .content{ grid-area: content; }
+    main.wrap > section.row:first-of-type .hero{ grid-area: hero; }
     main.wrap > section.row:first-of-type .label{
       grid-area: label;
       margin-top: calc(var(--rhythm) * 0.75);
       margin-bottom: 0;
     }
-
-    /* tighten the top block padding so the image doesn't float */
-    main.wrap > section.row:first-of-type{
-      padding-top: 0;
-    }
-
-    /* make image spacing feel even on mobile (no big top gap) */
-    .hook-image{
-      margin: 0 0 calc(var(--rhythm) * 1);
-    }
+    main.wrap > section.row:first-of-type .intro{ grid-area: intro; }
 
     .newsletter-section .label{ padding-top: 0; }
 
     .newsletter-row{ gap: 12px; }
     .emailfield{ width: 100%; }
     .emailfield-right{ max-width: 52%; }
+
+    .hook-image{
+      margin: calc(var(--rhythm) * 1) 0 calc(var(--rhythm) * 1);
+    }
   }
 
 
@@ -286,22 +282,28 @@
   <section class="row">
     <div class="label">STUDIO APPOSITE</div>
     <div class="content">
-        <img
-          class="hook-image"
-          src="assets/images/Maquinna05.jpg"
-          alt="Architectural detail, Studio Apposite"
-          loading="lazy"
-          decoding="async"
-        />
 
-      <p><span class="i">Architectural Design + Research</span></p>
+        <div class="hero">
+          <img
+            class="hook-image"
+            src="assets/images/Maquinna05.jpg"
+            alt="Architectural detail, Studio Apposite"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
 
-      <p>
-        Studio Apposite is an architectural design and research practice working primarily with existing houses on Vancouver Island and the Gulf Islands. The studio specializes in residential renovations, small additions, heritage-sensitive upgrades, and custom millwork—balancing craft and composition toward design that is apposite: fitting to situation and context.
-      </p>
-      <p>
-        Alongside client work, Studio Apposite operates as a hybrid research platform, producing exhibitions, publications, and archival studies focused on regional architectural history. This research directly informs the design practice, grounding each project in the spatial, material, and cultural conditions of its site.
-      </p>
+        <div class="intro">
+          <p><span class="i">Architectural Design + Research</span></p>
+
+          <p>
+            Studio Apposite is an architectural design and research practice working primarily with existing houses on Vancouver Island and the Gulf Islands. The studio specializes in residential renovations, small additions, heritage-sensitive upgrades, and custom millwork—balancing craft and composition toward design that is apposite: fitting to situation and context.
+          </p>
+          <p>
+            Alongside client work, Studio Apposite operates as a hybrid research platform, producing exhibitions, publications, and archival studies focused on regional architectural history. This research directly informs the design practice, grounding each project in the spatial, material, and cultural conditions of its site.
+          </p>
+        </div>
+
     </div>
   </section>
 
