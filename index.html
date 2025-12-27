@@ -28,17 +28,17 @@
       --rhythm: 16px;
 
       /* columns */
-      --left-buffer: 72px;
+      --left-buffer: 24px;     /* CHANGED: smaller buffer so everything moves left */
       --label-col: 150px;
       --gap: 36px;
-      --photo-col: 340px;
+      --photo-col: 520px;      /* CHANGED: give photo real room */
 
       /* outer padding */
       --page-pad: 44px;
     }
 
     .wrap{
-      max-width: 1240px; /* IMPORTANT: wider so the 3-column layout breathes */
+      max-width: 1560px; /* CHANGED: wider so the photo can be bigger */
       margin: 0 auto;
       padding: calc(var(--rhythm) * 1) var(--page-pad) calc(var(--rhythm) * 6);
     }
@@ -71,7 +71,7 @@
     /* ROW = buffer | label | content | photo */
     .row{
       display: grid;
-      grid-template-columns: var(--left-buffer) var(--label-col) minmax(0, 1fr) var(--photo-col);
+      grid-template-columns: var(--left-buffer) var(--label-col) minmax(0, 560px) var(--photo-col);
       column-gap: var(--gap);
       padding: calc(var(--rhythm) * 0.5) 0;
       align-items: start;
@@ -118,23 +118,25 @@
 
     /* --- Photo column (top row only) --- */
     .photo{
-      align-self: stretch; /* makes the photo column match the row height */
+      align-self: start; /* IMPORTANT: do NOT stretch to match the text column */
     }
     .photo-inner{
-      height: 100%;
-      border: 1px dotted #000; /* optional */
+      /* CHANGED: remove the border from the container so it doesn't draw a tall empty box */
+      border: 0;
       display: block;
-      overflow: hidden;
+      overflow: visible;
+      background: transparent;
     }
 
-    /* KEY CHANGE: show whole image (no crop) */
+    /* KEY CHANGE: show the whole image, and make the border hug the image itself */
     .hook-image{
       width: 100%;
-      height: 100%;
+      height: auto;
       display: block;
       margin: 0;
-      object-fit: contain;   /* <- entire image visible */
-      background: #fff;      /* letterbox color */
+      object-fit: contain;
+      background: #fff;
+      border: 1px dotted #000; /* CHANGED: border on image (not container) */
       border-radius: 0;
     }
 
@@ -269,14 +271,6 @@
       }
       .top-row .content{
         grid-area: content;
-      }
-
-      /* make the image not absurdly tall on mobile */
-      .top-row .photo-inner{
-        height: auto;
-      }
-      .hook-image{
-        height: auto;
       }
     }
 
