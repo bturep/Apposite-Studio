@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Practice — Studio Apposite</title>
-  <meta name="description" content="Studio Apposite — Practice, services, and process." />
+  <meta name="description" content="Studio Apposite — Practice: Services + Portfolio." />
 
   <!-- Lato -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,34 +70,6 @@
       align-items: baseline;
     }
 
-    /* --- Top block: allow label + media + text to reorder on mobile --- */
-    .top-block{
-      grid-template-areas:
-        "label media"
-        "label content";
-      align-items: start;
-    }
-    .top-block .label{ grid-area: label; }
-    .top-block .top-media{ grid-area: media; }
-    .top-block .top-content{ grid-area: content; }
-
-    /* Image */
-    .hook-image{
-      width: 100%;
-      height: auto;
-      display: block;
-
-      /* default margin (desktop) */
-      margin: 0 0 calc(var(--rhythm) * 1.25);
-
-      border: 1px dotted #000; /* optional */
-      border-radius: 0;
-      object-fit: cover;
-    }
-
-    /* In the top-block grid, spacing is handled by the grid + top-media margin */
-    .top-block .hook-image{ margin: 0; }
-
     .label{
       font-weight: 700;
       text-align: right;
@@ -123,13 +95,36 @@
 
     .rulewrap{ margin: calc(var(--rhythm) * 0.75) 0; }
 
-    /* Desktop: consistent breathing room under the image */
-    .top-block .top-media{
-      margin-bottom: calc(var(--rhythm) * 1);
+    /* --- Practice page identity: two-column content blocks --- */
+    .twocol{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: var(--gap);
+      row-gap: calc(var(--rhythm) * 1);
+      align-items: start;
     }
-    /* Prevent double-spacing before the first rule */
-    .top-block .top-content p:last-child{
-      margin-bottom: 0;
+
+    .card{
+      /* subtle “not-index” feel without changing the system */
+      padding-top: 0;
+    }
+
+    .kicker{
+      margin-bottom: calc(var(--rhythm) * 0.75);
+    }
+
+    .small{
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .list{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .list li{
+      margin: 0 0 calc(var(--rhythm) * 0.5) 0;
     }
 
     /* Colophon */
@@ -148,22 +143,9 @@
       .row{ grid-template-columns: 1fr; }
       .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
 
-      /* Top block order on mobile: image -> label -> text */
-      .top-block{
-        grid-template-areas:
-          "media"
-          "label"
-          "content";
-        padding-top: 0;
-      }
-
-      .top-block .label{
-        margin-top: calc(var(--rhythm) * 0.75);
-        margin-bottom: 0;
-      }
-
-      .top-block .top-media{
-        margin-bottom: calc(var(--rhythm) * 1);
+      .twocol{
+        grid-template-columns: 1fr;
+        column-gap: 0;
       }
     }
 
@@ -178,36 +160,17 @@
 
 <main class="wrap">
 
-  <!-- Top block -->
-  <section class="row top-block">
+  <!-- Header -->
+  <section class="row">
     <div class="label">Practice</div>
-
-    <div class="top-media">
-      <img
-        class="hook-image"
-        src="assets/images/Maquinna05.jpg"
-        alt="Architectural detail, Studio Apposite"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
-
-    <div class="top-content">
-      <p><span class="i">Services + process</span></p>
-
-      <p>
-        Studio Apposite works primarily with existing buildings—projects where the most important design work is often
-        <span class="i">integration</span>: tying new work into old work, aligning new constraints with existing structure,
-        and making repairs and upgrades legible rather than invisible.
+    <div class="content">
+      <p class="kicker">
+        Studio Apposite offers architectural design + documentation services for work on existing houses, small additions, and targeted upgrades.
+        The practice emphasizes careful measurement, proportion, and construction logic—work that is buildable, legible, and continuous with what already exists.
       </p>
-
-      <p>
-        We take on small projects (entries, stairs, built-ins, kitchens and bathrooms, decks, envelopes and upgrades) as well as
-        larger renovations and additions. Where needed, we also produce documentation for permitting pathways and coordinate
-        with consultants and builders.
+      <p class="small">
+        <a href="index.html"><span class="b">← Home</span></a>
       </p>
-
-      <p><a href="index.html"><span class="b">Back to index</span></a></p>
     </div>
   </section>
 
@@ -216,24 +179,44 @@
     <div class="content"><div class="rule"></div></div>
   </section>
 
+  <!-- Services + Process (two-column identity) -->
   <section class="row" id="services">
     <div class="label">Services</div>
     <div class="content">
-      <p>
-        Studio Apposite provides architectural design and documentation services with an emphasis on existing houses and
-        careful, design-sensitive alteration.
-      </p>
+      <div class="twocol">
 
-      <p>
-        Typical services include measured site visits and drawing up existing conditions; conceptual studies and options;
-        renovation and addition design; custom millwork and interior interventions; envelope and upgrade strategies; and
-        drawing sets suitable for permitting and construction.
-      </p>
+        <div class="card">
+          <p class="b">Design + documentation</p>
+          <ul class="list">
+            <li>Renovations and alterations (kitchens, bathrooms, stairs, entries, built-ins, millwork).</li>
+            <li>Small additions + integration studies (form, proportion, envelope logic, siting).</li>
+            <li>Concept design and options: clear drawings that support decision-making early.</li>
+            <li>Construction / permit drawing sets (as appropriate to scope and jurisdiction).</li>
+          </ul>
 
-      <p>
-        We also support projects that involve regulatory and documentation requirements—such as suite legalization pathways—
-        by preparing clear drawing packages and coordinating information required for municipal review.
-      </p>
+          <p class="b">Existing conditions + as-builts</p>
+          <ul class="list">
+            <li>Measured surveys and as-built drawings (plans / elevations / key sections as required).</li>
+            <li>Targeted verification of constraints (structure, head heights, egress conditions, etc.).</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <p class="b">Approvals + coordination</p>
+          <ul class="list">
+            <li>Permit pathway support: assembling the right scope of drawings and information for review.</li>
+            <li>Code- and bylaw-aware layout checks (egress, ceiling heights, fire separations, etc.) at a “what’s required here?” level.</li>
+            <li>Consultant coordination where needed (structural / energy / envelope / contractor collaboration).</li>
+            <li>Site reviews at key moments to keep intent and buildability aligned.</li>
+          </ul>
+
+          <p class="b">Special case: suite work</p>
+          <ul class="list">
+            <li>Suite legalization / secondary suite drawing packages (scope depends on existing conditions and municipality).</li>
+          </ul>
+        </div>
+
+      </div>
     </div>
   </section>
 
@@ -242,60 +225,31 @@
     <div class="content"><div class="rule"></div></div>
   </section>
 
-  <section class="row" id="approach">
-    <div class="label">Approach</div>
-    <div class="content">
-      <p>
-        Our approach is grounded in measurement, proportion, and construction logic. We treat the existing house as
-        <span class="i">material</span>, <span class="i">evidence</span>, and <span class="i">constraint</span>—working with what is there
-        rather than designing around an abstract ideal.
-      </p>
-
-      <p>
-        This often means making the “unseen” work explicit: structure, junctions, transitions, tolerances, and sequencing.
-        The goal is not novelty, but fit—work that is buildable, legible, and continuous with what already exists.
-      </p>
-    </div>
-  </section>
-
-  <section class="row rulewrap" aria-hidden="true">
-    <div class="label"></div>
-    <div class="content"><div class="rule"></div></div>
-  </section>
-
+  <!-- How we work -->
   <section class="row" id="process">
     <div class="label">Process</div>
     <div class="content">
-      <p>
-        Most projects follow a phased structure. The names and boundaries can shift depending on scope, but the sequence is consistent:
-        establish what exists, test options, develop a preferred direction, and then document it.
-      </p>
+      <div class="twocol">
 
-      <p>
-        <span class="b">1. Existing conditions + constraints</span><br>
-        Site visit, measurement, and a baseline drawing set; identification of key constraints (structure, code, zoning, services, access).
-      </p>
+        <div class="card">
+          <p class="b">A practical rhythm</p>
+          <p>
+            Most work moves through a simple sequence: initial call → site visit / measurement → options / concept drawings →
+            refinement → documentation for construction or approvals. The emphasis is on making the right drawings at the right moment—
+            enough resolution to build, without producing unnecessary volume.
+          </p>
+        </div>
 
-      <p>
-        <span class="b">2. Concept options</span><br>
-        A small set of design directions, studied through drawings and (when helpful) quick massing or spatial diagrams. We use this phase
-        to decide what to pursue—and what not to pursue.
-      </p>
+        <div class="card">
+          <p class="b">Fees</p>
+          <p>
+            Depending on scope, services can be structured as a fixed-fee phase (concept / schematic) followed by either a second fixed fee
+            (documentation) or hourly support for coordination and revisions. Where the work is uncertain at the outset, we’ll define a small
+            first phase to establish constraints and confirm the pathway before committing further.
+          </p>
+        </div>
 
-      <p>
-        <span class="b">3. Design development</span><br>
-        Refinement of the chosen direction: layout, junctions, key details, and coordination with consultants where required.
-      </p>
-
-      <p>
-        <span class="b">4. Documentation</span><br>
-        Drawing set prepared for permitting and/or construction. Scope ranges from targeted sheets to full packages, depending on the project.
-      </p>
-
-      <p>
-        <span class="b">5. Construction support</span><br>
-        Optional support during construction: answering RFIs, clarifying intent, reviewing changes, and maintaining continuity with the design.
-      </p>
+      </div>
     </div>
   </section>
 
@@ -304,41 +258,22 @@
     <div class="content"><div class="rule"></div></div>
   </section>
 
-  <section class="row" id="fees">
-    <div class="label">Fees</div>
-    <div class="content">
-      <p>
-        Fees can be structured as a fixed package by phase, hourly, or a hybrid (fixed for early phases; hourly for open-ended support).
-        The right structure depends on clarity of scope and the level of unknowns in the existing conditions.
-      </p>
-
-      <p>
-        For early-stage work, we often recommend a defined first phase (existing conditions + initial study) so that both parties
-        can make an informed decision about the next steps.
-      </p>
-
-      <p>
-        If you’re unsure what you need, a short call is usually enough to propose a sensible first phase.
-      </p>
-    </div>
-  </section>
-
-  <section class="row rulewrap" aria-hidden="true">
-    <div class="label"></div>
-    <div class="content"><div class="rule"></div></div>
-  </section>
-
+  <!-- Portfolio -->
   <section class="row" id="portfolio">
     <div class="label">Portfolio</div>
     <div class="content">
-      <p>
-        <span class="b">Portfolio forthcoming.</span>
-      </p>
-
-      <p>
-        Studio Apposite is currently building a public portfolio. In the meantime, we can share selected work privately upon request
-        (depending on client permissions and project stage).
-      </p>
+      <div class="twocol">
+        <div class="card">
+          <p class="b">Selected work</p>
+          <p><span class="i">Portfolio forthcoming.</span></p>
+        </div>
+        <div class="card">
+          <p class="b">In the meantime</p>
+          <p>
+            If you’d like examples of drawing sets, concept options, or documentation style, email us with a short description of your project.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -347,11 +282,11 @@
     <div class="content"><div class="rule"></div></div>
   </section>
 
+  <!-- Contact -->
   <section class="row" id="contact">
     <div class="label">Contact</div>
     <div class="content">
       <p><a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a></p>
-      <p><a href="index.html">Return to index</a></p>
     </div>
   </section>
 
