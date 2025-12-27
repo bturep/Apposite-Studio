@@ -230,35 +230,37 @@
     }
 
     /* Mobile */
-    @media (max-width: 760px){
+    /* Mobile */
+  @media (max-width: 760px){
+    :root{ --page-pad: 22px; }
+    .wrap{ padding-top: calc(var(--rhythm) * 4); }
+
+    .row{ grid-template-columns: 1fr; }
+    .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
+
+    /* Reorder ONLY the top block on mobile: label goes BELOW content */
     main.wrap > section.row:first-of-type{
       display: flex;
       flex-direction: column;
     }
-    main.wrap > section.row:first-of-type .content{
-      order: 1;
-    }
+    main.wrap > section.row:first-of-type .content{ order: 1; }
     main.wrap > section.row:first-of-type .label{
       order: 2;
       margin-top: calc(var(--rhythm) * 0.75);
       margin-bottom: 0;
     }
-  }
-      .row{ grid-template-columns: 1fr; }
-      .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
 
-      .newsletter-section .label{ padding-top: 0; }
+    .newsletter-section .label{ padding-top: 0; }
 
-      .newsletter-row{
-        gap: 12px;
-      }
-      .emailfield{
-        width: 100%;
-      }
-      .emailfield-right{
-        max-width: 52%;
-      }
+    .newsletter-row{ gap: 12px; }
+    .emailfield{ width: 100%; }
+    .emailfield-right{ max-width: 52%; }
+
+    .hook-image{
+      margin: calc(var(--rhythm) * 1) 0 calc(var(--rhythm) * 1);
     }
+  }
+
 
     @media (prefers-reduced-motion: reduce){
       .rule{ transform: none !important; transition: none !important; }
