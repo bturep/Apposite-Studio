@@ -21,27 +21,24 @@
       line-height: 1.55;
       color: #000;
       background: #fff;
-      zoom: 0.8;
+      zoom: 1;
     }
 
     :root{
       --rhythm: 16px;
-      --page-pad: 44px;
+      --label-col: 150px;
       --gap: 36px;
-
-      /* Option C layout */
-      --nav-col: 180px;
-      --main-col: 1fr;
-      --aside-col: 260px;
+      --page-pad: 44px;
     }
 
     .wrap{
-      max-width: 1120px;
+      max-width: 980px;
       margin: 0 auto;
       padding: calc(var(--rhythm) * 1) var(--page-pad) calc(var(--rhythm) * 6);
     }
 
     p{ margin: 0 0 calc(var(--rhythm) * 1) 0; }
+
     .b{ font-weight: 700; }
     .i{ font-style: italic; }
 
@@ -65,7 +62,22 @@
       a:hover{ background-size: 100% 1px; }
     }
 
-    /* Dashed rule (shared identity with index) */
+    .row{
+      display: grid;
+      grid-template-columns: var(--label-col) 1fr;
+      column-gap: var(--gap);
+      padding: calc(var(--rhythm) * 0.5) 0;
+      align-items: baseline;
+    }
+
+    .label{
+      font-weight: 700;
+      text-align: right;
+      padding-top: 0;
+    }
+
+    .content p:last-child{ margin-bottom: 0; }
+
     .rule{
       height: 1px;
       width: 100%;
@@ -81,77 +93,29 @@
       transition: transform 180ms linear;
     }
 
-    .rulewrap{
-      margin: calc(var(--rhythm) * 0.75) 0;
-    }
+    .rulewrap{ margin: calc(var(--rhythm) * 0.75) 0; }
 
-    /* --- OPTION C: page frame --- */
-    .frame{
-      display: grid;
-      grid-template-columns: var(--nav-col) var(--main-col) var(--aside-col);
-      column-gap: var(--gap);
-      align-items: start;
-    }
-
-    .nav{
-      position: sticky;
-      top: calc(var(--page-pad) * 1);
-      align-self: start;
-    }
-
-    .nav .title{
-      font-weight: 700;
-      margin: 0 0 calc(var(--rhythm) * 0.75) 0;
-    }
-
-    .nav a{
-      display: block;
-      text-decoration: none;
-      padding: 2px 0;
-    }
-    .nav a span{
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-thickness: 1px;
-    }
-
-    .nav .meta{
-      margin-top: calc(var(--rhythm) * 1);
-      font-size: 13px;
-      line-height: 1.4;
-    }
-
-    .main{ min-width: 0; }
-    .aside{
-      font-size: 13px;
-      line-height: 1.4;
-      min-width: 0;
-    }
-
-    .aside .box{
-      border: 1px dotted #000;
-      padding: 10px 12px;
-      margin-bottom: calc(var(--rhythm) * 1);
-    }
-
-    /* Section blocks (not the index rows; new identity) */
-    .block{
-      padding: calc(var(--rhythm) * 0.75) 0;
-    }
-
-    .block h2{
-      font-size: 16px;
-      line-height: 1.2;
-      margin: 0 0 calc(var(--rhythm) * 0.75) 0;
-      font-weight: 700;
-    }
-
-    .grid2{
+    /* --- Practice page identity: two-column content blocks --- */
+    .twocol{
       display: grid;
       grid-template-columns: 1fr 1fr;
       column-gap: var(--gap);
       row-gap: calc(var(--rhythm) * 1);
       align-items: start;
+    }
+
+    .card{
+      /* subtle “not-index” feel without changing the system */
+      padding-top: 0;
+    }
+
+    .kicker{
+      margin-bottom: calc(var(--rhythm) * 0.75);
+    }
+
+    .small{
+      font-size: 13px;
+      line-height: 1.4;
     }
 
     .list{
@@ -163,16 +127,7 @@
       margin: 0 0 calc(var(--rhythm) * 0.5) 0;
     }
 
-    .pill{
-      display: inline-block;
-      border: 1px dotted #000;
-      padding: 2px 8px;
-      margin: 0 6px 6px 0;
-      font-size: 13px;
-      line-height: 1.4;
-      white-space: nowrap;
-    }
-
+    /* Colophon */
     .colophon{
       margin-top: 5px;
       font-size: 13px;
@@ -180,29 +135,17 @@
     }
 
     /* Mobile */
-    @media (max-width: 860px){
+    @media (max-width: 760px){
       :root{ --page-pad: 22px; }
 
-      .wrap{
-        padding-top: var(--page-pad);
-      }
+      .wrap{ padding-top: var(--page-pad); }
 
-      .frame{
+      .row{ grid-template-columns: 1fr; }
+      .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
+
+      .twocol{
         grid-template-columns: 1fr;
         column-gap: 0;
-      }
-
-      .nav{
-        position: static;
-        margin-bottom: calc(var(--rhythm) * 1);
-      }
-
-      .grid2{
-        grid-template-columns: 1fr;
-      }
-
-      .aside{
-        margin-top: calc(var(--rhythm) * 1);
       }
     }
 
@@ -217,207 +160,142 @@
 
 <main class="wrap">
 
-  <div class="frame">
-
-    <!-- LEFT: sticky index -->
-    <nav class="nav" aria-label="Practice page navigation">
-      <p class="title">Practice</p>
-
-      <a href="#services"><span>Services</span></a>
-      <a href="#deliverables"><span>Deliverables</span></a>
-      <a href="#process"><span>Process</span></a>
-      <a href="#fees"><span>Fees</span></a>
-      <a href="#portfolio"><span>Portfolio</span></a>
-      <a href="#contact"><span>Contact</span></a>
-
-      <div class="meta">
-        <p><a href="index.html"><span class="b">← Home</span></a></p>
-        <p class="i">Architectural Design + Research</p>
-      </div>
-    </nav>
-
-    <!-- CENTER: main content -->
-    <div class="main">
-
-      <section class="block" id="intro">
-        <h2>Scope</h2>
-        <p>
-          Studio Apposite works primarily with <span class="i">existing houses</span>—renovations, small additions, and precise upgrades where
-          new work must integrate cleanly with what’s already there. The aim is not novelty, but fit: work that is buildable, legible, and
-          continuous with the spatial and material logic of the house.
-        </p>
-      </section>
-
-      <div class="rulewrap" aria-hidden="true"><div class="rule"></div></div>
-
-      <section class="block" id="services">
-        <h2>Services</h2>
-
-        <div class="grid2">
-          <div>
-            <p class="b">Renovations + alterations</p>
-            <ul class="list">
-              <li>Kitchens and bathrooms</li>
-              <li>Entries, stairs, and circulation fixes</li>
-              <li>Built-ins, millwork, and storage systems</li>
-              <li>Envelope / upgrade strategies (targeted, not wholesale)</li>
-            </ul>
-
-            <p class="b">Small additions</p>
-            <ul class="list">
-              <li>Siting + massing studies that respect the existing house</li>
-              <li>Integration details: rooflines, junctions, proportion, exterior continuity</li>
-            </ul>
-          </div>
-
-          <div>
-            <p class="b">Measured survey + as-builts</p>
-            <ul class="list">
-              <li>Measured drawings (plans / key elevations / sections as needed)</li>
-              <li>Constraint confirmation: head heights, openings, structure “as found”</li>
-            </ul>
-
-            <p class="b">Approvals + coordination</p>
-            <ul class="list">
-              <li>Permit pathway support (scope depends on jurisdiction + existing conditions)</li>
-              <li>Consultant coordination when required (structural / envelope / energy)</li>
-              <li>Contractor collaboration and revision cycles</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <div class="rulewrap" aria-hidden="true"><div class="rule"></div></div>
-
-      <section class="block" id="deliverables">
-        <h2>Deliverables</h2>
-        <p>
-          Deliverables are calibrated to the moment in the project—enough resolution to make decisions early, and the right kind of drawings
-          to build later.
-        </p>
-
-        <div class="grid2">
-          <div>
-            <p class="b">Early-phase</p>
-            <ul class="list">
-              <li>Measured base plan + existing conditions diagram</li>
-              <li>Two to three option sets (plans + key elevations / sections)</li>
-              <li>Material and junction precedent notes where helpful</li>
-            </ul>
-          </div>
-          <div>
-            <p class="b">Documentation-phase</p>
-            <ul class="list">
-              <li>Permit / construction drawings (scope-specific)</li>
-              <li>Key details and integration sections</li>
-              <li>Revision rounds coordinated with consultant input (as required)</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <div class="rulewrap" aria-hidden="true"><div class="rule"></div></div>
-
-      <section class="block" id="process">
-        <h2>Process</h2>
-        <div class="grid2">
-          <div>
-            <p class="b">A practical rhythm</p>
-            <p>
-              Most work moves through a simple sequence:
-              initial call → site visit / measurement → options → refinement → documentation.
-              The emphasis is on clarity: drawings that communicate decisions, constraints, and build logic.
-            </p>
-          </div>
-          <div>
-            <p class="b">Working with existing houses</p>
-            <p>
-              Existing conditions are treated as material and evidence, not as inconvenience.
-              We prefer careful integration: what stays, what changes, what must be repaired, and where new work should clearly declare itself.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <div class="rulewrap" aria-hidden="true"><div class="rule"></div></div>
-
-      <section class="block" id="fees">
-        <h2>Fees</h2>
-        <p>
-          Depending on scope, services are structured as fixed-fee phases (concept / schematic, documentation), with hourly support where
-          the work is inherently uncertain (coordination, revisions, agency feedback loops). When a pathway is unclear at the outset,
-          we’ll define a small first phase to establish constraints and confirm next steps before committing further.
-        </p>
-
-        <p class="small i">
-          If you email a short description of your project, we can propose an appropriate first phase and fee structure.
-        </p>
-      </section>
-
-      <div class="rulewrap" aria-hidden="true"><div class="rule"></div></div>
-
-      <section class="block" id="portfolio">
-        <h2>Portfolio</h2>
-        <div class="grid2">
-          <div>
-            <p class="b">Selected work</p>
-            <p><span class="i">Portfolio forthcoming.</span></p>
-          </div>
-          <div>
-            <p class="b">In the meantime</p>
-            <p>
-              We’re happy to share example drawing sets (concept options, documentation style) privately by request.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <div class="rulewrap" aria-hidden="true"><div class="rule"></div></div>
-
-      <section class="block" id="contact">
-        <h2>Contact</h2>
-        <p><a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a></p>
-      </section>
-
-      <section class="block" id="colophon">
-        <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
-      </section>
-
+  <!-- Header -->
+  <section class="row">
+    <div class="label">Practice</div>
+    <div class="content">
+      <p class="kicker">
+        Studio Apposite offers architectural design + documentation services for work on existing houses, small additions, and targeted upgrades.
+        The practice emphasizes careful measurement, proportion, and construction logic—work that is buildable, legible, and continuous with what already exists.
+      </p>
+      <p class="small">
+        <a href="index.html"><span class="b">← Home</span></a>
+      </p>
     </div>
+  </section>
 
-    <!-- RIGHT: quick facts rail -->
-    <aside class="aside" aria-label="Practice quick facts">
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
-      <div class="box">
-        <p class="b">Typical project types</p>
-        <p>
-          Renovations · targeted upgrades · built-ins · small additions · measured drawings · permit support
-        </p>
+  <!-- Services + Process (two-column identity) -->
+  <section class="row" id="services">
+    <div class="label">Services</div>
+    <div class="content">
+      <div class="twocol">
+
+        <div class="card">
+          <p class="b">Design + documentation</p>
+          <ul class="list">
+            <li>Renovations and alterations (kitchens, bathrooms, stairs, entries, built-ins, millwork).</li>
+            <li>Small additions + integration studies (form, proportion, envelope logic, siting).</li>
+            <li>Concept design and options: clear drawings that support decision-making early.</li>
+            <li>Construction / permit drawing sets (as appropriate to scope and jurisdiction).</li>
+          </ul>
+
+          <p class="b">Existing conditions + as-builts</p>
+          <ul class="list">
+            <li>Measured surveys and as-built drawings (plans / elevations / key sections as required).</li>
+            <li>Targeted verification of constraints (structure, head heights, egress conditions, etc.).</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <p class="b">Approvals + coordination</p>
+          <ul class="list">
+            <li>Permit pathway support: assembling the right scope of drawings and information for review.</li>
+            <li>Code- and bylaw-aware layout checks (egress, ceiling heights, fire separations, etc.) at a “what’s required here?” level.</li>
+            <li>Consultant coordination where needed (structural / energy / envelope / contractor collaboration).</li>
+            <li>Site reviews at key moments to keep intent and buildability aligned.</li>
+          </ul>
+
+          <p class="b">Special case: suite work</p>
+          <ul class="list">
+            <li>Suite legalization / secondary suite drawing packages (scope depends on existing conditions and municipality).</li>
+          </ul>
+        </div>
+
       </div>
+    </div>
+  </section>
 
-      <div class="box">
-        <p class="b">Good fits</p>
-        <p>
-          Design-sensitive repair · integration with existing · clarity in drawings · projects where proportion and junctions matter
-        </p>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
+
+  <!-- How we work -->
+  <section class="row" id="process">
+    <div class="label">Process</div>
+    <div class="content">
+      <div class="twocol">
+
+        <div class="card">
+          <p class="b">A practical rhythm</p>
+          <p>
+            Most work moves through a simple sequence: initial call → site visit / measurement → options / concept drawings →
+            refinement → documentation for construction or approvals. The emphasis is on making the right drawings at the right moment—
+            enough resolution to build, without producing unnecessary volume.
+          </p>
+        </div>
+
+        <div class="card">
+          <p class="b">Fees</p>
+          <p>
+            Depending on scope, services can be structured as a fixed-fee phase (concept / schematic) followed by either a second fixed fee
+            (documentation) or hourly support for coordination and revisions. Where the work is uncertain at the outset, we’ll define a small
+            first phase to establish constraints and confirm the pathway before committing further.
+          </p>
+        </div>
+
       </div>
+    </div>
+  </section>
 
-      <div class="box">
-        <p class="b">What to send</p>
-        <p>
-          Address + a few photos + what you’re trying to change + any constraints (timing / budget / approvals)
-        </p>
-        <p style="margin-top: 10px;">
-          <span class="pill">photos</span>
-          <span class="pill">address</span>
-          <span class="pill">scope</span>
-          <span class="pill">timing</span>
-        </p>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
+
+  <!-- Portfolio -->
+  <section class="row" id="portfolio">
+    <div class="label">Portfolio</div>
+    <div class="content">
+      <div class="twocol">
+        <div class="card">
+          <p class="b">Selected work</p>
+          <p><span class="i">Portfolio forthcoming.</span></p>
+        </div>
+        <div class="card">
+          <p class="b">In the meantime</p>
+          <p>
+            If you’d like examples of drawing sets, concept options, or documentation style, email us with a short description of your project.
+          </p>
+        </div>
       </div>
+    </div>
+  </section>
 
-    </aside>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
-  </div>
+  <!-- Contact -->
+  <section class="row" id="contact">
+    <div class="label">Contact</div>
+    <div class="content">
+      <p><a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a></p>
+    </div>
+  </section>
+
+  <section class="row" id="colophon">
+    <div class="label"></div>
+    <div class="content">
+      <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
+    </div>
+  </section>
 
 </main>
 
