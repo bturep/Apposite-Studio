@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Practice — Studio Apposite</title>
+  <meta name="description" content="Studio Apposite — Practice, services, and process." />
+
+  <!-- Lato -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    body{
+      font-family: "Lato", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      color: #000;
+      background: #fff;
+      zoom: 0.8;
+    }
+
+    :root{
+      --rhythm: 16px;
+      --label-col: 150px;
+      --gap: 36px;
+      --page-pad: 44px;
+    }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: calc(var(--rhythm) * 1) var(--page-pad) calc(var(--rhythm) * 6);
+    }
+
+    p{ margin: 0 0 calc(var(--rhythm) * 1) 0; }
+
+    .b{ font-weight: 700; }
+    .i{ font-style: italic; }
+
+    a{
+      color:#000;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+    }
+
+    @media (hover:hover){
+      a{
+        background-image: linear-gradient(#000,#000);
+        background-size: 0% 1px;
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        text-decoration: none;
+        padding-bottom: 1px;
+        transition: background-size 140ms linear;
+      }
+      a:hover{ background-size: 100% 1px; }
+    }
+
+    .row{
+      display: grid;
+      grid-template-columns: var(--label-col) 1fr;
+      column-gap: var(--gap);
+      padding: calc(var(--rhythm) * 0.5) 0;
+      align-items: baseline;
+    }
+
+    /* --- Top block: allow label + media + text to reorder on mobile --- */
+    .top-block{
+      grid-template-areas:
+        "label media"
+        "label content";
+      align-items: start;
+    }
+    .top-block .label{ grid-area: label; }
+    .top-block .top-media{ grid-area: media; }
+    .top-block .top-content{ grid-area: content; }
+
+    /* Image */
+    .hook-image{
+      width: 100%;
+      height: auto;
+      display: block;
+
+      /* default margin (desktop) */
+      margin: 0 0 calc(var(--rhythm) * 1.25);
+
+      border: 1px dotted #000; /* optional */
+      border-radius: 0;
+      object-fit: cover;
+    }
+
+    /* In the top-block grid, spacing is handled by the grid + top-media margin */
+    .top-block .hook-image{ margin: 0; }
+
+    .label{
+      font-weight: 700;
+      text-align: right;
+      padding-top: 0;
+    }
+
+    .content p:last-child{ margin-bottom: 0; }
+
+    .rule{
+      height: 1px;
+      width: 100%;
+      background-image: repeating-linear-gradient(
+        to right,
+        #000 0,
+        #000 2px,
+        transparent 2px,
+        transparent 7px
+      );
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+      transition: transform 180ms linear;
+    }
+
+    .rulewrap{ margin: calc(var(--rhythm) * 0.75) 0; }
+
+    /* Desktop: consistent breathing room under the image */
+    .top-block .top-media{
+      margin-bottom: calc(var(--rhythm) * 1);
+    }
+    /* Prevent double-spacing before the first rule */
+    .top-block .top-content p:last-child{
+      margin-bottom: 0;
+    }
+
+    /* Colophon */
+    .colophon{
+      margin-top: 5px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    /* Mobile */
+    @media (max-width: 760px){
+      :root{ --page-pad: 22px; }
+
+      .wrap{ padding-top: var(--page-pad); }
+
+      .row{ grid-template-columns: 1fr; }
+      .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
+
+      /* Top block order on mobile: image -> label -> text */
+      .top-block{
+        grid-template-areas:
+          "media"
+          "label"
+          "content";
+        padding-top: 0;
+      }
+
+      .top-block .label{
+        margin-top: calc(var(--rhythm) * 0.75);
+        margin-bottom: 0;
+      }
+
+      .top-block .top-media{
+        margin-bottom: calc(var(--rhythm) * 1);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .rule{ transform: none !important; transition: none !important; }
+      a{ transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="wrap">
+
+  <!-- Top block -->
+  <section class="row top-block">
+    <div class="label">Practice</div>
+
+    <div class="top-media">
+      <img
+        class="hook-image"
+        src="assets/images/Maquinna05.jpg"
+        alt="Architectural detail, Studio Apposite"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+
+    <div class="top-content">
+      <p><span class="i">Services + process</span></p>
+
+      <p>
+        Studio Apposite works primarily with existing buildings—projects where the most important design work is often
+        <span class="i">integration</span>: tying new work into old work, aligning new constraints with existing structure,
+        and making repairs and upgrades legible rather than invisible.
+      </p>
+
+      <p>
+        We take on small projects (entries, stairs, built-ins, kitchens and bathrooms, decks, envelopes and upgrades) as well as
+        larger renovations and additions. Where needed, we also produce documentation for permitting pathways and coordinate
+        with consultants and builders.
+      </p>
+
+      <p><a href="index.html"><span class="b">Back to index</span></a></p>
+    </div>
+  </section>
+
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
+
+  <section class="row" id="services">
+    <div class="label">Services</div>
+    <div class="content">
+      <p>
+        Studio Apposite provides architectural design and documentation services with an emphasis on existing houses and
+        careful, design-sensitive alteration.
+      </p>
+
+      <p>
+        Typical services include measured site visits and drawing up existing conditions; conceptual studies and options;
+        renovation and addition design; custom millwork and interior interventions; envelope and upgrade strategies; and
+        drawing sets suitable for permitting and construction.
+      </p>
+
+      <p>
+        We also support projects that involve regulatory and documentation requirements—such as suite legalization pathways—
+        by preparing clear drawing packages and coordinating information required for municipal review.
+      </p>
+    </div>
+  </section>
+
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
+
+  <section class="row" id="approach">
+    <div class="label">Approach</div>
+    <div class="content">
+      <p>
+        Our approach is grounded in measurement, proportion, and construction logic. We treat the existing house as
+        <span class="i">material</span>, <span class="i">evidence</span>, and <span class="i">constraint</span>—working with what is there
+        rather than designing around an abstract ideal.
+      </p>
+
+      <p>
+        This often means making the “unseen” work explicit: structure, junctions, transitions, tolerances, and sequencing.
+        The goal is not novelty, but fit—work that is buildable, legible, and continuous with what already exists.
+      </p>
+    </div>
+  </section>
+
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
+
+  <section class="row" id="process">
+    <div class="label">Process</div>
+    <div class="content">
+      <p>
+        Most projects follow a phased structure. The names and boundaries can shift depending on scope, but the sequence is consistent:
+        establish what exists, test options, develop a preferred direction, and then document it.
+      </p>
+
+      <p>
+        <span class="b">1. Existing conditions + constraints</span><br>
+        Site visit, measurement, and a baseline drawing set; identification of key constraints (structure, code, zoning, services, access).
+      </p>
+
+      <p>
+        <span class="b">2. Concept options</span><br>
+        A small set of design directions, studied through drawings and (when helpful) quick massing or spatial diagrams. We use this phase
+        to decide what to pursue—and what not to pursue.
+      </p>
+
+      <p>
+        <span class="b">3. Design development</span><br>
+        Refinement of the chosen direction: layout, junctions, key details, and coordination with consultants where required.
+      </p>
+
+      <p>
+        <span class="b">4. Documentation</span><br>
+        Drawing set prepared for permitting and/or construction. Scope ranges from targeted sheets to full packages, depending on the project.
+      </p>
+
+      <p>
+        <span class="b">5. Construction support</span><br>
+        Optional support during construction: answering RFIs, clarifying intent, reviewing changes, and maintaining continuity with the design.
+      </p>
+    </div>
+  </section>
+
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
+
+  <section class="row" id="fees">
+    <div class="label">Fees</div>
+    <div class="content">
+      <p>
+        Fees can be structured as a fixed package by phase, hourly, or a hybrid (fixed for early phases; hourly for open-ended support).
+        The right structure depends on clarity of scope and the level of unknowns in the existing conditions.
+      </p>
+
+      <p>
+        For early-stage work, we often recommend a defined first phase (existing conditions + initial study) so that both parties
+        can make an informed decision about the next steps.
+      </p>
+
+      <p>
+        If you’re unsure what you need, a short call is usually enough to propose a sensible first phase.
+      </p>
+    </div>
+  </section>
+
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
+
+  <section class="row" id="portfolio">
+    <div class="label">Portfolio</div>
+    <div class="content">
+      <p>
+        <span class="b">Portfolio forthcoming.</span>
+      </p>
+
+      <p>
+        Studio Apposite is currently building a public portfolio. In the meantime, we can share selected work privately upon request
+        (depending on client permissions and project stage).
+      </p>
+    </div>
+  </section>
+
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
+
+  <section class="row" id="contact">
+    <div class="label">Contact</div>
+    <div class="content">
+      <p><a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a></p>
+      <p><a href="index.html">Return to index</a></p>
+    </div>
+  </section>
+
+  <section class="row" id="colophon">
+    <div class="label"></div>
+    <div class="content">
+      <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Year
+  document.getElementById("y").textContent = new Date().getFullYear();
+
+  // Animate only the dashed rules on first view (no content opacity changes)
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ruleEls = Array.from(document.querySelectorAll(".rule"));
+
+  if (!prefersReduced && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        el.style.transform = "scaleX(1)";
+        io.unobserve(el);
+      });
+    }, { root: null, rootMargin: "0px 0px -12% 0px", threshold: 0.01 });
+
+    ruleEls.forEach(el => io.observe(el));
+  } else {
+    ruleEls.forEach(el => { el.style.transform = "scaleX(1)"; });
+  }
+</script>
+
+</body>
+</html>
