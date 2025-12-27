@@ -26,17 +26,22 @@
 
     :root{
       --rhythm: 16px;
+
+      /* columns */
+      --left-buffer: 72px;
       --label-col: 150px;
       --gap: 36px;
+      --photo-col: 340px;
+
+      /* outer padding */
       --page-pad: 44px;
     }
 
     .wrap{
-    max-width: 980px;
-    margin: 0 auto;
-    padding: calc(var(--rhythm) * 1) var(--page-pad) calc(var(--rhythm) * 6);
-  }
-
+      max-width: 1240px; /* IMPORTANT: wider so the 3-column layout breathes */
+      margin: 0 auto;
+      padding: calc(var(--rhythm) * 1) var(--page-pad) calc(var(--rhythm) * 6);
+    }
 
     p{ margin: 0 0 calc(var(--rhythm) * 1) 0; }
 
@@ -63,13 +68,23 @@
       a:hover{ background-size: 100% 1px; }
     }
 
+    /* ROW = buffer | label | content | photo */
     .row{
       display: grid;
-      grid-template-columns: var(--label-col) 1fr;
+
+      /* Option A: flexible buffer + readable content + photo gets the rest */
+      grid-template-columns:
+        minmax(0, 1fr)              /* buffer (flex) */
+        var(--label-col)            /* labels */
+        minmax(0, 520px)            /* content (cap it so it stays readable) */
+        minmax(360px, 1fr);         /* photo (takes remaining room) */
+
       column-gap: var(--gap);
       padding: calc(var(--rhythm) * 0.5) 0;
-      align-items: baseline;
+      align-items: start;
     }
+
+    .pad{ /* purely structural; no styling needed */ }
 
     .label{
       font-weight: 700;
@@ -108,47 +123,37 @@
     button{ cursor: pointer; }
     input{ width: min(520px, 100%); }
 
-    /* --- Hook image (single, quiet) --- */
-    /* --- Hook image (single, quiet) --- */
-.hook-image{
-  width: 100%;
-  height: auto;
-  display: block;
-
-  /* remove top white */
-  margin: 0 0 calc(var(--rhythm) * 1.25);
-
-  border: 1px dotted #000; /* optional */
-  border-radius: 0;        /* '1' is invalid; use 0 or px */
-  object-fit: cover;
-}
-/* remove the row's built-in vertical padding above the hook image */
-.hook-row{
-  padding-top: 0;
-  padding-bottom: 0; /* optional: keeps it tight */
-}
-
-    /* Slightly reduce margins on small screens */
-    @media (max-width: 760px){
-      .hook-image{
-        margin: calc(var(--rhythm) * 1) 0 calc(var(--rhythm) * 1);
-      }
+    /* --- Photo column (top row only) --- */
+    .photo{
+      align-self: start;
+    }
+    .photo-inner{
+      border: 1px dotted #000; /* optional */
+      display: block;
+      overflow: hidden;
+      background: #fff;        /* letterbox color */
     }
 
+    /* KEY CHANGE: show whole image (no crop), and remove forced stretch */
+    .hook-image{
+      width: 100%;
+      height: auto;            /* <- important: no giant empty space */
+      display: block;
+      margin: 0;
+      object-fit: contain;     /* <- entire image visible */
+      border-radius: 0;
+    }
 
-    /* --- Newsletter (updated) --- */
-
-    /* Top-align the Newsletter label with the form block */
+    /* --- Newsletter (unchanged, kept) --- */
     .newsletter-section{
       align-items: start;
     }
     .newsletter-section .label{
-      padding-top: 6px; /* optical align to the email box */
+      padding-top: 6px;
     }
 
     .newsletter-form{ margin: 0; }
 
-    /* Row 1: email box */
     .newsletter-row{
       display: flex;
       align-items: center;
@@ -163,7 +168,6 @@
       display: block;
     }
 
-    /* Left “Email” + right hint */
     .emailfield-left,
     .emailfield-right{
       position: absolute;
@@ -186,7 +190,6 @@
       font-style: italic;
     }
 
-    /* Invisible input overlay */
     .emailfield input{
       position: absolute;
       inset: 0;
@@ -198,17 +201,15 @@
       font: inherit;
       color: #000;
       outline: none;
-      padding-left: 70px; /* starts after “Email” */
+      padding-left: 70px;
     }
 
-    /* Hide right hint once user types */
     .emailfield.has-value .emailfield-right{
       display: none;
     }
 
-    /* Row 2: subscribe on its own line */
     .newsletter-actions{
-      margin-top: 10px; /* small, deliberate drop */
+      margin-top: 10px;
     }
 
     .newsletter-actions button{
@@ -222,7 +223,6 @@
       line-height: 1;
     }
 
-    /* Colophon (smaller + closer) */
     .colophon{
       margin-top: 5px;
       font-size: 13px;
@@ -230,46 +230,53 @@
     }
 
     /* Mobile */
-    /* Mobile */
-  @media (max-width: 760px){
-    :root{ --page-pad: 22px; }
+    @media (max-width: 760px){
+      :root{
+        --page-pad: 22px;
+        --left-buffer: 0px;
+        --photo-col: 0px;
+      }
 
-    /* IMPORTANT: this was causing the huge top whitespace */
-    .wrap{ padding-top: var(--page-pad); }
+      .wrap{
+        padding-top: var(--page-pad);
+      }
 
-    .row{ grid-template-columns: 1fr; }
-    .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
+      .row{
+        grid-template-columns: 1fr;
+        column-gap: 0;
+      }
 
-    /* Reorder ONLY the top block on mobile, using grid (NOT flex) */
-    main.wrap > section.row:first-of-type{
-      grid-template-areas:
-        "content"
-        "label";
+      .pad{ display: none; }
+
+      .label{
+        text-align: left;
+        margin-bottom: 6px;
+      }
+
+      /* hide photo column in all rows by default */
+      .photo{ display: none; }
+
+      /* Top row becomes: photo, then label+content */
+      .top-row{
+        grid-template-areas:
+          "photo"
+          "label"
+          "content";
+      }
+      .top-row .photo{
+        display: block;
+        grid-area: photo;
+        margin-bottom: calc(var(--rhythm) * 1);
+      }
+      .top-row .label{
+        grid-area: label;
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      .top-row .content{
+        grid-area: content;
+      }
     }
-    main.wrap > section.row:first-of-type .content{ grid-area: content; }
-    main.wrap > section.row:first-of-type .label{
-      grid-area: label;
-      margin-top: calc(var(--rhythm) * 0.75);
-      margin-bottom: 0;
-    }
-
-    /* tighten the top block padding so the image doesn't float */
-    main.wrap > section.row:first-of-type{
-      padding-top: 0;
-    }
-
-    /* make image spacing feel even on mobile (no big top gap) */
-    .hook-image{
-      margin: 0 0 calc(var(--rhythm) * 1);
-    }
-
-    .newsletter-section .label{ padding-top: 0; }
-
-    .newsletter-row{ gap: 12px; }
-    .emailfield{ width: 100%; }
-    .emailfield-right{ max-width: 52%; }
-  }
-
 
     @media (prefers-reduced-motion: reduce){
       .rule{ transform: none !important; transition: none !important; }
@@ -283,17 +290,12 @@
 <main class="wrap">
 
   <!-- Top block -->
-  <section class="row">
-    <div class="label">STUDIO APPOSITE</div>
-    <div class="content">
-        <img
-          class="hook-image"
-          src="assets/images/Maquinna05.jpg"
-          alt="Architectural detail, Studio Apposite"
-          loading="lazy"
-          decoding="async"
-        />
+  <section class="row top-row">
+    <div class="pad"></div>
 
+    <div class="label">STUDIO APPOSITE</div>
+
+    <div class="content">
       <p><span class="i">Architectural Design + Research</span></p>
 
       <p>
@@ -303,14 +305,29 @@
         Alongside client work, Studio Apposite operates as a hybrid research platform, producing exhibitions, publications, and archival studies focused on regional architectural history. This research directly informs the design practice, grounding each project in the spatial, material, and cultural conditions of its site.
       </p>
     </div>
+
+    <div class="photo">
+      <div class="photo-inner">
+        <img
+          class="hook-image"
+          src="assets/images/Maquinna05.jpg"
+          alt="Architectural detail, Studio Apposite"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
   </section>
 
   <section class="row rulewrap" aria-hidden="true">
+    <div class="pad"></div>
     <div class="label"></div>
     <div class="content"><div class="rule"></div></div>
+    <div class="photo"></div>
   </section>
 
   <section class="row" id="practice">
+    <div class="pad"></div>
     <div class="label">Practice</div>
     <div class="content">
       <p>
@@ -327,14 +344,18 @@
 
       <p><a href="practice.html"><span class="b">View services + portfolio</span></a></p>
     </div>
+    <div class="photo"></div>
   </section>
 
   <section class="row rulewrap" aria-hidden="true">
+    <div class="pad"></div>
     <div class="label"></div>
     <div class="content"><div class="rule"></div></div>
+    <div class="photo"></div>
   </section>
 
   <section class="row" id="research">
+    <div class="pad"></div>
     <div class="label">Research</div>
     <div class="content">
       <p>
@@ -344,14 +365,18 @@
 
       <p><a href="research.html"><span class="b">View publications + exhibitions</span></a></p>
     </div>
+    <div class="photo"></div>
   </section>
 
   <section class="row rulewrap" aria-hidden="true">
+    <div class="pad"></div>
     <div class="label"></div>
     <div class="content"><div class="rule"></div></div>
+    <div class="photo"></div>
   </section>
 
   <section class="row" id="studio">
+    <div class="pad"></div>
     <div class="label">Studio</div>
     <div class="content">
       <p>
@@ -369,25 +394,34 @@
         Hodgson’s Elza Mayhew Studio (1969).
       </p>
     </div>
+    <div class="photo"></div>
   </section>
 
   <section class="row rulewrap" aria-hidden="true">
+    <div class="pad"></div>
     <div class="label"></div>
     <div class="content"><div class="rule"></div></div>
+    <div class="photo"></div>
   </section>
 
   <section class="row" id="contact">
+    <div class="pad"></div>
     <div class="label">Contact</div>
     <div class="content">
       <p><a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a></p>
     </div>
+    <div class="photo"></div>
   </section>
+
   <section class="row" id="colophon">
+    <div class="pad"></div>
     <div class="label"></div>
     <div class="content">
         <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
     </div>
+    <div class="photo"></div>
   </section>
+
   <!--<section class="row newsletter-section" id="newsletter">
   <div class="label">Newsletter</div>
   <div class="content">
@@ -428,8 +462,7 @@
 
     </form>
   </div>
-</section>
-
+</section>-->
 
 </main>
 
