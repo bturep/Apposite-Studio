@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Practice — Studio Apposite</title>
-  <meta name="description" content="Studio Apposite — Practice, services, and process." />
+  <title>Research — Studio Apposite</title>
+  <meta name="description" content="Studio Apposite — Research: publications, exhibitions, archival studies." />
 
   <!-- Lato -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,24 +21,27 @@
       line-height: 1.55;
       color: #000;
       background: #fff;
-      zoom: 0.8;
     }
 
     :root{
       --rhythm: 16px;
-      --label-col: 150px;
       --gap: 36px;
       --page-pad: 44px;
+
+      /* Research layout */
+      --side-pad: 28px;        /* "tight" to edges */
+      --mid-gap: 44px;         /* the photo void */
+      --photo-col: 220px;      /* image width inside the void */
     }
 
+    /* Page wrap is full-width (tight columns to edges) */
     .wrap{
-      max-width: 980px;
-      margin: 0 auto;
-      padding: calc(var(--rhythm) * 1) var(--page-pad) calc(var(--rhythm) * 6);
+      width: 100%;
+      margin: 0;
+      padding: calc(var(--rhythm) * 1) var(--side-pad) calc(var(--rhythm) * 6);
     }
 
     p{ margin: 0 0 calc(var(--rhythm) * 1) 0; }
-
     .b{ font-weight: 700; }
     .i{ font-style: italic; }
 
@@ -62,50 +65,7 @@
       a:hover{ background-size: 100% 1px; }
     }
 
-    .row{
-      display: grid;
-      grid-template-columns: var(--label-col) 1fr;
-      column-gap: var(--gap);
-      padding: calc(var(--rhythm) * 0.5) 0;
-      align-items: baseline;
-    }
-
-    /* --- Top block: allow label + media + text to reorder on mobile --- */
-    .top-block{
-      grid-template-areas:
-        "label media"
-        "label content";
-      align-items: start;
-    }
-    .top-block .label{ grid-area: label; }
-    .top-block .top-media{ grid-area: media; }
-    .top-block .top-content{ grid-area: content; }
-
-    /* Image */
-    .hook-image{
-      width: 100%;
-      height: auto;
-      display: block;
-
-      /* default margin (desktop) */
-      margin: 0 0 calc(var(--rhythm) * 1.25);
-
-      border: 1px dotted #000; /* optional */
-      border-radius: 0;
-      object-fit: cover;
-    }
-
-    /* In the top-block grid, spacing is handled by the grid + top-media margin */
-    .top-block .hook-image{ margin: 0; }
-
-    .label{
-      font-weight: 700;
-      text-align: right;
-      padding-top: 0;
-    }
-
-    .content p:last-child{ margin-bottom: 0; }
-
+    /* Reuse the dashed rule language from index */
     .rule{
       height: 1px;
       width: 100%;
@@ -121,14 +81,60 @@
       transition: transform 180ms linear;
     }
 
-    .rulewrap{ margin: calc(var(--rhythm) * 0.75) 0; }
-
-    /* Desktop: consistent breathing room under the image */
-    .top-block .top-media{
-      margin-bottom: calc(var(--rhythm) * 1);
+    .rulewrap{
+      margin: calc(var(--rhythm) * 0.9) 0;
     }
-    /* Prevent double-spacing before the first rule */
-    .top-block .top-content p:last-child{
+
+    /* --- Research grid: left column | mid void | right column --- */
+    .rg-row{
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) var(--mid-gap) minmax(0, 1fr);
+      column-gap: var(--gap);
+      padding: calc(var(--rhythm) * 0.75) 0;
+      align-items: start;
+    }
+
+    /* The mid void (photo strip) sits inside the gap column */
+    .rg-mid{
+      position: relative;
+      min-height: 1px;
+    }
+
+    .rg-photo{
+      width: var(--photo-col);
+      max-width: 100%;
+      margin: 0 auto;              /* centered in the void */
+      border: 1px dotted #000;     /* optional: matches your motif */
+      display: block;
+    }
+
+    .rg-photo img{
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* Header row: keep it strict + index-like */
+    .kicker{
+      margin-bottom: calc(var(--rhythm) * 0.75);
+    }
+
+    /* Small meta */
+    .meta{
+      font-size: 13px;
+      line-height: 1.4;
+      margin-top: calc(var(--rhythm) * 0.5);
+    }
+
+    /* A quiet “tag” line */
+    .tagline{
+      margin-top: calc(var(--rhythm) * 0.35);
+    }
+
+    /* Consistent last-paragraph trimming */
+    .rg-left p:last-child,
+    .rg-right p:last-child{
       margin-bottom: 0;
     }
 
@@ -139,31 +145,28 @@
       line-height: 1.4;
     }
 
-    /* Mobile */
-    @media (max-width: 760px){
-      :root{ --page-pad: 22px; }
-
-      .wrap{ padding-top: var(--page-pad); }
-
-      .row{ grid-template-columns: 1fr; }
-      .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
-
-      /* Top block order on mobile: image -> label -> text */
-      .top-block{
-        grid-template-areas:
-          "media"
-          "label"
-          "content";
-        padding-top: 0;
+    /* Mobile: stack, keep photos inline between blocks */
+    @media (max-width: 900px){
+      :root{
+        --side-pad: 22px;
+        --mid-gap: 0px;
+        --photo-col: 100%;
       }
 
-      .top-block .label{
-        margin-top: calc(var(--rhythm) * 0.75);
-        margin-bottom: 0;
+      .rg-row{
+        grid-template-columns: 1fr;
+        column-gap: 0;
+        row-gap: calc(var(--rhythm) * 0.75);
       }
 
-      .top-block .top-media{
-        margin-bottom: calc(var(--rhythm) * 1);
+      .rg-mid{
+        order: 2;
+      }
+      .rg-left{ order: 1; }
+      .rg-right{ order: 3; }
+
+      .rg-photo{
+        border: 1px dotted #000;
       }
     }
 
@@ -178,186 +181,149 @@
 
 <main class="wrap">
 
-  <!-- Top block -->
-  <section class="row top-block">
-    <div class="label">Practice</div>
-
-    <div class="top-media">
-      <img
-        class="hook-image"
-        src="assets/images/Maquinna05.jpg"
-        alt="Architectural detail, Studio Apposite"
-        loading="lazy"
-        decoding="async"
-      />
+  <!-- Header (tight follow of index language, but two-column framing) -->
+  <section class="rg-row" id="top">
+    <div class="rg-left">
+      <p class="b">Research</p>
+      <p class="kicker">
+        Studio Apposite operates as a hybrid research platform: archival surveys, interviews, and image-based studies that culminate in small publications and occasional exhibitions.
+      </p>
+      <p class="meta"><a href="index.html"><span class="b">← Home</span></a></p>
     </div>
 
-    <div class="top-content">
-      <p><span class="i">Services + process</span></p>
-
-      <p>
-        Studio Apposite works primarily with existing buildings—projects where the most important design work is often
-        <span class="i">integration</span>: tying new work into old work, aligning new constraints with existing structure,
-        and making repairs and upgrades legible rather than invisible.
-      </p>
-
-      <p>
-        We take on small projects (entries, stairs, built-ins, kitchens and bathrooms, decks, envelopes and upgrades) as well as
-        larger renovations and additions. Where needed, we also produce documentation for permitting pathways and coordinate
-        with consultants and builders.
-      </p>
-
-      <p><a href="index.html"><span class="b">Back to index</span></a></p>
+    <div class="rg-mid">
+      <!-- optional: leave blank in header, or drop an image -->
+      <a class="rg-photo" href="#" aria-label="Research image (placeholder)">
+        <img src="assets/images/Maquinna05.jpg" alt="Architectural detail (placeholder image)" loading="lazy" decoding="async">
+      </a>
     </div>
-  </section>
 
-  <section class="row rulewrap" aria-hidden="true">
-    <div class="label"></div>
-    <div class="content"><div class="rule"></div></div>
-  </section>
-
-  <section class="row" id="services">
-    <div class="label">Services</div>
-    <div class="content">
-      <p>
-        Studio Apposite provides architectural design and documentation services with an emphasis on existing houses and
-        careful, design-sensitive alteration.
+    <div class="rg-right">
+      <p class="b">Working themes</p>
+      <p class="tagline">
+        Regional architectural history · building as evidence · documentation as design · repair and continuity · the archive as a practical tool.
       </p>
-
-      <p>
-        Typical services include measured site visits and drawing up existing conditions; conceptual studies and options;
-        renovation and addition design; custom millwork and interior interventions; envelope and upgrade strategies; and
-        drawing sets suitable for permitting and construction.
-      </p>
-
-      <p>
-        We also support projects that involve regulatory and documentation requirements—such as suite legalization pathways—
-        by preparing clear drawing packages and coordinating information required for municipal review.
+      <p class="meta small">
+        If you have material we should know about—photographs, drawings, correspondence, or leads—email us.
       </p>
     </div>
   </section>
 
-  <section class="row rulewrap" aria-hidden="true">
-    <div class="label"></div>
-    <div class="content"><div class="rule"></div></div>
+  <section class="rulewrap" aria-hidden="true">
+    <div class="rule"></div>
   </section>
 
-  <section class="row" id="approach">
-    <div class="label">Approach</div>
-    <div class="content">
+  <!-- ROW 1 -->
+  <section class="rg-row" id="pub-1">
+    <div class="rg-left">
+      <p class="b">Publication</p>
+      <p><span class="i">Photo-book series: West Coast Modern / regional practices</span></p>
       <p>
-        Our approach is grounded in measurement, proportion, and construction logic. We treat the existing house as
-        <span class="i">material</span>, <span class="i">evidence</span>, and <span class="i">constraint</span>—working with what is there
-        rather than designing around an abstract ideal.
+        A small-format publication program focused on discrete buildings and site conditions—prioritizing clear image sequences, concise captions, and archival trace materials.
       </p>
+      <p class="meta">Status: in development</p>
+    </div>
 
+    <div class="rg-mid">
+      <a class="rg-photo" href="#" aria-label="Publication image (placeholder)">
+        <img src="assets/images/Maquinna05.jpg" alt="Publication placeholder image" loading="lazy" decoding="async">
+      </a>
+    </div>
+
+    <div class="rg-right">
+      <p class="b">Format</p>
       <p>
-        This often means making the “unseen” work explicit: structure, junctions, transitions, tolerances, and sequencing.
-        The goal is not novelty, but fit—work that is buildable, legible, and continuous with what already exists.
+        Short runs, high legibility. Each issue assembles a record: photographs, drawing fragments, construction logic, and commentary—enough to be useful, not encyclopedic.
       </p>
+      <p class="meta">Outputs: printed booklet · PDF edition</p>
     </div>
   </section>
 
-  <section class="row rulewrap" aria-hidden="true">
-    <div class="label"></div>
-    <div class="content"><div class="rule"></div></div>
+  <section class="rulewrap" aria-hidden="true">
+    <div class="rule"></div>
   </section>
 
-  <section class="row" id="process">
-    <div class="label">Process</div>
-    <div class="content">
+  <!-- ROW 2 -->
+  <section class="rg-row" id="exhibit-1">
+    <div class="rg-left">
+      <p class="b">Exhibition</p>
+      <p><span class="i">Archival studies + image-based installations</span></p>
       <p>
-        Most projects follow a phased structure. The names and boundaries can shift depending on scope, but the sequence is consistent:
-        establish what exists, test options, develop a preferred direction, and then document it.
+        Occasional exhibitions that treat documentation as material: photographs, scans, and re-assembled evidence staged as a spatial argument.
       </p>
+      <p class="meta">Status: occasional / by project</p>
+    </div>
 
-      <p>
-        <span class="b">1. Existing conditions + constraints</span><br>
-        Site visit, measurement, and a baseline drawing set; identification of key constraints (structure, code, zoning, services, access).
-      </p>
+    <div class="rg-mid">
+      <a class="rg-photo" href="#" aria-label="Exhibition image (placeholder)">
+        <img src="assets/images/Maquinna05.jpg" alt="Exhibition placeholder image" loading="lazy" decoding="async">
+      </a>
+    </div>
 
+    <div class="rg-right">
+      <p class="b">Purpose</p>
       <p>
-        <span class="b">2. Concept options</span><br>
-        A small set of design directions, studied through drawings and (when helpful) quick massing or spatial diagrams. We use this phase
-        to decide what to pursue—and what not to pursue.
+        To build a local record of buildings and practices—and to carry that material back into client work, where it becomes reference, constraint, and grounding.
       </p>
-
-      <p>
-        <span class="b">3. Design development</span><br>
-        Refinement of the chosen direction: layout, junctions, key details, and coordination with consultants where required.
-      </p>
-
-      <p>
-        <span class="b">4. Documentation</span><br>
-        Drawing set prepared for permitting and/or construction. Scope ranges from targeted sheets to full packages, depending on the project.
-      </p>
-
-      <p>
-        <span class="b">5. Construction support</span><br>
-        Optional support during construction: answering RFIs, clarifying intent, reviewing changes, and maintaining continuity with the design.
-      </p>
+      <p class="meta">Outputs: wall text · prints · small publication</p>
     </div>
   </section>
 
-  <section class="row rulewrap" aria-hidden="true">
-    <div class="label"></div>
-    <div class="content"><div class="rule"></div></div>
+  <section class="rulewrap" aria-hidden="true">
+    <div class="rule"></div>
   </section>
 
-  <section class="row" id="fees">
-    <div class="label">Fees</div>
-    <div class="content">
+  <!-- ROW 3 -->
+  <section class="rg-row" id="archive-1">
+    <div class="rg-left">
+      <p class="b">Archival survey</p>
+      <p><span class="i">Fieldwork + interviews</span></p>
       <p>
-        Fees can be structured as a fixed package by phase, hourly, or a hybrid (fixed for early phases; hourly for open-ended support).
-        The right structure depends on clarity of scope and the level of unknowns in the existing conditions.
+        Site visits, measured observations, and conversations that identify what exists, what has changed, and what survives in drawings, photographs, and memory.
       </p>
+      <p class="meta">Status: ongoing</p>
+    </div>
 
-      <p>
-        For early-stage work, we often recommend a defined first phase (existing conditions + initial study) so that both parties
-        can make an informed decision about the next steps.
-      </p>
+    <div class="rg-mid">
+      <a class="rg-photo" href="#" aria-label="Archive image (placeholder)">
+        <img src="assets/images/Maquinna05.jpg" alt="Archive placeholder image" loading="lazy" decoding="async">
+      </a>
+    </div>
 
+    <div class="rg-right">
+      <p class="b">How it shows up in design</p>
       <p>
-        If you’re unsure what you need, a short call is usually enough to propose a sensible first phase.
+        Better briefs, better constraints, better proportion decisions. Research becomes a practical tool: a way to make interventions that fit what’s already there.
       </p>
+      <p class="meta">Outputs: notes · image sets · as-built fragments</p>
     </div>
   </section>
 
-  <section class="row rulewrap" aria-hidden="true">
-    <div class="label"></div>
-    <div class="content"><div class="rule"></div></div>
+  <section class="rulewrap" aria-hidden="true">
+    <div class="rule"></div>
   </section>
 
-  <section class="row" id="portfolio">
-    <div class="label">Portfolio</div>
-    <div class="content">
-      <p>
-        <span class="b">Portfolio forthcoming.</span>
-      </p>
-
-      <p>
-        Studio Apposite is currently building a public portfolio. In the meantime, we can share selected work privately upon request
-        (depending on client permissions and project stage).
-      </p>
-    </div>
-  </section>
-
-  <section class="row rulewrap" aria-hidden="true">
-    <div class="label"></div>
-    <div class="content"><div class="rule"></div></div>
-  </section>
-
-  <section class="row" id="contact">
-    <div class="label">Contact</div>
-    <div class="content">
+  <!-- Contact -->
+  <section class="rg-row" id="contact">
+    <div class="rg-left">
+      <p class="b">Contact</p>
       <p><a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a></p>
-      <p><a href="index.html">Return to index</a></p>
+    </div>
+
+    <div class="rg-mid"></div>
+
+    <div class="rg-right">
+      <p class="b">Notes</p>
+      <p class="meta">
+        If you’re reaching out with archival material, include whatever you have—addresses, dates, names, photo captions. We’ll follow up.
+      </p>
     </div>
   </section>
 
-  <section class="row" id="colophon">
-    <div class="label"></div>
-    <div class="content">
+  <section class="rg-row" id="colophon">
+    <div class="rg-left"></div>
+    <div class="rg-mid"></div>
+    <div class="rg-right">
       <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
     </div>
   </section>
@@ -368,7 +334,7 @@
   // Year
   document.getElementById("y").textContent = new Date().getFullYear();
 
-  // Animate only the dashed rules on first view (no content opacity changes)
+  // Animate dashed rules on first view
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const ruleEls = Array.from(document.querySelectorAll(".rule"));
 
@@ -376,9 +342,8 @@
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        const el = entry.target;
-        el.style.transform = "scaleX(1)";
-        io.unobserve(el);
+        entry.target.style.transform = "scaleX(1)";
+        io.unobserve(entry.target);
       });
     }, { root: null, rootMargin: "0px 0px -12% 0px", threshold: 0.01 });
 
