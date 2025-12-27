@@ -231,9 +231,19 @@
 
     /* Mobile */
     @media (max-width: 760px){
-      :root{ --page-pad: 22px; }
-      .wrap{ padding-top: calc(var(--rhythm) * 4); }
-
+    main.wrap > section.row:first-of-type{
+      display: flex;
+      flex-direction: column;
+    }
+    main.wrap > section.row:first-of-type .content{
+      order: 1;
+    }
+    main.wrap > section.row:first-of-type .label{
+      order: 2;
+      margin-top: calc(var(--rhythm) * 0.75);
+      margin-bottom: 0;
+    }
+  }
       .row{ grid-template-columns: 1fr; }
       .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
 
