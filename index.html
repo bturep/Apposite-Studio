@@ -135,6 +135,28 @@
         margin: 0 0 calc(var(--rhythm) * 1);
       }
     }
+    /* --- Offset hook image to top-left --- */
+    .hook-row{
+      position: relative;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .hook-row .content{
+      position: relative;
+    }
+
+    .hook-image{
+      position: relative;
+      display: block;
+      width: 82%;              /* controls how far it reaches toward the text */
+      max-width: 720px;
+      margin: 0;
+      top: -72px;              /* pull upward toward top of page */
+      left: -36px;             /* pull toward left edge */
+      border: 1px dotted #000; /* optional */
+      object-fit: cover;
+    }
 
     /* --- Newsletter (updated) --- */
 
