@@ -108,17 +108,24 @@
     input{ width: min(520px, 100%); }
 
     /* --- Hook image (single, quiet) --- */
-    .hook-image{
-      width: 100%;
-      height: auto;
-      display: block;
-      margin: calc(var(--rhythm) * 1.25) 0 calc(var(--rhythm) * 1.25);
-      border: 1px dotted #000;          /* optional: remove if you want it borderless */
-      border-radius: 1;
-      object-fit: cover;
+    /* --- Hook image (single, quiet) --- */
+.hook-image{
+  width: 100%;
+  height: auto;
+  display: block;
 
+  /* remove top white */
+  margin: 0 0 calc(var(--rhythm) * 1.25);
 
-    }
+  border: 1px dotted #000; /* optional */
+  border-radius: 0;        /* '1' is invalid; use 0 or px */
+  object-fit: cover;
+}
+/* remove the row's built-in vertical padding above the hook image */
+.hook-row{
+  padding-top: 0;
+  padding-bottom: 0; /* optional: keeps it tight */
+}
 
     /* Slightly reduce margins on small screens */
     @media (max-width: 760px){
@@ -251,7 +258,7 @@
 
 <body>
   <!-- Hook image (single, quiet) -->
-    <section class="row" aria-label="Maquinna Suite">
+    <section class="row hook-row" aria-label="Maquinna Suite">
       <div class="label"></div>
       <div class="content">
         <img
