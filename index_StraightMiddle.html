@@ -29,17 +29,12 @@
       --label-col: 150px;
       --gap: 36px;
       --page-pad: 44px;
-
-      /* NEW: left buffer + photo column */
-      --left-buffer: 64px;
-      --photo-col: 320px;
     }
 
     .wrap{
     max-width: 980px;
     margin: 0 auto;
     padding: calc(var(--rhythm) * 1) var(--page-pad) calc(var(--rhythm) * 6);
-    padding-left: calc(var(--page-pad) + var(--left-buffer));
   }
 
 
@@ -70,7 +65,7 @@
 
     .row{
       display: grid;
-      grid-template-columns: var(--label-col) minmax(0, 1fr) var(--photo-col);
+      grid-template-columns: var(--label-col) 1fr;
       column-gap: var(--gap);
       padding: calc(var(--rhythm) * 0.5) 0;
       align-items: baseline;
@@ -117,11 +112,11 @@
     /* --- Hook image (single, quiet) --- */
 .hook-image{
   width: 100%;
-  height: 100%;
+  height: auto;
   display: block;
 
   /* remove top white */
-  margin: 0;
+  margin: 0 0 calc(var(--rhythm) * 1.25);
 
   border: 1px dotted #000; /* optional */
   border-radius: 0;        /* '1' is invalid; use 0 or px */
@@ -133,18 +128,10 @@
   padding-bottom: 0; /* optional: keeps it tight */
 }
 
-/* NEW: photo column container */
-.photo{
-  align-self: stretch;
-}
-.photo-inner{
-  height: 100%;
-}
-
     /* Slightly reduce margins on small screens */
     @media (max-width: 760px){
       .hook-image{
-        margin: 0;
+        margin: calc(var(--rhythm) * 1) 0 calc(var(--rhythm) * 1);
       }
     }
 
@@ -245,42 +232,35 @@
     /* Mobile */
     /* Mobile */
   @media (max-width: 760px){
-    :root{
-      --page-pad: 22px;
-      --left-buffer: 0px;
-      --photo-col: 0px;
-    }
+    :root{ --page-pad: 22px; }
 
     /* IMPORTANT: this was causing the huge top whitespace */
-    .wrap{ padding-top: var(--page-pad); padding-left: var(--page-pad); }
+    .wrap{ padding-top: var(--page-pad); }
 
     .row{ grid-template-columns: 1fr; }
     .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
 
-    /* Hide photo column by default on mobile */
-    .photo{ display: none; }
-
-    /* Top block: show photo ABOVE label/content on mobile */
-    .top-row{
+    /* Reorder ONLY the top block on mobile, using grid (NOT flex) */
+    main.wrap > section.row:first-of-type{
       grid-template-areas:
-        "photo"
-        "label"
-        "content";
+        "content"
+        "label";
     }
-    .top-row .photo{
-      display: block;
-      grid-area: photo;
-    }
-    .top-row .label{
+    main.wrap > section.row:first-of-type .content{ grid-area: content; }
+    main.wrap > section.row:first-of-type .label{
       grid-area: label;
       margin-top: calc(var(--rhythm) * 0.75);
       margin-bottom: 0;
     }
-    .top-row .content{ grid-area: content; }
 
     /* tighten the top block padding so the image doesn't float */
     main.wrap > section.row:first-of-type{
       padding-top: 0;
+    }
+
+    /* make image spacing feel even on mobile (no big top gap) */
+    .hook-image{
+      margin: 0 0 calc(var(--rhythm) * 1);
     }
 
     .newsletter-section .label{ padding-top: 0; }
@@ -303,9 +283,16 @@
 <main class="wrap">
 
   <!-- Top block -->
-  <section class="row top-row">
+  <section class="row">
     <div class="label">STUDIO APPOSITE</div>
     <div class="content">
+        <img
+          class="hook-image"
+          src="assets/images/Maquinna05.jpg"
+          alt="Architectural detail, Studio Apposite"
+          loading="lazy"
+          decoding="async"
+        />
 
       <p><span class="i">Architectural Design + Research</span></p>
 
@@ -316,24 +303,11 @@
         Alongside client work, Studio Apposite operates as a hybrid research platform, producing exhibitions, publications, and archival studies focused on regional architectural history. This research directly informs the design practice, grounding each project in the spatial, material, and cultural conditions of its site.
       </p>
     </div>
-
-    <div class="photo">
-      <div class="photo-inner">
-        <img
-          class="hook-image"
-          src="assets/images/Maquinna05.jpg"
-          alt="Architectural detail, Studio Apposite"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-    </div>
   </section>
 
   <section class="row rulewrap" aria-hidden="true">
     <div class="label"></div>
     <div class="content"><div class="rule"></div></div>
-    <div class="photo"></div>
   </section>
 
   <section class="row" id="practice">
@@ -353,13 +327,11 @@
 
       <p><a href="practice.html"><span class="b">View services + portfolio</span></a></p>
     </div>
-    <div class="photo"></div>
   </section>
 
   <section class="row rulewrap" aria-hidden="true">
     <div class="label"></div>
     <div class="content"><div class="rule"></div></div>
-    <div class="photo"></div>
   </section>
 
   <section class="row" id="research">
@@ -372,13 +344,11 @@
 
       <p><a href="research.html"><span class="b">View publications + exhibitions</span></a></p>
     </div>
-    <div class="photo"></div>
   </section>
 
   <section class="row rulewrap" aria-hidden="true">
     <div class="label"></div>
     <div class="content"><div class="rule"></div></div>
-    <div class="photo"></div>
   </section>
 
   <section class="row" id="studio">
@@ -399,13 +369,11 @@
         Hodgson’s Elza Mayhew Studio (1969).
       </p>
     </div>
-    <div class="photo"></div>
   </section>
 
   <section class="row rulewrap" aria-hidden="true">
     <div class="label"></div>
     <div class="content"><div class="rule"></div></div>
-    <div class="photo"></div>
   </section>
 
   <section class="row" id="contact">
@@ -413,14 +381,12 @@
     <div class="content">
       <p><a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a></p>
     </div>
-    <div class="photo"></div>
   </section>
   <section class="row" id="colophon">
     <div class="label"></div>
     <div class="content">
         <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
     </div>
-    <div class="photo"></div>
   </section>
   <!--<section class="row newsletter-section" id="newsletter">
   <div class="label">Newsletter</div>
