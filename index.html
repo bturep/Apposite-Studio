@@ -152,7 +152,14 @@
     }
 
 
-    /* --- Newsletter (updated) --- */
+    /* Desktop: consistent breathing room under the image */
+  .top-block .top-media{
+    margin-bottom: calc(var(--rhythm) * 1);
+  }
+  /* Remove the extra paragraph-bottom gap in the top block (prevents double-spacing before the rule) */
+  .top-block .top-content p:last-child{
+    margin-bottom: 0;
+  }
 
     /* Top-align the Newsletter label with the form block */
     .newsletter-section{
