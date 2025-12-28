@@ -34,6 +34,10 @@
       --label-col: 150px;
       --gap: 36px;
       --page-pad: 44px;
+
+      /* Accent (sampled from the photo’s wood/shadow range) */
+ --accent: #5a4b3f;        /* muted umber */
+ --accent-soft: #8a7a6d;   /* lighter for secondary use if needed */
     }
 
     .wrap{
@@ -86,6 +90,7 @@
       font-weight: 700;
       text-align: right;
       padding-top: 0;
+      color: var(--accent);
     }
 
     .content p:last-child{ margin-bottom: 0; }
@@ -112,6 +117,10 @@
     .top-block .top-content p:last-child{
       margin-bottom: 0;
     }
+    /* Optional: top subtitle only (keeps body copy black) */
+    .top-block .top-content .i{
+      color: var(--accent);
+    }
 
     /* ----------------------------- */
     /* Rule separators                */
@@ -121,8 +130,8 @@
       width: 100%;
       background-image: repeating-linear-gradient(
         to right,
-        #000 0,
-        #000 2px,
+        var(--accent) 0,
+    var(--accent) 2px,
         transparent 2px,
         transparent 7px
       );
