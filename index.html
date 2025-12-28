@@ -248,12 +248,13 @@
     /* Mobile                         */
     /* ----------------------------- */
     @media (max-width: 760px){
-      :root{ --page-pad: 22px; --edge: 16px;}
+      html{
+    transform: none;
+  }
+      :root{ --edge: 16px;}
 
       .wrap{
-    padding-top: var(--edge);
-    padding-left: var(--edge);
-    padding-right: var(--edge);
+    padding: var(--edge);
     padding-bottom: calc(var(--rhythm) * 6);
   }
 
