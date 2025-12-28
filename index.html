@@ -41,6 +41,7 @@
 
       /* height of the “window” gaps between sections */
       --gap-row: 28px;
+      --main-offset: 64px; /* try 48–96px */
     }
 
     /* FRAME: full width, with an image field inset by --edge */
@@ -66,6 +67,7 @@
       z-index: 1;
       max-width: var(--main-max);
       min-width: 0;
+      margin-left: var(--main-offset);
     }
 
     p{ margin: 0 0 calc(var(--rhythm) * 1) 0; }
