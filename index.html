@@ -30,16 +30,17 @@
       transform-origin: top center;
     }
     :root{
-      --rhythm: 16px;
-      --label-col: 170px;
-      --gap: 28px;
-      --page-pad: 44px;
-    }
+    --rhythm: 16px;
+    --label-col: 170px;
+    --gap: 28px;
 
-    .wrap{
+    --edge: 16px;     /* one edge for top/left/right */
+  }
+
+  .wrap{
     max-width: 980px;
-    margin: 0;                 /* was 0 auto */
-    padding: calc(var(--rhythm) * 1) var(--page-pad) calc(var(--rhythm) * 6);
+    margin: 0; /* left-anchored */
+    padding: var(--edge) var(--edge) calc(var(--rhythm) * 6);
   }
 
     p{ margin: 0 0 calc(var(--rhythm) * 1) 0; }
