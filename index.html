@@ -42,14 +42,13 @@
 
     /* WRAP becomes a 2-column layout: main + strip */
     .wrap{
-      display: grid;
-      grid-template-columns: minmax(0, var(--main-max)) var(--strip-w);
-      column-gap: var(--wrap-gap);
-
-      /* symmetric outer edges */
-      padding: var(--edge);
-      align-items: start;
-    }
+    display: grid;
+    grid-template-columns: minmax(0, var(--main-max)) 1fr; /* strip fills remainder */
+    column-gap: var(--wrap-gap);
+    padding: var(--edge);
+    align-items: start;
+    width: 100%;
+  }
 
     /* Main column holds all rows */
     .main{
