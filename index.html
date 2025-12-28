@@ -27,21 +27,20 @@
     }
     html{
       transform: scale(0.9);
-      transform-origin: top center;
+      transform-origin: top left;
     }
     :root{
-    --rhythm: 16px;
-    --label-col: 170px;
-    --gap: 28px;
+      --rhythm: 16px;
+      --label-col: 170px;
+      --gap: 28px;
+      --edge: 16px; /* or 24px if you want calmer */
+    }
 
-    --edge: 16px;     /* one edge for top/left/right */
-  }
-
-  .wrap{
-    max-width: 980px;
-    margin: 0; /* left-anchored */
-    padding: var(--edge) var(--edge) calc(var(--rhythm) * 6);
-  }
+    .wrap{
+      max-width: 980px;
+      margin: 0;
+      padding: var(--edge) var(--edge) calc(var(--rhythm) * 6);
+    }
 
     p{ margin: 0 0 calc(var(--rhythm) * 1) 0; }
 
