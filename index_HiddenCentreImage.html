@@ -25,20 +25,15 @@
       color: #000;
       background: #fff;
     }
-
     html{
       transform: scale(1);
       transform-origin: top left;
     }
-
     :root{
       --rhythm: 16px;
       --label-col: 170px;
       --gap: 28px;
-      --edge: 16px;
-
-      /* NEW: tighten content column, leave remainder for the right-side strip image */
-      --content-col: 560px; /* tune 520–620 */
+      --edge: 16px; /* or 24px if you want calmer */
     }
 
     .wrap{
@@ -81,7 +76,7 @@
     /* ----------------------------- */
     .row{
       display: grid;
-      grid-template-columns: var(--label-col) minmax(360px, var(--content-col)) 1fr;
+      grid-template-columns: var(--label-col) 1fr;
       column-gap: var(--gap);
       padding: calc(var(--rhythm) * 0.5) 0;
       align-items: baseline;
@@ -96,34 +91,26 @@
     .content p:last-child{ margin-bottom: 0; }
 
     /* ----------------------------- */
-    /* Top block (label + content + side strip) */
+    /* Top block (image + label + text) */
     /* ----------------------------- */
     .top-block{
-      grid-template-areas: "label content side";
+      grid-template-areas:
+        "label media"
+        "label content";
       align-items: start;
     }
     .top-block .label{ grid-area: label; }
+    .top-block .top-media{ grid-area: media; }
     .top-block .top-content{ grid-area: content; }
-    .top-block .side-media{ grid-area: side; }
+
+    /* Desktop: consistent breathing room under the image */
+    .top-block .top-media{
+      margin-bottom: calc(var(--rhythm) * 1);
+    }
 
     /* Prevent extra gap at end of top text before the rule */
     .top-block .top-content p:last-child{
       margin-bottom: 0;
-    }
-
-    /* ----------------------------- */
-    /* Right strip image              */
-    /* ----------------------------- */
-    .side-media{
-      align-self: stretch;
-    }
-
-    .side-image{
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-      border-radius: 0;
     }
 
     /* ----------------------------- */
@@ -146,11 +133,6 @@
 
     .rulewrap{ margin: calc(var(--rhythm) * 0.75) 0; }
 
-    /* Make dotted rules span content + strip columns */
-    .ruleline{
-      grid-column: 2 / -1;
-    }
-
     /* ----------------------------- */
     /* Inputs (global baseline)       */
     /* ----------------------------- */
@@ -166,14 +148,14 @@
     input{ width: min(520px, 100%); }
 
     /* ----------------------------- */
-    /* Hook image (kept for later)    */
+    /* Hook image                     */
     /* ----------------------------- */
     .hook-image{
       width: 100%;
       height: auto;
       display: block;
-      margin: 0;
-      border: 0px dotted #000;
+      margin: 0;                 /* spacing handled by container (top-media) */
+      border: 0px dotted #000;    /* optional */
       border-radius: 0;
       object-fit: cover;
     }
@@ -266,28 +248,38 @@
     /* Mobile                         */
     /* ----------------------------- */
     @media (max-width: 760px){
-      html{ transform: none; }
-
-      :root{ --edge: 16px; }
+      html{
+    transform: none;
+  }
+      :root{ --edge: 16px;}
 
       .wrap{
-        padding: var(--edge);
-        padding-bottom: calc(var(--rhythm) * 6);
-      }
+    padding: var(--edge);
+    padding-bottom: calc(var(--rhythm) * 6);
+  }
+
 
       .row{ grid-template-columns: 1fr; }
       .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
 
-      /* Top block order on mobile: label -> text (strip hidden) */
+      /* Top block order on mobile: image -> label -> text */
       .top-block{
         grid-template-areas:
+          "media"
           "label"
           "content";
         padding-top: 0;
       }
 
-      .side-media{ display: none; }
-      .ruleline{ grid-column: auto; }
+      .top-block .label{
+        margin-top: calc(var(--rhythm) * 0.75);
+        margin-bottom: 0;
+      }
+
+      /* keep breathing room under the image on mobile */
+      .top-block .top-media{
+        margin-bottom: calc(var(--rhythm) * 1);
+      }
 
       .newsletter-section .label{ padding-top: 0; }
 
@@ -310,9 +302,7 @@
   <!-- Top block -->
   <section class="row top-block">
     <div class="label">STUDIO APPOSITE</div>
-
-    <!-- Kept (inactive) full-width image block for later use -->
-    <!--
+<!--
     <div class="top-media">
       <img
         class="hook-image"
@@ -322,8 +312,7 @@
         decoding="async"
       />
     </div>
-    -->
-
+-->
     <div class="top-content">
       <p><span class="i">Architectural Design + Research</span></p>
 
@@ -331,22 +320,11 @@
         Studio Apposite is an architectural design and research practice based in Victoria, British Columbia. The studio operates across two parallel bodies of work: a client-facing architectural practice focused on residential renovation and alteration across a range of scales, and an independent research and publishing program dedicated to the study of regional architectural history and theory.
       </p>
     </div>
-
-    <!-- NEW: long thin image strip in the remaining right-side space -->
-    <div class="side-media" aria-hidden="true">
-      <img
-        class="side-image"
-        src="assets/images/Maquinna05.jpg"
-        alt=""
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
   </section>
 
   <section class="row rulewrap" aria-hidden="true">
     <div class="label"></div>
-    <div class="content ruleline"><div class="rule"></div></div>
+    <div class="content"><div class="rule"></div></div>
   </section>
 
   <section class="row" id="practice">
@@ -360,7 +338,7 @@
 
   <section class="row rulewrap" aria-hidden="true">
     <div class="label"></div>
-    <div class="content ruleline"><div class="rule"></div></div>
+    <div class="content"><div class="rule"></div></div>
   </section>
 
   <section class="row" id="research">
@@ -375,21 +353,21 @@
 
   <section class="row rulewrap" aria-hidden="true">
     <div class="label"></div>
-    <div class="content ruleline"><div class="rule"></div></div>
+    <div class="content"><div class="rule"></div></div>
   </section>
 
   <section class="row" id="people">
     <div class="label">People</div>
     <div class="content">
-      <p>Brandon Poole is an architectural designer, researcher, and educator based in Victoria. He is a PhD Candidate in Architecture at McGill University, where he is a Vadasz Scholar and SSHRC Doctoral Fellow. He holds a Master of Visual Studies from the University of Toronto’s Faculty of Architecture, Landscape, and Design, and a Bachelor of Fine Arts from the University of Victoria. He teaches in the Visual Arts Department at the University of Victoria.</p>
-
-      <p>Patrick Rollins is a designer, researcher, and curator. His work has included contributions to From the Ground, Into the Light: Organic Architecture of the Islands and Centennial Square: A Design History at the Wentworth Villa Architectural Museum. Current projects include research and exhibitions focused on regional architectural history and a forthcoming publication on the work of Alan Hodgson.</p>
-    </div>
+    <p>  Brandon Poole is an architectural designer, researcher, and educator based in Victoria. He is a PhD Candidate in Architecture at McGill University, where he is a Vadasz Scholar and SSHRC Doctoral Fellow. He holds a Master of Visual Studies from the University of Toronto’s Faculty of Architecture, Landscape, and Design, and a Bachelor of Fine Arts from the University of Victoria. He teaches in the Visual Arts Department at the University of Victoria.
+</p><p>
+  Patrick Rollins is a designer, researcher, and curator. His work has included contributions to From the Ground, Into the Light: Organic Architecture of the Islands and Centennial Square: A Design History at the Wentworth Villa Architectural Museum. Current projects include research and exhibitions focused on regional architectural history and a forthcoming publication on the work of Alan Hodgson.
+</p>  </div>
   </section>
 
   <section class="row rulewrap" aria-hidden="true">
     <div class="label"></div>
-    <div class="content ruleline"><div class="rule"></div></div>
+    <div class="content"><div class="rule"></div></div>
   </section>
 
   <section class="row" id="contact">
@@ -444,7 +422,7 @@
 
     </form>
   </div>
-</section>-->
+</section>
 
 </main>
 
