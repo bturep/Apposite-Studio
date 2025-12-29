@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Practice — Studio Apposite</title>
+  <meta name="description" content="Studio Apposite — Practice: Services + Portfolio." />
+
+  <!-- Lato -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ----------------------------- */
+    /* Reset + base                   */
+    /* ----------------------------- */
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    body{
+      font-family: "Lato", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      color: #000;
+      background: #fff;
+    }
+
+    html{
+      transform: scale(1);
+      transform-origin: top left;
+    }
+
+    :root{
+      --rhythm: 16px;
+      --label-col: 240px;
+      --gap: 28px;
+      --edge: 24px;
+      --content-max: 620px; /* keep aligned with index “tight” column */
+    }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0;
+      padding: var(--edge) var(--edge) calc(var(--rhythm) * 6);
+    }
+
+    p{ margin: 0 0 calc(var(--rhythm) * 1) 0; }
+
+    .b{ font-weight: 700; }
+    .i{ font-style: italic; }
+    .sc{ font-variant: small-caps; letter-spacing: 0.02em;}
+
+    /* ----------------------------- */
+    /* Links                          */
+    /* ----------------------------- */
+    a{
+      color:#000;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+    }
+
+    @media (hover:hover){
+      a{
+        background-image: linear-gradient(#000,#000);
+        background-size: 0% 1px;
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        text-decoration: none;
+        padding-bottom: 1px;
+        transition: background-size 140ms linear;
+      }
+      a:hover{ background-size: 100% 1px; }
+    }
+
+    /* ----------------------------- */
+    /* Grid rows + labels             */
+    /* ----------------------------- */
+    .row{
+      display: grid;
+      grid-template-columns: var(--label-col) minmax(0, var(--content-max));
+      column-gap: var(--gap);
+      padding: calc(var(--rhythm) * 0.5) 0;
+      align-items: baseline;
+      justify-content: start; /* keep extra space on the right */
+    }
+
+    .label{
+      font-weight: 700;
+      text-align: right;
+      padding-top: 0;
+    }
+
+    .content p:last-child{ margin-bottom: 0; }
+
+    /* ----------------------------- */
+    /* Top block (page header)        */
+    /* ----------------------------- */
+    .top-block{
+      align-items: start;
+    }
+
+    .top-kicker{
+      margin: 0 0 calc(var(--rhythm) * 0.75) 0;
+    }
+
+    .small{
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    /* ----------------------------- */
+    /* Rule separators                */
+    /* ----------------------------- */
+    .rule{
+      height: 1px;
+      width: 100%;
+      background-image: repeating-linear-gradient(
+        to right,
+        #000 0,
+        #000 2px,
+        transparent 2px,
+        transparent 7px
+      );
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+      transition: transform 180ms linear;
+    }
+
+    .rulewrap{ margin: calc(var(--rhythm) * 0.75) 0; }
+
+    /* ----------------------------- */
+    /* Practice page specifics        */
+    /* ----------------------------- */
+    .twocol{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: var(--gap);
+      row-gap: calc(var(--rhythm) * 1);
+      align-items: start;
+    }
+    /* Portfolio full-width image inside twocol */
+    .twocol .span-all{
+      grid-column: 1 / -1;
+    }
+
+    .portfolio-image{
+      width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: calc(var(--rhythm) * 0.75);
+    }
+
+    .list{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .list li{
+      margin: 0 0 calc(var(--rhythm) * 0.5) 0;
+    }
+
+    /* ----------------------------- */
+    /* Colophon                       */
+    /* ----------------------------- */
+    .colophon{
+      margin-top: 5px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    /* ----------------------------- */
+    /* Mobile                         */
+    /* ----------------------------- */
+    @media (max-width: 760px){
+      html{ transform: none; }
+      :root{ --edge: 16px; }
+
+      .wrap{
+        padding: var(--edge);
+        padding-bottom: calc(var(--rhythm) * 6);
+      }
+
+      .row{ grid-template-columns: 1fr; }
+      .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
+
+      .twocol{
+        grid-template-columns: 1fr;
+        column-gap: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .rule{ transform: none !important; transition: none !important; }
+      a{ transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="wrap">
+
+  <!-- Page header (keeps your practice text exactly) -->
+  <section class="row top-block">
+    <div class="label">STUDIO APPOSITE</div>
+    <div class="content">
+      <p class="top-kicker"><span class="i">Practice</span></p>
+
+      <p>
+        Studio Apposite offers architectural design + documentation services for work on existing houses, small additions, and targeted upgrades.
+        The practice emphasizes careful measurement, proportion, and construction logic—work that is buildable, legible, and continuous with what already exists.
+      </p>
+
+      <p class="small">
+        <a href="index.html"><span class="b">← Home</span></a>
+      </p>
+    </div>
+  </section>
+
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
+
+  <!-- Services -->
+  <section class="row" id="services">
+    <div class="label">Services</div>
+    <div class="content">
+      <div class="twocol">
+
+        <div>
+          <p class="b">Design + documentation</p>
+          <ul class="list">
+            <li>Renovations and alterations (kitchens, bathrooms, stairs, entries, built-ins, millwork).</li>
+            <li>Small additions + integration studies (form, proportion, envelope logic, siting).</li>
+            <li>Concept design and options: clear drawings that support decision-making early.</li>
+            <li>Construction / permit drawing sets (as appropriate to scope and jurisdiction).</li>
+          </ul>
+
+          <p class="b">Existing conditions + as-builts</p>
+          <ul class="list">
+            <li>Measured surveys and as-built drawings (plans / elevations / key sections as required).</li>
+            <li>Targeted verification of constraints (structure, head heights, egress conditions, etc.).</li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="b">Approvals + coordination</p>
+          <ul class="list">
+            <li>Permit pathway support: assembling the right scope of drawings and information for review.</li>
+            <li>Code- and bylaw-aware layout checks (egress, ceiling heights, fire separations, etc.) at a “what’s required here?” level.</li>
+            <li>Consultant coordination where needed (structural / energy / envelope / contractor collaboration).</li>
+            <li>Site reviews at key moments to keep intent and buildability aligned.</li>
+          </ul>
+
+          <p class="b">Special case: suite work</p>
+          <ul class="list">
+            <li>Suite legalization / secondary suite drawing packages (scope depends on existing conditions and municipality).</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
+
+  <!-- Portfolio -->
+  <section class="row" id="portfolio">
+    <div class="label">Portfolio</div>
+
+    <div class="content">
+      <p>
+    <span class="b">Selected work</span>
+    <span class="i">(forthcoming)</span>
+  </p>
+
+      <img
+        class="portfolio-image"
+        src="assets/images/Maquinna01.jpg"
+        alt="Selected architectural work"
+        loading="lazy"
+        decoding="async"
+      />
+
+    </div>
+  </section>
+
+
+
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
+
+  <!-- Contact -->
+  <section class="row" id="contact">
+    <div class="label">Contact</div>
+    <div class="content">
+      <p><a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a></p>
+    </div>
+  </section>
+
+  <section class="row" id="colophon">
+    <div class="label"></div>
+    <div class="content">
+      <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Year
+  document.getElementById("y").textContent = new Date().getFullYear();
+
+  // Animate only the dashed rules on first view (no content opacity changes)
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ruleEls = Array.from(document.querySelectorAll(".rule"));
+
+  if (!prefersReduced && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        el.style.transform = "scaleX(1)";
+        io.unobserve(el);
+      });
+    }, { root: null, rootMargin: "0px 0px -12% 0px", threshold: 0.01 });
+
+    ruleEls.forEach(el => io.observe(el));
+  } else {
+    ruleEls.forEach(el => { el.style.transform = "scaleX(1)"; });
+  }
+</script>
+
+</body>
+</html>
