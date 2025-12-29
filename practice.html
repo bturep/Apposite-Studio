@@ -5,49 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Practice — Studio Apposite</title>
   <meta name="description" content="Studio Apposite — Practice: Services + Portfolio." />
-
-  <!-- Lato -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
 <body>
-<main class="wrap">
+  <div class="shell">
+    
+  <aside class="navcol">
+    <div class="studio">STUDIO APPOSITE</div>
+    <nav class="site-nav" aria-label="Site">
+      <a href="index.html">Index</a>
+      <a href="practice.html" aria-current="page">Practice</a>
+      <a href="research.html">Research</a>
+      <a href="mailto:mail@apposite.studio">Mail</a>
+    </nav>
+  </aside>
 
-  <!-- Header -->
-  <section class="row top-block">
-    <div class="label">STUDIO APPOSITE</div>
-    <div class="content">
+    <main class="maincol">
       <p class="top-kicker"><span class="i">Practice</span></p>
-
-      <nav class="site-nav" aria-label="Site">
-        <a href="index.html">Index</a>
-        <a href="practice.html" aria-current="page">Practice</a>
-        <a href="research.html">Research</a>
-        <a href="index.html#contact">Contact</a>
-      </nav>
 
       <p>
         Studio Apposite offers architectural design + documentation services for work on existing houses, small additions, and targeted upgrades.
         The practice emphasizes careful measurement, proportion, and construction logic—work that is buildable, legible, and continuous with what already exists.
       </p>
-    </div>
-  </section>
 
-  <section class="row rulewrap" aria-hidden="true">
-    <div class="label"></div>
-    <div class="content"><div class="rule"></div></div>
-  </section>
+      <div class="rulewrap" aria-hidden="true"><div class="rule"></div></div>
 
-  <!-- Services -->
-  <section class="row" id="services">
-    <div class="label">Services</div>
-    <div class="content">
+      <p class="b">Services</p>
       <div class="twocol">
-
         <div>
           <p class="b">Design + documentation</p>
           <ul class="list">
@@ -78,54 +66,18 @@
             <li>Suite legalization / secondary suite drawing packages (scope depends on existing conditions and municipality).</li>
           </ul>
         </div>
-
       </div>
-    </div>
-  </section>
 
-  <section class="row rulewrap" aria-hidden="true">
-    <div class="label"></div>
-    <div class="content"><div class="rule"></div></div>
-  </section>
+      <div class="rulewrap" aria-hidden="true"><div class="rule"></div></div>
 
-  <!-- Portfolio -->
-  <section class="row" id="portfolio">
-    <div class="label">Portfolio</div>
-    <div class="content">
       <p><span class="b">Selected work</span> <span class="i">(forthcoming)</span></p>
 
-      <img
-        class="portfolio-image"
-        src="assets/images/Maquinna01.jpg"
-        alt="Selected architectural work"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
-  </section>
+      <img class="portfolio-image" src="assets/images/Maquinna01.jpg" alt="Selected architectural work" loading="lazy" decoding="async" />
 
-  <section class="row rulewrap" aria-hidden="true">
-    <div class="label"></div>
-    <div class="content"><div class="rule"></div></div>
-  </section>
+      <div class="footer">© <span id="y"></span> Studio Apposite · Victoria, BC</div>
+    </main>
+  </div>
 
-  <!-- Contact -->
-  <section class="row" id="contact">
-    <div class="label">Contact</div>
-    <div class="content">
-      <p><a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a></p>
-    </div>
-  </section>
-
-  <section class="row" id="colophon">
-    <div class="label"></div>
-    <div class="content">
-      <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
-    </div>
-  </section>
-
-</main>
-
-<script src="assets/site.js"></script>
+  <script src="assets/site.js"></script>
 </body>
 </html>

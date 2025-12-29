@@ -1,13 +1,17 @@
-// Studio Apposite — shared behavior
-(function(){
-  // Year stamp (supports multiple instances safely)
-  const ys = document.querySelectorAll("#y");
-  const year = String(new Date().getFullYear());
-  ys.forEach(el => { el.textContent = year; });
+// Studio Apposite — shared JS
+// Keep this file in /assets/site.js
 
-  // Animate dashed rules on first view
+// Set year wherever #y exists
+(function(){
+  const y = document.getElementById("y");
+  if (y) y.textContent = new Date().getFullYear();
+})();
+
+// Animate dashed rules on first view
+(function(){
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const ruleEls = Array.from(document.querySelectorAll(".rule"));
+  if (!ruleEls.length) return;
 
   if (prefersReduced || !("IntersectionObserver" in window)) {
     ruleEls.forEach(el => { el.style.transform = "scaleX(1)"; });

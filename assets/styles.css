@@ -1,13 +1,16 @@
 /* Studio Apposite — shared styles
-   Used by: index.html, practice.html, research.html
+   Keep this file in /assets/styles.css
 */
 
 *{ box-sizing:border-box; }
-html, body{ margin:0; padding:0; }
+html,body{ margin:0; padding:0; }
 
-html{
-  transform: scale(1);
-  transform-origin: top left;
+:root{
+  --rhythm: 16px;
+  --gap: 28px;
+  --edge: 24px;
+  --nav-col: 220px;
+  --content-max: 720px;
 }
 
 body{
@@ -18,33 +21,12 @@ body{
   background:#fff;
 }
 
-:root{
-  --rhythm: 16px;
-  --label-col: 240px;
-  --gap: 28px;
-  --edge: 24px;
-  --content-max: 620px;  /* tight content column */
-}
-
-/* Layout */
-.wrap{
-  max-width: 980px;
-  margin: 0;
-  padding: var(--edge) var(--edge) calc(var(--rhythm) * 6);
-}
+.b{ font-weight:700; }
+.i{ font-style:italic; }
+.sc{ font-variant: small-caps; letter-spacing: .02em; }
 
 p{ margin: 0 0 calc(var(--rhythm) * 1) 0; }
 
-.b{ font-weight:700; }
-.i{ font-style:italic; }
-.sc{ font-variant: small-caps; letter-spacing: 0.02em; }
-
-.small{
-  font-size: 13px;
-  line-height: 1.4;
-}
-
-/* Links */
 a{
   color:#000;
   text-decoration: underline;
@@ -65,27 +47,53 @@ a{
   a:hover{ background-size: 100% 1px; }
 }
 
-/* Rows + labels */
-.row{
+/* Shell layout: left nav column + content */
+.shell{
+  max-width: 1100px;
+  padding: var(--edge);
   display: grid;
-  grid-template-columns: var(--label-col) minmax(0, var(--content-max));
+  grid-template-columns: var(--nav-col) minmax(0, var(--content-max));
   column-gap: var(--gap);
-  padding: calc(var(--rhythm) * 0.5) 0;
-  align-items: baseline;
-  justify-content: start; /* keep extra space on the right */
+  align-items: start;
 }
 
-.label{
+/* Left column */
+.navcol{
+  position: sticky;
+  top: var(--edge);
+  align-self: start;
+}
+
+.studio{
   font-weight: 700;
-  text-align: right;
-  padding-top: 0;
+  letter-spacing: .02em;
 }
 
-.content p:last-child{ margin-bottom: 0; }
+/* Vertical nav */
+.site-nav{
+  margin-top: calc(var(--rhythm) * .75);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-/* Rules */
-.rulewrap{ margin: calc(var(--rhythm) * 0.75) 0; }
+.site-nav a{
+  width: fit-content;
+}
 
+.site-nav a[aria-current="page"]{
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+/* Content column */
+.maincol{
+  padding-bottom: calc(var(--rhythm) * 6);
+}
+
+/* Dashed rule separators */
 .rule{
   height: 1px;
   width: 100%;
@@ -101,60 +109,27 @@ a{
   transition: transform 180ms linear;
 }
 
-/* Top blocks */
-.top-block{ align-items: start; }
+.rulewrap{ margin: calc(var(--rhythm) * 0.75) 0; }
 
-.top-kicker{ margin: 0 0 calc(var(--rhythm) * 0.75) 0; }
-
-/* Index-specific */
-.top-block.index{
-  grid-template-areas:
-    "label media"
-    "label content";
-}
-.top-block.index .label{ grid-area: label; }
-.top-block.index .top-media{ grid-area: media; }
-.top-block.index .top-content{ grid-area: content; }
-
-.top-block.index .top-media{
-  margin-bottom: calc(var(--rhythm) * 1);
-}
-
-.hook-image{
+/* Images */
+.hook-image,
+.portfolio-image,
+.work-image{
   width: 100%;
   height: auto;
   display: block;
-  margin: 0; /* spacing via container */
   border: 0;
   border-radius: 0;
   object-fit: cover;
 }
 
-/* Navigation */
-.nav-row{
-  padding-top: 0;
-  padding-bottom: calc(var(--rhythm) * 0.25);
-}
+.hook-image{ margin: 0 0 calc(var(--rhythm) * 1) 0; }
+.portfolio-image{ margin: calc(var(--rhythm) * .75) 0 calc(var(--rhythm) * 1) 0; }
+.work-image{ margin: calc(var(--rhythm) * .75) 0 calc(var(--rhythm) * .75) 0; }
 
-.site-nav{
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  align-items: baseline;
+.small{
   font-size: 13px;
   line-height: 1.4;
-}
-
-.site-nav a{
-  text-decoration: none; /* hover underline handled by bg */
-}
-
-.site-nav a[aria-current="page"]{
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 1px;
 }
 
 /* Practice: two-column blocks */
@@ -171,101 +146,65 @@ a{
   padding: 0;
   list-style: none;
 }
-.list li{
-  margin: 0 0 calc(var(--rhythm) * 0.5) 0;
-}
+.list li{ margin: 0 0 calc(var(--rhythm) * .5) 0; }
 
-.portfolio-image{
-  width: 100%;
-  height: auto;
-  display: block;
-  margin: calc(var(--rhythm) * 0.75) 0;
-  border: 0;
-  border-radius: 0;
-  object-fit: cover;
-}
-
-/* Research: each work item */
+/* Research items */
 .work-head{
   display: grid;
   grid-template-columns: 1fr auto;
   column-gap: 14px;
   align-items: baseline;
-  margin-bottom: calc(var(--rhythm) * 0.5);
+  margin-bottom: calc(var(--rhythm) * .5);
 }
-
 .work-meta{
   text-align: right;
   white-space: nowrap;
   font-size: 13px;
   line-height: 1.4;
 }
-
 .type{
   font-size: 13px;
   line-height: 1.4;
   letter-spacing: 0.02em;
   font-variant: small-caps;
 }
-
 .tagline{
   margin-top: 2px;
   font-size: 13px;
   line-height: 1.4;
 }
 
-.work-image{
-  width: 100%;
-  height: auto;
-  display: block;
-  margin: calc(var(--rhythm) * 0.75) 0 calc(var(--rhythm) * 0.75);
-  border: 0;
-  border-radius: 0;
-  object-fit: cover;
-}
-
-/* Colophon */
-.colophon{
-  margin-top: 5px;
+/* Footer */
+.footer{
+  margin-top: calc(var(--rhythm) * 2);
   font-size: 13px;
   line-height: 1.4;
 }
 
 /* Mobile */
 @media (max-width: 760px){
-  html{ transform: none; }
-  :root{ --edge: 16px; }
-
-  .wrap{
-    padding: var(--edge);
-    padding-bottom: calc(var(--rhythm) * 6);
+  :root{
+    --edge: 16px;
+    --nav-col: 1fr;
   }
-
-  .row{ grid-template-columns: 1fr; }
-  .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
-
-  /* Index: image -> label -> content */
-  .top-block.index{
-    grid-template-areas:
-      "media"
-      "label"
-      "content";
-    padding-top: 0;
+  .shell{
+    grid-template-columns: 1fr;
+    row-gap: calc(var(--rhythm) * 1.25);
   }
-
-  .top-block.index .label{
-    margin-top: calc(var(--rhythm) * 0.75);
-    margin-bottom: 0;
+  .navcol{
+    position: static;
   }
-
-  .top-block.index .top-media{
-    margin-bottom: calc(var(--rhythm) * 1);
+  .site-nav{
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 14px;
   }
-
-  .twocol{ grid-template-columns: 1fr; column-gap: 0; }
-
-  .work-head{ grid-template-columns: 1fr; row-gap: 6px; }
+  .work-head{
+    grid-template-columns: 1fr;
+    row-gap: 6px;
+  }
   .work-meta{ text-align: left; }
+  .twocol{ grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce){
