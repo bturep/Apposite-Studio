@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Research — Studio Apposite</title>
-  <meta name="description" content="Studio Apposite — Research: publications, exhibitions, archival studies." />
+  <meta name="description" content="Studio Apposite — Research: Publications + Exhibitions." />
 
   <!-- Lato -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,6 +12,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
   <style>
+    /* ----------------------------- */
+    /* Reset + base                   */
+    /* ----------------------------- */
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
 
@@ -23,28 +26,34 @@
       background: #fff;
     }
 
-    :root{
-      --rhythm: 16px;
-      --gap: 36px;
-      --page-pad: 44px;
-
-      /* Research layout */
-      --side-pad: 28px;        /* "tight" to edges */
-      --mid-gap: 400px;         /* the photo void */
-      --photo-col: 400x;      /* image width inside the void */
+    html{
+      transform: scale(1);
+      transform-origin: top left;
     }
 
-    /* Page wrap is full-width (tight columns to edges) */
+    :root{
+      --rhythm: 16px;
+      --label-col: 240px;
+      --gap: 28px;
+      --edge: 24px;
+      --content-max: 620px; /* keep aligned with index + practice */
+    }
+
     .wrap{
-      width: 100%;
+      max-width: 980px;
       margin: 0;
-      padding: calc(var(--rhythm) * 1) var(--side-pad) calc(var(--rhythm) * 6);
+      padding: var(--edge) var(--edge) calc(var(--rhythm) * 6);
     }
 
     p{ margin: 0 0 calc(var(--rhythm) * 1) 0; }
+
     .b{ font-weight: 700; }
     .i{ font-style: italic; }
+    .sc{ font-variant: small-caps; letter-spacing: 0.02em; }
 
+    /* ----------------------------- */
+    /* Links                          */
+    /* ----------------------------- */
     a{
       color:#000;
       text-decoration: underline;
@@ -65,7 +74,29 @@
       a:hover{ background-size: 100% 1px; }
     }
 
-    /* Reuse the dashed rule language from index */
+    /* ----------------------------- */
+    /* Grid rows + labels             */
+    /* ----------------------------- */
+    .row{
+      display: grid;
+      grid-template-columns: var(--label-col) minmax(0, var(--content-max));
+      column-gap: var(--gap);
+      padding: calc(var(--rhythm) * 0.5) 0;
+      align-items: baseline;
+      justify-content: start; /* keep extra space on the right */
+    }
+
+    .label{
+      font-weight: 700;
+      text-align: right;
+      padding-top: 0;
+    }
+
+    .content p:last-child{ margin-bottom: 0; }
+
+    /* ----------------------------- */
+    /* Rule separators                */
+    /* ----------------------------- */
     .rule{
       height: 1px;
       width: 100%;
@@ -81,92 +112,85 @@
       transition: transform 180ms linear;
     }
 
-    .rulewrap{
-      margin: calc(var(--rhythm) * 0.9) 0;
+    .rulewrap{ margin: calc(var(--rhythm) * 0.75) 0; }
+
+    /* ----------------------------- */
+    /* Page header                    */
+    /* ----------------------------- */
+    .top-block{ align-items: start; }
+
+    .top-kicker{
+      margin: 0 0 calc(var(--rhythm) * 0.75) 0;
     }
 
-    /* --- Research grid: left column | mid void | right column --- */
-    .rg-row{
+    .small{
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    /* ----------------------------- */
+    /* Work rows (each item)          */
+    /* ----------------------------- */
+    .work-head{
       display: grid;
-      grid-template-columns: minmax(0, 1fr) var(--mid-gap) minmax(0, 1fr);
-      column-gap: var(--gap);
-      padding: calc(var(--rhythm) * 0.75) 0;
-      align-items: start;
+      grid-template-columns: 1fr auto;
+      column-gap: 14px;
+      align-items: baseline;
+      margin-bottom: calc(var(--rhythm) * 0.5);
     }
 
-    /* The mid void (photo strip) sits inside the gap column */
-    .rg-mid{
-    padding-top: calc(var(--rhythm) * 0.5);
-  }
+    .work-meta{
+      text-align: right;
+      white-space: nowrap;
+      font-size: 13px;
+      line-height: 1.4;
+    }
 
+    .tagline{
+      margin-top: 2px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
 
-    .rg-photo{
-    width: var(--photo-col);
-    margin: 0 auto;        /* keeps image centered */
-    border: 1px dotted #000;
-  }
-
-
-    .rg-photo img{
+    .work-image{
       width: 100%;
       height: auto;
       display: block;
+      margin: calc(var(--rhythm) * 0.75) 0 calc(var(--rhythm) * 0.75);
+      border: 0;
+      border-radius: 0;
       object-fit: cover;
     }
 
-    /* Header row: keep it strict + index-like */
-    .kicker{
-      margin-bottom: calc(var(--rhythm) * 0.75);
-    }
-
-    /* Small meta */
-    .meta{
+    /* Optional: “type” marker */
+    .type{
       font-size: 13px;
       line-height: 1.4;
-      margin-top: calc(var(--rhythm) * 0.5);
+      letter-spacing: 0.02em;
+      font-variant: small-caps;
     }
 
-    /* A quiet “tag” line */
-    .tagline{
-      margin-top: calc(var(--rhythm) * 0.35);
-    }
+    /* ----------------------------- */
+    /* Mobile                         */
+    /* ----------------------------- */
+    @media (max-width: 760px){
+      html{ transform: none; }
+      :root{ --edge: 16px; }
 
-    /* Consistent last-paragraph trimming */
-    .rg-left p:last-child,
-    .rg-right p:last-child{
-      margin-bottom: 0;
-    }
-
-    /* Colophon */
-    .colophon{
-      margin-top: 5px;
-      font-size: 13px;
-      line-height: 1.4;
-    }
-
-    /* Mobile: stack, keep photos inline between blocks */
-    @media (max-width: 900px){
-      :root{
-        --side-pad: 22px;
-        --mid-gap: 0px;
-        --photo-col: 100%;
+      .wrap{
+        padding: var(--edge);
+        padding-bottom: calc(var(--rhythm) * 6);
       }
 
-      .rg-row{
+      .row{ grid-template-columns: 1fr; }
+      .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
+
+      .work-head{
         grid-template-columns: 1fr;
-        column-gap: 0;
-        row-gap: calc(var(--rhythm) * 0.75);
+        row-gap: 6px;
       }
 
-      .rg-mid{
-        order: 2;
-      }
-      .rg-left{ order: 1; }
-      .rg-right{ order: 3; }
-
-      .rg-photo{
-        border: 1px dotted #000;
-      }
+      .work-meta{ text-align: left; }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -180,150 +204,187 @@
 
 <main class="wrap">
 
-  <!-- Header (tight follow of index language, but two-column framing) -->
-  <section class="rg-row" id="top">
-    <div class="rg-left">
-      <p class="b">Research</p>
-      <p class="kicker">
-        Studio Apposite operates as a hybrid research platform: archival surveys, interviews, and image-based studies that culminate in small publications and occasional exhibitions.
-      </p>
-      <p class="meta"><a href="index.html"><span class="b">← Home</span></a></p>
-    </div>
+  <!-- Header -->
+  <section class="row top-block">
+    <div class="label">STUDIO APPOSITE</div>
+    <div class="content">
+      <p class="top-kicker"><span class="b">RESEARCH</span></p>
 
-    <div class="rg-mid">
-      <!-- optional: leave blank in header, or drop an image -->
-      <a class="rg-photo" href="#" aria-label="Research image (placeholder)">
-        <img src="assets/images/Maquinna05.jpg" alt="Architectural detail (placeholder image)" loading="lazy" decoding="async">
-      </a>
-    </div>
-
-    <div class="rg-right">
-      <p class="b">Working themes</p>
-      <p class="tagline">
-        Regional architectural history · building as evidence · documentation as design · repair and continuity · the archive as a practical tool.
-      </p>
-      <p class="meta small">
-        If you have material we should know about—photographs, drawings, correspondence, or leads—email us.
-      </p>
-    </div>
-  </section>
-
-  <section class="rulewrap" aria-hidden="true">
-    <div class="rule"></div>
-  </section>
-
-  <!-- ROW 1 -->
-  <section class="rg-row" id="pub-1">
-    <div class="rg-left">
-      <p class="b">Publication</p>
-      <p><span class="i">Photo-book series: West Coast Modern / regional practices</span></p>
       <p>
-        A small-format publication program focused on discrete buildings and site conditions—prioritizing clear image sequences, concise captions, and archival trace materials.
+        Studio Apposite maintains an independent research and publishing program dedicated to the history and theory of architecture in Victoria and the surrounding region. This work develops through archival research, writing, and image-based study, and is disseminated through publications, exhibitions, and public projects under the imprint Apposite Press.
       </p>
-      <p class="meta">Status: in development</p>
-    </div>
 
-    <div class="rg-mid">
-      <a class="rg-photo" href="#" aria-label="Publication image (placeholder)">
-        <img src="assets/images/Maquinna05.jpg" alt="Publication placeholder image" loading="lazy" decoding="async">
-      </a>
-    </div>
-
-    <div class="rg-right">
-      <p class="b">Format</p>
-      <p>
-        Short runs, high legibility. Each issue assembles a record: photographs, drawing fragments, construction logic, and commentary—enough to be useful, not encyclopedic.
+      <p class="small">
+        <a href="index.html"><span class="b">← INDEX</span></a>
       </p>
-      <p class="meta">Outputs: printed booklet · PDF edition</p>
     </div>
   </section>
 
-  <section class="rulewrap" aria-hidden="true">
-    <div class="rule"></div>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
   </section>
 
-  <!-- ROW 2 -->
-  <section class="rg-row" id="exhibit-1">
-    <div class="rg-left">
-      <p class="b">Exhibition</p>
-      <p><span class="i">Archival studies + image-based installations</span></p>
+  <!-- Work 01 -->
+  <section class="row work" id="work-01">
+    <div class="label">Work</div>
+    <div class="content">
+      <div class="work-head">
+        <div>
+          <p class="b">For Everyone a Room</p>
+          <p class="tagline"><span class="i">Exhibition</span> — curated storefront activation aligned with Design Victoria.</p>
+        </div>
+        <div class="work-meta">
+          <div class="type">Exhibition</div>
+          <div>Victoria, BC</div>
+          <div>2026</div>
+        </div>
+      </div>
+
+      <img
+        class="work-image"
+        src="assets/images/Maquinna01.jpg"
+        alt="For Everyone a Room — installation image"
+        loading="lazy"
+        decoding="async"
+      />
+
       <p>
-        Occasional exhibitions that treat documentation as material: photographs, scans, and re-assembled evidence staged as a spatial argument.
+        A curated exhibition project foregrounding the room as a social and architectural unit: a practical enclosure, a situation for looking, and a temporary civic interior. Developed as a storefront intervention with a publication component.
       </p>
-      <p class="meta">Status: occasional / by project</p>
-    </div>
 
-    <div class="rg-mid">
-      <a class="rg-photo" href="#" aria-label="Exhibition image (placeholder)">
-        <img src="assets/images/Maquinna05.jpg" alt="Exhibition placeholder image" loading="lazy" decoding="async">
-      </a>
-    </div>
-
-    <div class="rg-right">
-      <p class="b">Purpose</p>
-      <p>
-        To build a local record of buildings and practices—and to carry that material back into client work, where it becomes reference, constraint, and grounding.
-      </p>
-      <p class="meta">Outputs: wall text · prints · small publication</p>
-    </div>
-  </section>
-
-  <section class="rulewrap" aria-hidden="true">
-    <div class="rule"></div>
-  </section>
-
-  <!-- ROW 3 -->
-  <section class="rg-row" id="archive-1">
-    <div class="rg-left">
-      <p class="b">Archival survey</p>
-      <p><span class="i">Fieldwork + interviews</span></p>
-      <p>
-        Site visits, measured observations, and conversations that identify what exists, what has changed, and what survives in drawings, photographs, and memory.
-      </p>
-      <p class="meta">Status: ongoing</p>
-    </div>
-
-    <div class="rg-mid">
-      <a class="rg-photo" href="#" aria-label="Archive image (placeholder)">
-        <img src="assets/images/Maquinna05.jpg" alt="Archive placeholder image" loading="lazy" decoding="async">
-      </a>
-    </div>
-
-    <div class="rg-right">
-      <p class="b">How it shows up in design</p>
-      <p>
-        Better briefs, better constraints, better proportion decisions. Research becomes a practical tool: a way to make interventions that fit what’s already there.
-      </p>
-      <p class="meta">Outputs: notes · image sets · as-built fragments</p>
+      <p class="small"><span class="b">Status:</span> In development.</p>
     </div>
   </section>
 
-  <section class="rulewrap" aria-hidden="true">
-    <div class="rule"></div>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
+
+  <!-- Work 02 -->
+  <section class="row work" id="work-02">
+    <div class="label"></div>
+    <div class="content">
+      <div class="work-head">
+        <div>
+          <p class="b">Hodgson / Mayhew</p>
+          <p class="tagline"><span class="i">Publication</span> — regional architectural and studio history (book project).</p>
+        </div>
+        <div class="work-meta">
+          <div class="type">Publication</div>
+          <div>Victoria, BC</div>
+          <div>Forthcoming</div>
+        </div>
+      </div>
+
+      <img
+        class="work-image"
+        src="assets/images/Maquinna05.jpg"
+        alt="Hodgson / Mayhew — archival image or studio documentation"
+        loading="lazy"
+        decoding="async"
+      />
+
+      <p>
+        An ongoing publication project assembling drawings, photographs, and archival fragments into a concentrated study of practice, collaboration, and built work. The aim is documentation that is usable: for readers, for historians, and for houses that are still changing.
+      </p>
+
+      <p class="small"><span class="b">Status:</span> Research + writing in progress.</p>
+    </div>
+  </section>
+
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
+
+  <!-- Work 03 -->
+  <section class="row work" id="work-03">
+    <div class="label"></div>
+    <div class="content">
+      <div class="work-head">
+        <div>
+          <p class="b">Regional House Studies</p>
+          <p class="tagline"><span class="i">Ongoing series</span> — house-by-house research notes, drawings, and image studies.</p>
+        </div>
+        <div class="work-meta">
+          <div class="type">Series</div>
+          <div>Greater Victoria</div>
+          <div>Ongoing</div>
+        </div>
+      </div>
+
+      <img
+        class="work-image"
+        src="assets/images/Maquinna01.jpg"
+        alt="Regional House Studies — detail photograph"
+        loading="lazy"
+        decoding="async"
+      />
+
+      <p>
+        A rolling body of work built from site visits, archive pulls, and measured drawing: small, precise documents that can be read quickly, shared easily, and expanded over time. Each entry focuses on what can actually be seen, verified, and drawn.
+      </p>
+
+      <p class="small"><span class="b">Status:</span> Active.</p>
+    </div>
+  </section>
+
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
+
+  <!-- Work 04 -->
+  <section class="row work" id="work-04">
+    <div class="label"></div>
+    <div class="content">
+      <div class="work-head">
+        <div>
+          <p class="b">Apposite Press</p>
+          <p class="tagline"><span class="i">Imprint</span> — short publications, editions, and project documents.</p>
+        </div>
+        <div class="work-meta">
+          <div class="type">Imprint</div>
+          <div>Victoria, BC</div>
+          <div>Ongoing</div>
+        </div>
+      </div>
+
+      <img
+        class="work-image"
+        src="assets/images/Maquinna05.jpg"
+        alt="Apposite Press — publication or printed matter"
+        loading="lazy"
+        decoding="async"
+      />
+
+      <p>
+        A small publishing arm for work that doesn’t fit typical venues: short runs, field documents, drawing packets, and exhibition matter—kept lean, legible, and materially direct.
+      </p>
+
+      <p class="small"><span class="b">Status:</span> Active.</p>
+    </div>
+  </section>
+
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
   </section>
 
   <!-- Contact -->
-  <section class="rg-row" id="contact">
-    <div class="rg-left">
-      <p class="b">Contact</p>
+  <section class="row" id="contact">
+    <div class="label">Contact</div>
+    <div class="content">
       <p><a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a></p>
-    </div>
-
-    <div class="rg-mid"></div>
-
-    <div class="rg-right">
-      <p class="b">Notes</p>
-      <p class="meta">
-        If you’re reaching out with archival material, include whatever you have—addresses, dates, names, photo captions. We’ll follow up.
-      </p>
     </div>
   </section>
 
-  <section class="rg-row" id="colophon">
-    <div class="rg-left"></div>
-    <div class="rg-mid"></div>
-    <div class="rg-right">
-      <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
+  <section class="row" id="colophon">
+    <div class="label"></div>
+    <div class="content">
+      <p class="small">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
     </div>
   </section>
 
@@ -333,7 +394,7 @@
   // Year
   document.getElementById("y").textContent = new Date().getFullYear();
 
-  // Animate dashed rules on first view
+  // Animate only the dashed rules on first view (no content opacity changes)
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const ruleEls = Array.from(document.querySelectorAll(".rule"));
 
@@ -341,8 +402,9 @@
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        entry.target.style.transform = "scaleX(1)";
-        io.unobserve(entry.target);
+        const el = entry.target;
+        el.style.transform = "scaleX(1)";
+        io.unobserve(el);
       });
     }, { root: null, rootMargin: "0px 0px -12% 0px", threshold: 0.01 });
 
