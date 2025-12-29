@@ -76,14 +76,13 @@
     /* Grid rows + labels             */
     /* ----------------------------- */
     .row{
-    display: grid;
-    grid-template-columns: var(--label-col) 1fr;
-    column-gap: var(--gap);
-    padding: calc(var(--rhythm) * 0.5) 0;
-    align-items: baseline;
-  }
-
-
+      display: grid;
+      grid-template-columns: var(--label-col) minmax(0, var(--content-max));
+      column-gap: var(--gap);
+      padding: calc(var(--rhythm) * 0.5) 0;
+      align-items: baseline;
+      justify-content: start; /* ensures the “extra” space sits on the right */
+    }
     .label{
       font-weight: 700;
       text-align: right;
