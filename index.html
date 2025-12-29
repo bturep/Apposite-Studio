@@ -29,12 +29,13 @@
       transform: scale(1);
       transform-origin: top left;
     }
+
     :root{
       --rhythm: 16px;
       --label-col: 240px;
       --gap: 28px;
-      --edge: 24px; /* or 24px if you want calmer */
-        --content-max: 620px; /* ← tune: 520–680 */
+      --edge: 24px;            /* tune */
+      --content-max: 620px;    /* tune: 520–680 */
     }
 
     .wrap{
@@ -76,13 +77,13 @@
     /* Grid rows + labels             */
     /* ----------------------------- */
     .row{
-    display: grid;
-    grid-template-columns: var(--label-col) 1fr;
-    column-gap: var(--gap);
-    padding: calc(var(--rhythm) * 0.5) 0;
-    align-items: baseline;
-  }
-
+      display: grid;
+      grid-template-columns: var(--label-col) minmax(0, var(--content-max));
+      column-gap: var(--gap);
+      padding: calc(var(--rhythm) * 0.5) 0;
+      align-items: baseline;
+      justify-content: start; /* keeps extra space on the right */
+    }
 
     .label{
       font-weight: 700;
@@ -93,25 +94,28 @@
     .content p:last-child{ margin-bottom: 0; }
 
     /* ----------------------------- */
-    /* Top block (image + label + text) */
+    /* Top block: label + stacked content */
     /* ----------------------------- */
     .top-block{
-      grid-template-areas:
-        "label media"
-        "label content";
       align-items: start;
     }
-    .top-block .label{ grid-area: label; }
-    .top-block .top-media{ grid-area: media; }
-    .top-block .top-content{ grid-area: content; }
 
-    /* Desktop: consistent breathing room under the image */
-    .top-block .top-media{
+    .top-stack{
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .top-kicker{
+      margin: 0 0 calc(var(--rhythm) * 0.75) 0;
+    }
+
+    .top-media{
       margin-bottom: calc(var(--rhythm) * 1);
     }
 
     /* Prevent extra gap at end of top text before the rule */
-    .top-block .top-content p:last-child{
+    .top-content p:last-child{
       margin-bottom: 0;
     }
 
@@ -156,8 +160,8 @@
       width: 100%;
       height: auto;
       display: block;
-      margin: 0;                 /* spacing handled by container (top-media) */
-      border: 0px dotted #000;    /* optional */
+      margin: 0;
+      border: 0px dotted #000;  /* optional */
       border-radius: 0;
       object-fit: cover;
     }
@@ -165,13 +169,8 @@
     /* ----------------------------- */
     /* Newsletter (kept, even if commented out) */
     /* ----------------------------- */
-    .newsletter-section{
-      align-items: start;
-    }
-    .newsletter-section .label{
-      padding-top: 6px;
-    }
-
+    .newsletter-section{ align-items: start; }
+    .newsletter-section .label{ padding-top: 6px; }
     .newsletter-form{ margin: 0; }
 
     .newsletter-row{
@@ -250,40 +249,18 @@
     /* Mobile                         */
     /* ----------------------------- */
     @media (max-width: 760px){
-      html{
-    transform: none;
-  }
-      :root{ --edge: 16px;}
+      html{ transform: none; }
+      :root{ --edge: 16px; }
 
       .wrap{
-    padding: var(--edge);
-    padding-bottom: calc(var(--rhythm) * 6);
-  }
-
+        padding: var(--edge);
+        padding-bottom: calc(var(--rhythm) * 6);
+      }
 
       .row{ grid-template-columns: 1fr; }
       .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
 
-      /* Top block order on mobile: image -> label -> text */
-      .top-block{
-        grid-template-areas:
-          "media"
-          "label"
-          "content";
-        padding-top: 0;
-      }
-
-      .top-block .label{
-        margin-top: calc(var(--rhythm) * 0.75);
-        margin-bottom: 0;
-      }
-
-      /* keep breathing room under the image on mobile */
-      .top-block .top-media{
-        margin-bottom: calc(var(--rhythm) * 1);
-      }
-
-      .newsletter-section .label{ padding-top: 0; }
+      .top-stack{ width: 100%; }
 
       .newsletter-row{ gap: 12px; }
       .emailfield{ width: 100%; }
@@ -305,22 +282,24 @@
   <section class="row top-block">
     <div class="label">STUDIO APPOSITE</div>
 
-    <div class="top-media">
-      <img
-        class="hook-image"
-        src="assets/images/Maquinna05.jpg"
-        alt="Architectural detail, Studio Apposite"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
+    <div class="top-stack">
+      <p class="top-kicker"><span class="i">Architectural Design + Research</span></p>
 
-    <div class="top-content">
-      <p><span class="i">Architectural Design + Research</span></p>
+      <div class="top-media">
+        <img
+          class="hook-image"
+          src="assets/images/Maquinna05.jpg"
+          alt="Architectural detail, Studio Apposite"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
 
-      <p>
-        Studio Apposite is an architectural design and research practice based in Victoria, British Columbia. The studio operates across two parallel bodies of work: a client-facing architectural practice focused on residential renovation and alteration across a range of scales, and an independent research and publishing program dedicated to the study of regional architectural history and theory.
-      </p>
+      <div class="top-content">
+        <p>
+          Studio Apposite is an architectural design and research practice based in Victoria, British Columbia. The studio operates across two parallel bodies of work: a client-facing architectural practice focused on residential renovation and alteration across a range of scales, and an independent research and publishing program dedicated to the study of regional architectural history and theory.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -347,7 +326,8 @@
     <div class="label">Research</div>
     <div class="content">
       <p>
-      Studio Apposite maintains an independent research and publishing program focused on the history and theory of architecture in Victoria and the surrounding region. This work develops through archival research, writing, and image-based study, and is disseminated through publications, exhibitions, and public projects under the imprint Apposite Press. The research program operates as a sustained scholarly practice, contributing to the documentation and interpretation of regional architectural culture.  </p>
+        Studio Apposite maintains an independent research and publishing program focused on the history and theory of architecture in Victoria and the surrounding region. This work develops through archival research, writing, and image-based study, and is disseminated through publications, exhibitions, and public projects under the imprint Apposite Press. The research program operates as a sustained scholarly practice, contributing to the documentation and interpretation of regional architectural culture.
+      </p>
 
       <p><a href="research.html"><span class="b">View publications + exhibitions</span></a></p>
     </div>
@@ -361,10 +341,10 @@
   <section class="row" id="people">
     <div class="label">People</div>
     <div class="content">
-    <p>  Brandon Poole is an architectural designer, researcher, and educator based in Victoria. He is a PhD Candidate in Architecture at McGill University, where he is a Vadasz Scholar and SSHRC Doctoral Fellow. He holds a Master of Visual Studies from the University of Toronto’s Faculty of Architecture, Landscape, and Design, and a Bachelor of Fine Arts from the University of Victoria. He teaches in the Visual Arts Department at the University of Victoria.
-</p><p>
-  Patrick Rollins is a designer, researcher, and curator. His work has included contributions to From the Ground, Into the Light: Organic Architecture of the Islands and Centennial Square: A Design History at the Wentworth Villa Architectural Museum. Current projects include research and exhibitions focused on regional architectural history and a forthcoming publication on the work of Alan Hodgson.
-</p>  </div>
+      <p>Brandon Poole is an architectural designer, researcher, and educator based in Victoria. He is a PhD Candidate in Architecture at McGill University, where he is a Vadasz Scholar and SSHRC Doctoral Fellow. He holds a Master of Visual Studies from the University of Toronto’s Faculty of Architecture, Landscape, and Design, and a Bachelor of Fine Arts from the University of Victoria. He teaches in the Visual Arts Department at the University of Victoria.</p>
+
+      <p>Patrick Rollins is a designer, researcher, and curator. His work has included contributions to From the Ground, Into the Light: Organic Architecture of the Islands and Centennial Square: A Design History at the Wentworth Villa Architectural Museum. Current projects include research and exhibitions focused on regional architectural history and a forthcoming publication on the work of Alan Hodgson.</p>
+    </div>
   </section>
 
   <section class="row rulewrap" aria-hidden="true">
@@ -424,7 +404,7 @@
 
     </form>
   </div>
-</section>
+</section>-->
 
 </main>
 
