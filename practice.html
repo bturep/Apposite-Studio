@@ -140,6 +140,17 @@
       row-gap: calc(var(--rhythm) * 1);
       align-items: start;
     }
+    /* Portfolio full-width image inside twocol */
+    .twocol .span-all{
+      grid-column: 1 / -1;
+    }
+
+    .portfolio-image{
+      width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: calc(var(--rhythm) * 0.75);
+    }
 
     .list{
       margin: 0;
@@ -263,18 +274,21 @@
   <section class="row" id="portfolio">
     <div class="label">Portfolio</div>
     <div class="content">
-      <div class="top-media">
-        <img
-          class="hook-image"
-          src="assets/images/Maquinna01.jpg"
-          alt="Architectural detail, Studio Apposite"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-
       <div class="twocol">
-        <div>
+
+        <!-- Full-width image spanning both columns -->
+        <div class="span-all">
+          <img
+            class="portfolio-image"
+            src="assets/images/Maquinna01.jpg"
+            alt="Selected architectural work"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
+        <!-- Text underneath, also spanning both columns -->
+        <div class="span-all">
           <p class="b">Selected work</p>
           <p><span class="i">Portfolio forthcoming.</span></p>
         </div>
@@ -282,6 +296,7 @@
       </div>
     </div>
   </section>
+
 
   <section class="row rulewrap" aria-hidden="true">
     <div class="label"></div>
