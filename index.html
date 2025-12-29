@@ -34,6 +34,7 @@
       --label-col: 240px;
       --gap: 28px;
       --edge: 24px; /* or 24px if you want calmer */
+        --content-max: 620px; /* ← tune: 520–680 */
     }
 
     .wrap{
@@ -76,12 +77,12 @@
     /* ----------------------------- */
     .row{
       display: grid;
-      grid-template-columns: var(--label-col) 1fr;
+      grid-template-columns: var(--label-col) minmax(0, var(--content-max));
       column-gap: var(--gap);
       padding: calc(var(--rhythm) * 0.5) 0;
       align-items: baseline;
+      justify-content: start; /* ensures the “extra” space sits on the right */
     }
-
     .label{
       font-weight: 700;
       text-align: right;
