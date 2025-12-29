@@ -12,6 +12,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
   <style>
+    /* ----------------------------- */
+    /* Reset + base                   */
+    /* ----------------------------- */
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
 
@@ -21,27 +24,36 @@
       line-height: 1.55;
       color: #000;
       background: #fff;
-      zoom: 1;
+    }
+
+    html{
+      transform: scale(1);
+      transform-origin: top left;
     }
 
     :root{
       --rhythm: 16px;
-      --label-col: 150px;
-      --gap: 36px;
-      --page-pad: 44px;
+      --label-col: 240px;
+      --gap: 28px;
+      --edge: 24px;
+      --content-max: 620px; /* keep aligned with index “tight” column */
     }
 
     .wrap{
       max-width: 980px;
-      margin: 0 auto;
-      padding: calc(var(--rhythm) * 1) var(--page-pad) calc(var(--rhythm) * 6);
+      margin: 0;
+      padding: var(--edge) var(--edge) calc(var(--rhythm) * 6);
     }
 
     p{ margin: 0 0 calc(var(--rhythm) * 1) 0; }
 
     .b{ font-weight: 700; }
     .i{ font-style: italic; }
+    .sc{ font-variant: small-caps; letter-spacing: 0.02em;}
 
+    /* ----------------------------- */
+    /* Links                          */
+    /* ----------------------------- */
     a{
       color:#000;
       text-decoration: underline;
@@ -62,12 +74,16 @@
       a:hover{ background-size: 100% 1px; }
     }
 
+    /* ----------------------------- */
+    /* Grid rows + labels             */
+    /* ----------------------------- */
     .row{
       display: grid;
-      grid-template-columns: var(--label-col) 1fr;
+      grid-template-columns: var(--label-col) minmax(0, var(--content-max));
       column-gap: var(--gap);
       padding: calc(var(--rhythm) * 0.5) 0;
       align-items: baseline;
+      justify-content: start; /* keep extra space on the right */
     }
 
     .label{
@@ -78,6 +94,25 @@
 
     .content p:last-child{ margin-bottom: 0; }
 
+    /* ----------------------------- */
+    /* Top block (page header)        */
+    /* ----------------------------- */
+    .top-block{
+      align-items: start;
+    }
+
+    .top-kicker{
+      margin: 0 0 calc(var(--rhythm) * 0.75) 0;
+    }
+
+    .small{
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    /* ----------------------------- */
+    /* Rule separators                */
+    /* ----------------------------- */
     .rule{
       height: 1px;
       width: 100%;
@@ -95,27 +130,15 @@
 
     .rulewrap{ margin: calc(var(--rhythm) * 0.75) 0; }
 
-    /* --- Practice page identity: two-column content blocks --- */
+    /* ----------------------------- */
+    /* Practice page specifics        */
+    /* ----------------------------- */
     .twocol{
       display: grid;
       grid-template-columns: 1fr 1fr;
       column-gap: var(--gap);
       row-gap: calc(var(--rhythm) * 1);
       align-items: start;
-    }
-
-    .card{
-      /* subtle “not-index” feel without changing the system */
-      padding-top: 0;
-    }
-
-    .kicker{
-      margin-bottom: calc(var(--rhythm) * 0.75);
-    }
-
-    .small{
-      font-size: 13px;
-      line-height: 1.4;
     }
 
     .list{
@@ -127,18 +150,26 @@
       margin: 0 0 calc(var(--rhythm) * 0.5) 0;
     }
 
-    /* Colophon */
+    /* ----------------------------- */
+    /* Colophon                       */
+    /* ----------------------------- */
     .colophon{
       margin-top: 5px;
       font-size: 13px;
       line-height: 1.4;
     }
 
-    /* Mobile */
+    /* ----------------------------- */
+    /* Mobile                         */
+    /* ----------------------------- */
     @media (max-width: 760px){
-      :root{ --page-pad: 22px; }
+      html{ transform: none; }
+      :root{ --edge: 16px; }
 
-      .wrap{ padding-top: var(--page-pad); }
+      .wrap{
+        padding: var(--edge);
+        padding-bottom: calc(var(--rhythm) * 6);
+      }
 
       .row{ grid-template-columns: 1fr; }
       .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
@@ -160,14 +191,17 @@
 
 <main class="wrap">
 
-  <!-- Header -->
-  <section class="row">
-    <div class="label">Practice</div>
+  <!-- Page header (keeps your practice text exactly) -->
+  <section class="row top-block">
+    <div class="label">STUDIO APPOSITE</div>
     <div class="content">
-      <p class="kicker">
+      <p class="top-kicker"><span class="i">Practice</span></p>
+
+      <p>
         Studio Apposite offers architectural design + documentation services for work on existing houses, small additions, and targeted upgrades.
         The practice emphasizes careful measurement, proportion, and construction logic—work that is buildable, legible, and continuous with what already exists.
       </p>
+
       <p class="small">
         <a href="index.html"><span class="b">← Home</span></a>
       </p>
@@ -179,13 +213,13 @@
     <div class="content"><div class="rule"></div></div>
   </section>
 
-  <!-- Services + Process (two-column identity) -->
+  <!-- Services -->
   <section class="row" id="services">
     <div class="label">Services</div>
     <div class="content">
       <div class="twocol">
 
-        <div class="card">
+        <div>
           <p class="b">Design + documentation</p>
           <ul class="list">
             <li>Renovations and alterations (kitchens, bathrooms, stairs, entries, built-ins, millwork).</li>
@@ -201,7 +235,7 @@
           </ul>
         </div>
 
-        <div class="card">
+        <div>
           <p class="b">Approvals + coordination</p>
           <ul class="list">
             <li>Permit pathway support: assembling the right scope of drawings and information for review.</li>
@@ -225,13 +259,13 @@
     <div class="content"><div class="rule"></div></div>
   </section>
 
-  <!-- How we work -->
+  <!-- Process -->
   <section class="row" id="process">
     <div class="label">Process</div>
     <div class="content">
       <div class="twocol">
 
-        <div class="card">
+        <div>
           <p class="b">A practical rhythm</p>
           <p>
             Most work moves through a simple sequence: initial call → site visit / measurement → options / concept drawings →
@@ -240,7 +274,7 @@
           </p>
         </div>
 
-        <div class="card">
+        <div>
           <p class="b">Fees</p>
           <p>
             Depending on scope, services can be structured as a fixed-fee phase (concept / schematic) followed by either a second fixed fee
@@ -263,11 +297,11 @@
     <div class="label">Portfolio</div>
     <div class="content">
       <div class="twocol">
-        <div class="card">
+        <div>
           <p class="b">Selected work</p>
           <p><span class="i">Portfolio forthcoming.</span></p>
         </div>
-        <div class="card">
+        <div>
           <p class="b">In the meantime</p>
           <p>
             If you’d like examples of drawing sets, concept options, or documentation style, email us with a short description of your project.
