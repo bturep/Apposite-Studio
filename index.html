@@ -5,64 +5,475 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Studio Apposite</title>
   <meta name="description" content="Studio Apposite — Architecture + Research." />
+
+  <!-- Lato -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css" />
+
+  <style>
+    /* ----------------------------- */
+    /* Reset + base                   */
+    /* ----------------------------- */
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    body{
+      font-family: "Lato", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      color: #000;
+      background: #fff;
+    }
+    html{
+      transform: scale(1);
+      transform-origin: top left;
+    }
+    :root{
+      --rhythm: 16px;
+      --label-col: 240px;
+      --gap: 28px;
+      --edge: 24px; /* or 24px if you want calmer */
+        --content-max: 620px; /* ← tune: 520–680 */
+    }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0;
+      padding: var(--edge) var(--edge) calc(var(--rhythm) * 6);
+    }
+
+    p{ margin: 0 0 calc(var(--rhythm) * 1) 0; }
+
+    .b{ font-weight: 700; }
+    .i{ font-style: italic; }
+    .sc{ font-variant: small-caps; letter-spacing: 0.02em;}
+
+    /* ----------------------------- */
+    /* Links                          */
+    /* ----------------------------- */
+    a{
+      color:#000;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+    }
+
+    @media (hover:hover){
+      a{
+        background-image: linear-gradient(#000,#000);
+        background-size: 0% 1px;
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        text-decoration: none;
+        padding-bottom: 1px;
+        transition: background-size 140ms linear;
+      }
+      a:hover{ background-size: 100% 1px; }
+    }
+
+    /* ----------------------------- */
+    /* Grid rows + labels             */
+    /* ----------------------------- */
+    .row{
+      display: grid;
+      grid-template-columns: var(--label-col) 1fr;
+      column-gap: var(--gap);
+      padding: calc(var(--rhythm) * 0.5) 0;
+      align-items: baseline;
+    }
+
+    .label{
+      font-weight: 700;
+      text-align: right;
+      padding-top: 0;
+    }
+
+    .content p:last-child{ margin-bottom: 0; }
+
+    /* ----------------------------- */
+    /* Top block (image + label + text) */
+    /* ----------------------------- */
+    .top-block{
+      grid-template-areas:
+        "label media"
+        "label content";
+      align-items: start;
+    }
+    .top-block .label{ grid-area: label; }
+    .top-block .top-media{ grid-area: media; }
+    .top-block .top-content{ grid-area: content; }
+
+    /* Desktop: consistent breathing room under the image */
+    .top-block .top-media{
+      margin-bottom: calc(var(--rhythm) * 1);
+    }
+
+    /* Prevent extra gap at end of top text before the rule */
+    .top-block .top-content p:last-child{
+      margin-bottom: 0;
+    }
+
+    /* ----------------------------- */
+    /* Rule separators                */
+    /* ----------------------------- */
+    .rule{
+      height: 1px;
+      width: 100%;
+      background-image: repeating-linear-gradient(
+        to right,
+        #000 0,
+        #000 2px,
+        transparent 2px,
+        transparent 7px
+      );
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+      transition: transform 180ms linear;
+    }
+
+    .rulewrap{ margin: calc(var(--rhythm) * 0.75) 0; }
+
+    /* ----------------------------- */
+    /* Inputs (global baseline)       */
+    /* ----------------------------- */
+    input, button{
+      font: inherit;
+      color: #000;
+      background: #fff;
+      border: 1px solid #000;
+      padding: 6px 8px;
+      border-radius: 0;
+    }
+    button{ cursor: pointer; }
+    input{ width: min(520px, 100%); }
+
+    /* ----------------------------- */
+    /* Hook image                     */
+    /* ----------------------------- */
+    .hook-image{
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0;                 /* spacing handled by container (top-media) */
+      border: 0px dotted #000;    /* optional */
+      border-radius: 0;
+      object-fit: cover;
+    }
+
+    /* ----------------------------- */
+    /* Newsletter (kept, even if commented out) */
+    /* ----------------------------- */
+    .newsletter-section{
+      align-items: start;
+    }
+    .newsletter-section .label{
+      padding-top: 6px;
+    }
+
+    .newsletter-form{ margin: 0; }
+
+    .newsletter-row{
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .emailfield{
+      position: relative;
+      border: 1px dotted #000;
+      width: min(760px, 100%);
+      height: 38px;
+      display: block;
+    }
+
+    .emailfield-left,
+    .emailfield-right{
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      white-space: nowrap;
+      font: inherit;
+    }
+
+    .emailfield-left{ left: 10px; }
+
+    .emailfield-right{
+      right: 10px;
+      max-width: 65%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-style: italic;
+    }
+
+    .emailfield input{
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: transparent;
+      padding: 6px 10px;
+      font: inherit;
+      color: #000;
+      outline: none;
+      padding-left: 70px;
+    }
+
+    .emailfield.has-value .emailfield-right{ display: none; }
+
+    .newsletter-actions{ margin-top: 10px; }
+
+    .newsletter-actions button{
+      border: none;
+      padding: 0;
+      background: none;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      line-height: 1;
+    }
+
+    /* ----------------------------- */
+    /* Colophon                       */
+    /* ----------------------------- */
+    .colophon{
+      margin-top: 5px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    /* ----------------------------- */
+    /* Mobile                         */
+    /* ----------------------------- */
+    @media (max-width: 760px){
+      html{
+    transform: none;
+  }
+      :root{ --edge: 16px;}
+
+      .wrap{
+    padding: var(--edge);
+    padding-bottom: calc(var(--rhythm) * 6);
+  }
+
+
+      .row{ grid-template-columns: 1fr; }
+      .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
+
+      /* Top block order on mobile: image -> label -> text */
+      .top-block{
+        grid-template-areas:
+          "media"
+          "label"
+          "content";
+        padding-top: 0;
+      }
+
+      .top-block .label{
+        margin-top: calc(var(--rhythm) * 0.75);
+        margin-bottom: 0;
+      }
+
+      /* keep breathing room under the image on mobile */
+      .top-block .top-media{
+        margin-bottom: calc(var(--rhythm) * 1);
+      }
+
+      .newsletter-section .label{ padding-top: 0; }
+
+      .newsletter-row{ gap: 12px; }
+      .emailfield{ width: 100%; }
+      .emailfield-right{ max-width: 52%; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .rule{ transform: none !important; transition: none !important; }
+      a{ transition: none !important; }
+    }
+  </style>
 </head>
 
 <body>
-  <div class="shell">
-    
-  <aside class="navcol">
-    <div class="studio">STUDIO APPOSITE</div>
-    <nav class="site-nav" aria-label="Site">
-      <a href="index.html" aria-current="page">Index</a>
-      <a href="practice.html">Practice</a>
-      <a href="research.html">Research</a>
-      <a href="mailto:mail@apposite.studio">Mail</a>
-    </nav>
-  </aside>
 
-    <main class="maincol">
-      <img class="hook-image" src="assets/images/Maquinna05.jpg" alt="Architectural detail, Studio Apposite" loading="lazy" decoding="async" />
+<main class="wrap">
 
+  <!-- Top block -->
+  <section class="row top-block">
+    <div class="label">STUDIO APPOSITE</div>
+
+    <div class="top-media">
+      <img
+        class="hook-image"
+        src="assets/images/Maquinna05.jpg"
+        alt="Architectural detail, Studio Apposite"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+
+    <div class="top-content">
       <p><span class="i">Architectural Design + Research</span></p>
 
       <p>
         Studio Apposite is an architectural design and research practice based in Victoria, British Columbia. The studio operates across two parallel bodies of work: a client-facing architectural practice focused on residential renovation and alteration across a range of scales, and an independent research and publishing program dedicated to the study of regional architectural history and theory.
       </p>
+    </div>
+  </section>
 
-      <div class="rulewrap" aria-hidden="true"><div class="rule"></div></div>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
-      <p class="b">Practice</p>
-      <p>
-        Studio Apposite works primarily with existing buildings. The studio undertakes renovation, alteration, and small additions through careful measurement, drawing, and construction study, developing new work in close relation to what is already there. Projects are shaped by the specific conditions of the building and site, with an emphasis on proportion, material continuity, and buildability.
-      </p>
+  <section class="row" id="practice">
+    <div class="label">Practice</div>
+    <div class="content">
+      <p>Studio Apposite works primarily with existing buildings. The studio undertakes renovation, alteration, and small additions through careful measurement, drawing, and construction study, developing new work in close relation to what is already there. Projects are shaped by the specific conditions of the building and site, with an emphasis on proportion, material continuity, and buildability.</p>
+
       <p><a href="practice.html"><span class="b">View services + portfolio</span></a></p>
+    </div>
+  </section>
 
-      <div class="rulewrap" aria-hidden="true"><div class="rule"></div></div>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
-      <p class="b">Research</p>
+  <section class="row" id="research">
+    <div class="label">Research</div>
+    <div class="content">
       <p>
-        Studio Apposite maintains an independent research and publishing program focused on the history and theory of architecture in Victoria and the surrounding region. This work develops through archival research, writing, and image-based study, and is disseminated through publications, exhibitions, and public projects under the imprint Apposite Press.
-      </p>
+      Studio Apposite maintains an independent research and publishing program focused on the history and theory of architecture in Victoria and the surrounding region. This work develops through archival research, writing, and image-based study, and is disseminated through publications, exhibitions, and public projects under the imprint Apposite Press. The research program operates as a sustained scholarly practice, contributing to the documentation and interpretation of regional architectural culture.  </p>
+
       <p><a href="research.html"><span class="b">View publications + exhibitions</span></a></p>
+    </div>
+  </section>
 
-      <div class="rulewrap" aria-hidden="true"><div class="rule"></div></div>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
 
-      <p class="b">People</p>
-      <p>
-        Brandon Poole is an architectural designer, researcher, and educator based in Victoria. He is a PhD Candidate in Architecture at McGill University, where he is a Vadasz Scholar and SSHRC Doctoral Fellow. He holds a Master of Visual Studies from the University of Toronto’s Faculty of Architecture, Landscape, and Design, and a Bachelor of Fine Arts from the University of Victoria. He teaches in the Visual Arts Department at the University of Victoria.
-      </p>
-      <p>
-        Patrick Rollins is a designer, researcher, and curator. His work has included contributions to <span class="i">From the Ground, Into the Light: Organic Architecture of the Islands</span> and <span class="i">Centennial Square: A Design History</span> at the Wentworth Villa Architectural Museum. Current projects include research and exhibitions focused on regional architectural history and a forthcoming publication on the work of Alan Hodgson.
-      </p>
+  <section class="row" id="people">
+    <div class="label">People</div>
+    <div class="content">
+    <p>  Brandon Poole is an architectural designer, researcher, and educator based in Victoria. He is a PhD Candidate in Architecture at McGill University, where he is a Vadasz Scholar and SSHRC Doctoral Fellow. He holds a Master of Visual Studies from the University of Toronto’s Faculty of Architecture, Landscape, and Design, and a Bachelor of Fine Arts from the University of Victoria. He teaches in the Visual Arts Department at the University of Victoria.
+</p><p>
+  Patrick Rollins is a designer, researcher, and curator. His work has included contributions to From the Ground, Into the Light: Organic Architecture of the Islands and Centennial Square: A Design History at the Wentworth Villa Architectural Museum. Current projects include research and exhibitions focused on regional architectural history and a forthcoming publication on the work of Alan Hodgson.
+</p>  </div>
+  </section>
 
-      <div class="footer">© <span id="y"></span> Studio Apposite · Victoria, BC</div>
-    </main>
+  <section class="row rulewrap" aria-hidden="true">
+    <div class="label"></div>
+    <div class="content"><div class="rule"></div></div>
+  </section>
+
+  <section class="row" id="contact">
+    <div class="label">Contact</div>
+    <div class="content">
+      <p><a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a></p>
+    </div>
+  </section>
+
+  <section class="row" id="colophon">
+    <div class="label"></div>
+    <div class="content">
+      <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
+    </div>
+  </section>
+
+  <!--<section class="row newsletter-section" id="newsletter">
+  <div class="label">Newsletter</div>
+  <div class="content">
+    <form
+      class="newsletter-form"
+      action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
+      method="post"
+    >
+      <input type="hidden" name="tag" value="research" />
+      <input type="hidden" name="metadata[source]" value="index" />
+
+      <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
+             style="position:absolute;left:-5000px;" aria-hidden="true">
+
+      <div class="newsletter-row">
+        <div class="emailfield">
+          <span class="emailfield-left">Email</span>
+
+          <input
+            id="bd-email"
+            type="email"
+            name="email"
+            required
+            aria-label="Email address"
+            autocomplete="email"
+            inputmode="email"
+          />
+        </div>
+      </div>
+
+      <div class="newsletter-actions">
+        <button type="submit" class="b">Subscribe</button>
+      </div>
+
+      <!-- line break after subscribe is naturally created by this paragraph -->
+
+    </form>
   </div>
+</section>
 
-  <script src="assets/site.js"></script>
+</main>
+
+<script>
+  // Year
+  document.getElementById("y").textContent = new Date().getFullYear();
+
+  // Animate only the dashed rules on first view (no content opacity changes)
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ruleEls = Array.from(document.querySelectorAll(".rule"));
+
+  if (!prefersReduced && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        el.style.transform = "scaleX(1)";
+        io.unobserve(el);
+      });
+    }, { root: null, rootMargin: "0px 0px -12% 0px", threshold: 0.01 });
+
+    ruleEls.forEach(el => io.observe(el));
+  } else {
+    ruleEls.forEach(el => { el.style.transform = "scaleX(1)"; });
+  }
+
+  // Buttondown honeypot guard
+  (function(){
+    const hp = document.querySelector('input[name="bd_hp"]');
+    const form = hp ? hp.closest("form") : null;
+    if (!form) return;
+    form.addEventListener("submit", (e) => {
+      if (hp.value) e.preventDefault();
+    });
+  })();
+
+  // Hide the right-side hint when user types
+  (function(){
+    const input = document.getElementById("bd-email");
+    if (!input) return;
+    const wrap = input.closest(".emailfield");
+    if (!wrap) return;
+
+    function sync(){
+      wrap.classList.toggle("has-value", !!input.value.trim());
+    }
+    input.addEventListener("input", sync);
+    sync();
+  })();
+</script>
+
 </body>
 </html>
