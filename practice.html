@@ -140,10 +140,6 @@
       row-gap: calc(var(--rhythm) * 1);
       align-items: start;
     }
-    /* Portfolio full-width image inside twocol */
-    .twocol .span-all{
-      grid-column: 1 / -1;
-    }
 
     .portfolio-image{
       width: 100%;
@@ -159,6 +155,33 @@
     }
     .list li{
       margin: 0 0 calc(var(--rhythm) * 0.5) 0;
+    }
+
+    /* ----------------------------- */
+    /* Services (Design / Delivery)   */
+    /* ----------------------------- */
+    .services .svc-kicker{
+      margin: 0 0 calc(var(--rhythm) * 0.75) 0;
+      font-size: 13px;
+      line-height: 1.4;
+      font-weight: 700;
+    }
+
+    .services .svc-title{
+      margin: 0 0 4px 0; /* tighten heading → list */
+      font-weight: 700;
+    }
+
+    .services .list{
+      margin: 0 0 calc(var(--rhythm) * 0.75) 0; /* space between phases */
+    }
+
+    .services .list li{
+      margin: 0 0 4px 0; /* tighter bullets */
+    }
+
+    .services .list li:last-child{
+      margin-bottom: 0;
     }
 
     /* ----------------------------- */
@@ -202,18 +225,16 @@
 
 <main class="wrap">
 
-  <!-- Page header (keeps your practice text exactly) -->
+  <!-- Page header -->
   <section class="row top-block">
     <div class="label">STUDIO APPOSITE</div>
     <div class="content">
       <p class="top-kicker"><span class="i">Practice</span></p>
 
       <p>
-      Studio Apposite provides architectural design services focused on existing houses, small additions, and alterations.
-      The practice works through proportion, construction logic, and existing conditions, producing drawings for permitting, coordination, and construction.
-    </p>
-
-
+        Studio Apposite provides architectural design services focused on existing houses, small additions, and alterations.
+        The practice works through proportion, construction logic, and existing conditions, producing drawings for permitting, coordination, and construction.
+      </p>
 
       <p class="small">
         <a href="index.html"><span class="b">← Home</span></a>
@@ -227,56 +248,65 @@
   </section>
 
   <!-- Services -->
-  <section class="row" id="services">
+  <section class="row services" id="services">
     <div class="label">Services</div>
     <div class="content">
+      <div class="twocol">
 
-      <p class="b">Feasibility studies / strategic planning</p>
-      <ul class="list">
-        <li>Review of existing conditions and site constraints</li>
-        <li>Zoning and bylaw analysis</li>
-        <li>Program and spatial feasibility</li>
-        <li>Preliminary budget alignment</li>
-        <li>Identification of approval pathways and risks</li>
-      </ul>
+        <div>
+          <p class="svc-kicker">Design</p>
 
-      <p class="b">Preliminary design / project coordination</p>
-      <ul class="list">
-        <li>Concept and schematic design options</li>
-        <li>Existing conditions documentation and analysis</li>
-        <li>Preliminary plans, massing, and spatial layouts</li>
-        <li>Early consultant coordination</li>
-        <li>Review of zoning, code, and approval implications</li>
-      </ul>
+          <p class="svc-title">Feasibility studies / strategic planning</p>
+          <ul class="list">
+            <li>Review of existing conditions and site constraints</li>
+            <li>Zoning and bylaw analysis</li>
+            <li>Program and spatial feasibility</li>
+            <li>Preliminary budget alignment</li>
+            <li>Identification of approval pathways and risks</li>
+          </ul>
 
-      <p class="b">Detailed design / construction documents</p>
-      <ul class="list">
-        <li>Developed architectural design and detailing</li>
-        <li>Integration of consultant work</li>
-        <li>Material, assembly, and system coordination</li>
-        <li>Construction and permit drawing sets</li>
-        <li>Drawing revisions in response to authority review</li>
-      </ul>
+          <p class="svc-title">Preliminary design / project coordination</p>
+          <ul class="list">
+            <li>Concept and schematic design options</li>
+            <li>Existing conditions documentation and analysis</li>
+            <li>Preliminary plans, massing, and spatial layouts</li>
+            <li>Early consultant coordination</li>
+            <li>Review of zoning, code, and approval implications</li>
+          </ul>
 
-      <p class="b">Approvals / permits</p>
-      <ul class="list">
-        <li>Zoning and bylaw compliance review</li>
-        <li>Permit drawing coordination and submission support</li>
-        <li>Responses to authority comments and revisions</li>
-        <li>Assistance with variances or special approvals</li>
-      </ul>
+          <p class="svc-title">Detailed design / construction documents</p>
+          <ul class="list">
+            <li>Developed architectural design and detailing</li>
+            <li>Integration of consultant work</li>
+            <li>Material, assembly, and system coordination</li>
+            <li>Construction and permit drawing sets</li>
+            <li>Drawing revisions in response to authority review</li>
+          </ul>
+        </div>
 
-      <p class="b">Construction coordination / quality control</p>
-      <ul class="list">
-        <li>Site reviews at key construction milestones</li>
-        <li>Review of shop drawings, samples, and substitutions</li>
-        <li>Coordination with contractor and consultants</li>
-        <li>Clarifications and drawing revisions</li>
-      </ul>
+        <div>
+          <p class="svc-kicker">Delivery</p>
 
+          <p class="svc-title">Approvals / permits</p>
+          <ul class="list">
+            <li>Zoning and bylaw compliance review</li>
+            <li>Permit drawing coordination and submission support</li>
+            <li>Responses to authority comments and revisions</li>
+            <li>Assistance with variances or special approvals</li>
+          </ul>
+
+          <p class="svc-title">Construction coordination / quality control</p>
+          <ul class="list">
+            <li>Site reviews at key construction milestones</li>
+            <li>Review of shop drawings, samples, and substitutions</li>
+            <li>Coordination with contractor and consultants</li>
+            <li>Clarifications and drawing revisions</li>
+          </ul>
+        </div>
+
+      </div>
     </div>
   </section>
-
 
   <section class="row rulewrap" aria-hidden="true">
     <div class="label"></div>
@@ -286,12 +316,11 @@
   <!-- Portfolio -->
   <section class="row" id="portfolio">
     <div class="label">Portfolio</div>
-
     <div class="content">
       <p>
-    <span class="b">Selected work</span>
-    <span class="i">(forthcoming)</span>
-  </p>
+        <span class="b">Selected work</span>
+        <span class="i">(forthcoming)</span>
+      </p>
 
       <img
         class="portfolio-image"
@@ -300,11 +329,8 @@
         loading="lazy"
         decoding="async"
       />
-
     </div>
   </section>
-
-
 
   <section class="row rulewrap" aria-hidden="true">
     <div class="label"></div>
