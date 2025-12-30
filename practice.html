@@ -193,6 +193,46 @@
       font-size: 13px;
       line-height: 1.4;
     }
+    /* ----------------------------- */
+/* Services: label–list matrix   */
+/* ----------------------------- */
+
+.services .svc-grid{
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  column-gap: var(--gap);
+  row-gap: calc(var(--rhythm) * 0.75);
+}
+
+.services .svc-phase{
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.services .svc-list{
+  margin: 0;
+}
+
+.services .svc-list li{
+  margin: 0 0 2px 0;
+  line-height: 1.35;
+}
+
+.services .svc-list li:last-child{
+  margin-bottom: 0;
+}
+
+/* Mobile: collapse gracefully */
+@media (max-width: 760px){
+  .services .svc-grid{
+    grid-template-columns: 1fr;
+  }
+
+  .services .svc-phase{
+    margin-top: calc(var(--rhythm) * 0.5);
+  }
+}
+
 
     /* ----------------------------- */
     /* Mobile                         */
@@ -252,60 +292,52 @@
   <section class="row services" id="services">
     <div class="label">Services</div>
     <div class="content">
-      <div class="twocol">
 
-        <div>
-          <p class="svc-kicker">Design</p>
+      <div class="svc-grid">
+        <div class="svc-phase">Feasibility studies / strategic planning</div>
+        <ul class="list svc-list">
+          <li>Review of existing conditions and site constraints</li>
+          <li>Zoning and bylaw analysis</li>
+          <li>Program and spatial feasibility</li>
+          <li>Preliminary budget alignment</li>
+          <li>Identification of approval pathways and risks</li>
+        </ul>
 
-          <p class="svc-title">Feasibility studies / strategic planning</p>
-          <ul class="list">
-            <li>Review of existing conditions and site constraints</li>
-            <li>Zoning and bylaw analysis</li>
-            <li>Program and spatial feasibility</li>
-            <li>Preliminary budget alignment</li>
-            <li>Identification of approval pathways and risks</li>
-          </ul>
+        <div class="svc-phase">Preliminary design / project coordination</div>
+        <ul class="list svc-list">
+          <li>Concept and schematic design options</li>
+          <li>Existing conditions documentation and analysis</li>
+          <li>Preliminary plans, massing, and spatial layouts</li>
+          <li>Early consultant coordination</li>
+          <li>Review of zoning, code, and approval implications</li>
+        </ul>
 
-          <p class="svc-title">Preliminary design / project coordination</p>
-          <ul class="list">
-            <li>Concept and schematic design options</li>
-            <li>Existing conditions documentation and analysis</li>
-            <li>Preliminary plans, massing, and spatial layouts</li>
-            <li>Early consultant coordination</li>
-            <li>Review of zoning, code, and approval implications</li>
-          </ul>
+        <div class="svc-phase">Detailed design / construction documents</div>
+        <ul class="list svc-list">
+          <li>Developed architectural design and detailing</li>
+          <li>Integration of consultant work</li>
+          <li>Material, assembly, and system coordination</li>
+          <li>Construction and permit drawing sets</li>
+          <li>Drawing revisions in response to authority review</li>
+        </ul>
 
-          <p class="svc-title">Detailed design / construction documents</p>
-          <ul class="list">
-            <li>Developed architectural design and detailing</li>
-            <li>Integration of consultant work</li>
-            <li>Material, assembly, and system coordination</li>
-            <li>Construction and permit drawing sets</li>
-            <li>Drawing revisions in response to authority review</li>
-          </ul>
-        </div>
+        <div class="svc-phase">Approvals / permits</div>
+        <ul class="list svc-list">
+          <li>Zoning and bylaw compliance review</li>
+          <li>Permit drawing coordination and submission support</li>
+          <li>Responses to authority comments and revisions</li>
+          <li>Assistance with variances or special approvals</li>
+        </ul>
 
-        <div>
-          <p class="svc-kicker">Delivery</p>
-
-          <p class="svc-title">Approvals / permits</p>
-          <ul class="list">
-            <li>Zoning and bylaw compliance review</li>
-            <li>Permit drawing coordination and submission support</li>
-            <li>Responses to authority comments and revisions</li>
-            <li>Assistance with variances or special approvals</li>
-          </ul>
-
-          <p class="svc-title">Construction coordination / quality control</p>
-          <ul class="list">
-            <li>Site reviews at key construction milestones</li>
-            <li>Review of shop drawings, samples, and substitutions</li>
-            <li>Coordination with contractor and consultants</li>
-            <li>Clarifications and drawing revisions</li>
-          </ul>
-        </div>
-
+        <div class="svc-phase">Construction coordination / quality control</div>
+        <ul class="list svc-list">
+          <li>Site reviews at key construction milestones</li>
+          <li>Review of shop drawings, samples, and substitutions</li>
+          <li>Coordination with contractor and consultants</li>
+          <li>Clarifications and drawing revisions</li>
+        </ul>
       </div>
+
     </div>
   </section>
 
