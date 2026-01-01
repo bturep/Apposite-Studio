@@ -51,6 +51,11 @@
     .b{ font-weight: 700; }
     .i{ font-style: italic; }
     .sc{ font-variant: small-caps; letter-spacing: 0.02em; }
+    .pager{
+      display: flex;
+      justify-content: space-between;
+      max-width: 100%;
+    }
 
     /* ----------------------------- */
     /* Links (static underline)       */
@@ -229,7 +234,10 @@
       </p>
 
       <p>
-        <a href="index.html">← Home </a>&nbsp;&nbsp; <a href="research.html"> Research →</a>
+        <nav class="pager">
+    <a href="index.html">← Home</a>
+    <a href="research.html">Research →</a>
+  </nav>
       </p>
     </div>
   </section>
