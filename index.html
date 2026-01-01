@@ -25,16 +25,18 @@
       color: #000;
       background: #fff;
     }
+
     html{
       transform: scale(1);
       transform-origin: top left;
     }
+
     :root{
       --rhythm: 16px;
       --label-col: 240px;
       --gap: 28px;
-      --edge: 24px; /* or 24px if you want calmer */
-        --content-max: 620px; /* ← tune: 520–680 */
+      --edge: 24px;           /* calmer */
+      --content-max: 620px;   /* tune: 520–680 */
     }
 
     .wrap{
@@ -47,10 +49,10 @@
 
     .b{ font-weight: 700; }
     .i{ font-style: italic; }
-    .sc{ font-variant: small-caps; letter-spacing: 0.02em;}
+    .sc{ font-variant: small-caps; letter-spacing: 0.02em; }
 
     /* ----------------------------- */
-    /* Links                          */
+    /* Links (static underline)       */
     /* ----------------------------- */
     a{
       color:#000;
@@ -59,17 +61,9 @@
       text-decoration-thickness: 1px;
     }
 
+    /* Optional: subtle hover emphasis (no animation) */
     @media (hover:hover){
-      a{
-        background-image: linear-gradient(#000,#000);
-        background-size: 0% 1px;
-        background-position: 0 100%;
-        background-repeat: no-repeat;
-        text-decoration: none;
-        padding-bottom: 1px;
-        transition: background-size 140ms linear;
-      }
-      a:hover{ background-size: 100% 1px; }
+      a:hover{ text-decoration-thickness: 2px; }
     }
 
     /* ----------------------------- */
@@ -77,10 +71,11 @@
     /* ----------------------------- */
     .row{
       display: grid;
-      grid-template-columns: var(--label-col) 1fr;
+      grid-template-columns: var(--label-col) minmax(0, var(--content-max));
       column-gap: var(--gap);
       padding: calc(var(--rhythm) * 0.5) 0;
       align-items: baseline;
+      justify-content: start;
     }
 
     .label{
@@ -155,8 +150,8 @@
       width: 100%;
       height: auto;
       display: block;
-      margin: 0;                 /* spacing handled by container (top-media) */
-      border: 0px dotted #000;    /* optional */
+      margin: 0;                  /* spacing handled by container (top-media) */
+      border: 0px dotted #000;     /* optional */
       border-radius: 0;
       object-fit: cover;
     }
@@ -249,16 +244,13 @@
     /* Mobile                         */
     /* ----------------------------- */
     @media (max-width: 760px){
-      html{
-    transform: none;
-  }
-      :root{ --edge: 16px;}
+      html{ transform: none; }
+      :root{ --edge: 16px; }
 
       .wrap{
-    padding: var(--edge);
-    padding-bottom: calc(var(--rhythm) * 6);
-  }
-
+        padding: var(--edge);
+        padding-bottom: calc(var(--rhythm) * 6);
+      }
 
       .row{ grid-template-columns: 1fr; }
       .label{ text-align: left; margin-bottom: 6px; padding-top: 0; }
@@ -291,7 +283,6 @@
 
     @media (prefers-reduced-motion: reduce){
       .rule{ transform: none !important; transition: none !important; }
-      a{ transition: none !important; }
     }
   </style>
 </head>
@@ -318,7 +309,9 @@
       <p><span class="b">Architectural Design + Research</span></p>
 
       <p>
-        Studio Apposite is an architectural design and research practice based in Victoria, British Columbia. The studio operates through two parallel bodies of work: a client-facing architectural practice focused on residential renovation and alteration across a range of scales, and an independent research and publishing program dedicated to the study of regional architectural history and theory.
+        Studio Apposite is an architectural design and research practice based in Victoria, British Columbia.
+        The studio operates through two parallel bodies of work: a client-facing architectural practice focused on residential renovation and alteration across a range of scales,
+        and an independent research and publishing program dedicated to the study of regional architectural history and theory.
       </p>
     </div>
   </section>
@@ -331,7 +324,10 @@
   <section class="row" id="practice">
     <div class="label">Practice</div>
     <div class="content">
-      <p>The studio approaches architectural practice as a form of applied design inquiry, shaped by the specific attributes of the building and site. Projects are developed with attention to proportion, material sensitivity, and buildability, balancing design intent with the realities of construction and use.
+      <p>
+        The studio approaches architectural practice as a form of applied design inquiry, shaped by the specific attributes of the building and site.
+        Projects are developed with attention to proportion, material sensitivity, and buildability, balancing design intent with the realities of construction and use.
+      </p>
       <p><a href="practice.html">View services + portfolio</a></p>
     </div>
   </section>
@@ -345,7 +341,10 @@
     <div class="label">Research</div>
     <div class="content">
       <p>
-    The studio maintains an independent research and publishing program focused on the history and theory of architecture in Victoria and the surrounding region. The work is developed through archival research, writing, and image-based study, and is disseminated through publications, exhibitions, and public projects under the imprint Apposite Press. The program contributes to the documentation and interpretation of regional architectural culture. </p>
+        The studio maintains an independent research and publishing program focused on the history and theory of architecture in Victoria and the surrounding region.
+        The work is developed through archival research, writing, and image-based study, and is disseminated through publications, exhibitions, and public projects under the imprint Apposite Press.
+        The program contributes to the documentation and interpretation of regional architectural culture.
+      </p>
 
       <p><a href="research.html">View publications + exhibitions</a></p>
     </div>
@@ -359,10 +358,17 @@
   <section class="row" id="people">
     <div class="label">People</div>
     <div class="content">
-    <p>  <span class="b">Brandon Poole</span> is an architectural designer, researcher, and educator based in Victoria. He is a PhD Candidate in Architecture at McGill University, where he is a Vadasz Scholar and SSHRC Doctoral Fellow. He holds a Master of Visual Studies from the University of Toronto’s Faculty of Architecture, Landscape, and Design, and a Bachelor of Fine Arts from the University of Victoria. He lectures in the Visual Arts Department at the University of Victoria.
-</p><p>
-  <span class="b">Patrick Rollins</span> is a designer, researcher, and curator. His work has included contributions to <span class="i">From the Ground, Into the Light: Organic Architecture of the Islands</span> and <span class="i">Centennial Square: A Design History</span> at the Wentworth Villa Architectural Museum. Current projects include research and exhibitions focused on regional architectural history and a forthcoming publication on the work of Alan Hodgson.
-</p>  </div>
+      <p>
+        <span class="b">Brandon Poole</span> is an architectural designer, researcher, and educator based in Victoria. He is a PhD Candidate in Architecture at McGill University, where he is a Vadasz Scholar and SSHRC Doctoral Fellow.
+        He holds a Master of Visual Studies from the University of Toronto’s Faculty of Architecture, Landscape, and Design, and a Bachelor of Fine Arts from the University of Victoria.
+        He lectures in the Visual Arts Department at the University of Victoria.
+      </p>
+      <p>
+        <span class="b">Patrick Rollins</span> is a designer, researcher, and curator. His work has included contributions to <span class="i">From the Ground, Into the Light: Organic Architecture of the Islands</span> and
+        <span class="i">Centennial Square: A Design History</span> at the Wentworth Villa Architectural Museum.
+        Current projects include research and exhibitions focused on regional architectural history and a forthcoming publication on the work of Alan Hodgson.
+      </p>
+    </div>
   </section>
 
   <section class="row rulewrap" aria-hidden="true">
@@ -384,45 +390,45 @@
     </div>
   </section>
 
-  <!--<section class="row newsletter-section" id="newsletter">
-  <div class="label">Newsletter</div>
-  <div class="content">
-    <form
-      class="newsletter-form"
-      action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
-      method="post"
-    >
-      <input type="hidden" name="tag" value="research" />
-      <input type="hidden" name="metadata[source]" value="index" />
+  <!-- Newsletter section intentionally retained but commented out -->
+  <!--
+  <section class="row newsletter-section" id="newsletter">
+    <div class="label">Newsletter</div>
+    <div class="content">
+      <form
+        class="newsletter-form"
+        action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
+        method="post"
+      >
+        <input type="hidden" name="tag" value="research" />
+        <input type="hidden" name="metadata[source]" value="index" />
 
-      <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
-             style="position:absolute;left:-5000px;" aria-hidden="true">
+        <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
+               style="position:absolute;left:-5000px;" aria-hidden="true">
 
-      <div class="newsletter-row">
-        <div class="emailfield">
-          <span class="emailfield-left">Email</span>
+        <div class="newsletter-row">
+          <div class="emailfield">
+            <span class="emailfield-left">Email</span>
 
-          <input
-            id="bd-email"
-            type="email"
-            name="email"
-            required
-            aria-label="Email address"
-            autocomplete="email"
-            inputmode="email"
-          />
+            <input
+              id="bd-email"
+              type="email"
+              name="email"
+              required
+              aria-label="Email address"
+              autocomplete="email"
+              inputmode="email"
+            />
+          </div>
         </div>
-      </div>
 
-      <div class="newsletter-actions">
-        <button type="submit" class="b">Subscribe</button>
-      </div>
-
-      <!-- line break after subscribe is naturally created by this paragraph -->
-
-    </form>
-  </div>
-</section>
+        <div class="newsletter-actions">
+          <button type="submit" class="b">Subscribe</button>
+        </div>
+      </form>
+    </div>
+  </section>
+  -->
 
 </main>
 
@@ -449,18 +455,16 @@
     ruleEls.forEach(el => { el.style.transform = "scaleX(1)"; });
   }
 
-  // Buttondown honeypot guard
+  // Buttondown honeypot guard + hint hide (only if newsletter is enabled)
   (function(){
     const hp = document.querySelector('input[name="bd_hp"]');
     const form = hp ? hp.closest("form") : null;
-    if (!form) return;
-    form.addEventListener("submit", (e) => {
-      if (hp.value) e.preventDefault();
-    });
-  })();
+    if (form) {
+      form.addEventListener("submit", (e) => {
+        if (hp.value) e.preventDefault();
+      });
+    }
 
-  // Hide the right-side hint when user types
-  (function(){
     const input = document.getElementById("bd-email");
     if (!input) return;
     const wrap = input.closest(".emailfield");
