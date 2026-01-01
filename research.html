@@ -52,7 +52,7 @@
     .sc{ font-variant: small-caps; letter-spacing: 0.02em; }
 
     /* ----------------------------- */
-    /* Links                          */
+    /* Links (static underline)       */
     /* ----------------------------- */
     a{
       color:#000;
@@ -61,17 +61,9 @@
       text-decoration-thickness: 1px;
     }
 
+    /* Optional: subtle hover emphasis (no animation) */
     @media (hover:hover){
-      a{
-        background-image: linear-gradient(#000,#000);
-        background-size: 0% 1px;
-        background-position: 0 100%;
-        background-repeat: no-repeat;
-        text-decoration: none;
-        padding-bottom: 1px;
-        transition: background-size 140ms linear;
-      }
-      a:hover{ background-size: 100% 1px; }
+      a:hover{ text-decoration-thickness: 2px; }
     }
 
     /* ----------------------------- */
@@ -195,7 +187,6 @@
 
     @media (prefers-reduced-motion: reduce){
       .rule{ transform: none !important; transition: none !important; }
-      a{ transition: none !important; }
     }
   </style>
 </head>
@@ -211,7 +202,8 @@
       <p class="top-kicker"><span class="b">RESEARCH</span></p>
 
       <p>
-        Studio Apposite maintains an independent research and publishing program dedicated to the history and theory of architecture in Victoria and the surrounding region. This work develops through archival research, writing, and image-based study, and is disseminated through publications, exhibitions, and public projects under the imprint Apposite Press.
+        The studio maintains an independent research and publishing program focused on the history and theory of architecture in Victoria and the surrounding region.
+        The work is developed through archival research, writing, and image-based study, and is disseminated through publications, exhibitions, and public projects under the imprint Apposite Press.
       </p>
 
       <p class="small">
@@ -250,7 +242,8 @@
       />
 
       <p>
-        A curated exhibition project foregrounding the room as a social and architectural unit: a practical enclosure, a situation for looking, and a temporary civic interior. Developed as a storefront intervention with a publication component.
+        A curated exhibition project foregrounding the room as a social and architectural unit: a practical enclosure, a situation for looking, and a temporary civic interior.
+        Developed as a storefront intervention with a publication component.
       </p>
 
       <p class="small"><span class="b">Status:</span> In development.</p>
@@ -287,7 +280,8 @@
       />
 
       <p>
-        An ongoing publication project assembling drawings, photographs, and archival fragments into a concentrated study of practice, collaboration, and built work. The aim is documentation that is usable: for readers, for historians, and for houses that are still changing.
+        An ongoing publication project assembling drawings, photographs, and archival fragments into a concentrated study of practice, collaboration, and built work.
+        The aim is documentation that is usable: for readers, for historians, and for houses that are still changing.
       </p>
 
       <p class="small"><span class="b">Status:</span> Research + writing in progress.</p>
@@ -324,7 +318,8 @@
       />
 
       <p>
-        A rolling body of work built from site visits, archive pulls, and measured drawing: small, precise documents that can be read quickly, shared easily, and expanded over time. Each entry focuses on what can actually be seen, verified, and drawn.
+        A rolling body of work built from site visits, archive pulls, and measured drawing: small, precise documents that can be read quickly, shared easily, and expanded over time.
+        Each entry focuses on what can actually be seen, verified, and drawn.
       </p>
 
       <p class="small"><span class="b">Status:</span> Active.</p>

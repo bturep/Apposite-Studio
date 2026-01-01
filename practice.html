@@ -36,7 +36,7 @@
       --label-col: 240px;
       --gap: 28px;
       --edge: 24px;
-      --content-max: 620px; /* keep aligned with index “tight” column */
+      --content-max: 620px; /* keep aligned with index */
       --svc-head-col: 210px; /* phase label column width (reduced) */
     }
 
@@ -50,10 +50,10 @@
 
     .b{ font-weight: 700; }
     .i{ font-style: italic; }
-    .sc{ font-variant: small-caps; letter-spacing: 0.02em;}
+    .sc{ font-variant: small-caps; letter-spacing: 0.02em; }
 
     /* ----------------------------- */
-    /* Links                          */
+    /* Links (static underline)       */
     /* ----------------------------- */
     a{
       color:#000;
@@ -62,17 +62,9 @@
       text-decoration-thickness: 1px;
     }
 
+    /* Optional: subtle hover emphasis (no animation) */
     @media (hover:hover){
-      a{
-        background-image: linear-gradient(#000,#000);
-        background-size: 0% 1px;
-        background-position: 0 100%;
-        background-repeat: no-repeat;
-        text-decoration: none;
-        padding-bottom: 1px;
-        transition: background-size 140ms linear;
-      }
-      a:hover{ background-size: 100% 1px; }
+      a:hover{ text-decoration-thickness: 2px; }
     }
 
     /* ----------------------------- */
@@ -84,7 +76,7 @@
       column-gap: var(--gap);
       padding: calc(var(--rhythm) * 0.5) 0;
       align-items: baseline;
-      justify-content: start; /* keep extra space on the right */
+      justify-content: start;
     }
 
     .label{
@@ -98,9 +90,7 @@
     /* ----------------------------- */
     /* Top block (page header)        */
     /* ----------------------------- */
-    .top-block{
-      align-items: start;
-    }
+    .top-block{ align-items: start; }
 
     .top-kicker{
       margin: 0 0 calc(var(--rhythm) * 0.75) 0;
@@ -157,15 +147,14 @@
       line-height: 1.25;
     }
 
-    /* Optional: visually soften the slash line without changing text */
     .services .svc-phase .minor{
       font-weight: 400;
     }
 
-    /* Right column bullets (real bullets) */
+    /* Right column bullets */
     .services .svc-list{
       margin: 0;
-      padding-left: 18px; /* creates bullet gutter */
+      padding-left: 18px;
       list-style: disc;
     }
 
@@ -221,7 +210,6 @@
 
     @media (prefers-reduced-motion: reduce){
       .rule{ transform: none !important; transition: none !important; }
-      a{ transition: none !important; }
     }
   </style>
 </head>
