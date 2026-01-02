@@ -55,6 +55,18 @@
       justify-content: space-between;
       max-width: 100%;
     }
+    /* Default: desktop — no breaks */
+    .tagline .break {
+      display: inline;
+    }
+
+    /* Mobile: stack after periods */
+    @media (max-width: 760px) {
+      .tagline .break {
+        display: block;
+        height: 0.25em; /* optional breathing room */
+      }
+    }
 
     /* ----------------------------- */
     /* Links (static underline)       */
@@ -228,7 +240,11 @@
       <div class="work-head">
         <div>
           <p class="b">Mayhew Studio</p>
-          <p class="tagline">Architect: <span class="i">Alan Hodgson</span>. Introduction by <span class="i">Patrick Rollins</span>. Essay by <span class="i">Lynda Gammon</span>.</p>
+            <p class="tagline">
+              Architect: <span class="i">Alan Hodgson</span>.<span class="break"></span>
+              Introduction by <span class="i">Patrick Rollins</span>.<span class="break"></span>
+              Essay by <span class="i">Lynda Gammon</span>.
+            </p>
         </div>
       </div>
 
