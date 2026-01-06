@@ -117,6 +117,9 @@
       font-size: 13px;
       line-height: 1.4;
     }
+    h1.label, h2.label { margin: 0; font-size: inherit; }
+    h1.top-kicker { margin: 0 0 calc(var(--rhythm) * 0.75) 0; font-size: inherit; line-height: inherit; }
+    h3.b { margin: 0; font-size: inherit; line-height: inherit; }
 
     /* ----------------------------- */
     /* Rule separators                */
@@ -239,7 +242,7 @@
   <section class="row top-block">
     <div class="label">STUDIO APPOSITE</div>
     <div class="content">
-      <p class="top-kicker"><span class="b">Practice</span></p>
+      <h1 class="top-kicker"><span class="b">Practice</span></h1>
 
       <p>
         Studio Apposite provides architectural design services for residential renovation, alteration, and small additions, with a focus on existing buildings. Work typically begins with a feasibility and constraints review, establishing scope, approvals, and key risks early. Design is developed through measured documentation, iterative options, and clear drawing sets that support decision-making, permitting, and construction coordination.
@@ -261,7 +264,7 @@
 
   <!-- Services -->
   <section class="row services" id="services">
-    <div class="label">Services</div>
+    <h2 class="label">Services</h2>
     <div class="content">
 
       <div class="svc-grid">
@@ -329,7 +332,7 @@
 
   <!-- Portfolio -->
   <section class="row" id="portfolio">
-    <div class="label">Portfolio</div>
+    <h2 class="label">Portfolio</h2>
     <div class="content">
       <p>
         <span class="b">Selected work</span>
@@ -353,7 +356,7 @@
 
   <!-- Contact -->
   <section class="row" id="contact">
-    <div class="label">Contact</div>
+    <h2 class="label">Contact</h2>
     <div class="content">
     <p>  <a href="mailto:mail@apposite.studio"
      onclick="gtag('event', 'contact_email_click', {
