@@ -169,73 +169,16 @@
       border-radius: 0;
       object-fit: cover;
     }
-
-    /* ----------------------------- */
-    /* Newsletter (kept, even if commented out) */
-    /* ----------------------------- */
-    .newsletter-section{
-      align-items: start;
-    }
-    .newsletter-section .label{
-      padding-top: 6px;
-    }
-
-    .newsletter-form{ margin: 0; }
-
-    .newsletter-row{
+    /* Newsletter: inline field + underline action */
+    .newsletter-inline{
       display: flex;
       align-items: center;
       gap: 18px;
+      flex-wrap: wrap;
     }
 
-    .emailfield{
-      position: relative;
-      border: 1px dotted #000;
-      width: min(760px, 100%);
-      height: 38px;
-      display: block;
-    }
-
-    .emailfield-left,
-    .emailfield-right{
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      white-space: nowrap;
-      font: inherit;
-    }
-
-    .emailfield-left{ left: 10px; }
-
-    .emailfield-right{
-      right: 10px;
-      max-width: 65%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-style: italic;
-    }
-
-    .emailfield input{
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+    .newsletter-submit{
       border: 0;
-      background: transparent;
-      padding: 6px 10px;
-      font: inherit;
-      color: #000;
-      outline: none;
-      padding-left: 70px;
-    }
-
-    .emailfield.has-value .emailfield-right{ display: none; }
-
-    .newsletter-actions{ margin-top: 10px; }
-
-    .newsletter-actions button{
-      border: none;
       padding: 0;
       background: none;
       cursor: pointer;
@@ -243,8 +186,25 @@
       text-underline-offset: 3px;
       text-decoration-thickness: 1px;
       line-height: 1;
+      font: inherit;
+      color: #000;
     }
 
+    @media (hover:hover){
+      .newsletter-submit:hover{ text-decoration-thickness: 2px; }
+    }
+
+    /* Make sure the email box doesn't sprawl too wide */
+    .emailfield{
+      border: 1px dotted #000;
+      width: min(760px, 100%);
+      height: 38px;
+      display: block;
+    }
+
+    /* Mobile: stack naturally */
+    @media (max-width: 760px){
+      .newsletter-inline{ gap: 12px; }
     /* ----------------------------- */
     /* Colophon                       */
     /* ----------------------------- */
@@ -400,7 +360,6 @@
     </div>
   </section>
 
-  <!-- Newsletter section intentionally retained but commented out -->
   <section class="row newsletter-section" id="newsletter">
     <div class="label">Newsletter</div>
     <div class="content">
@@ -415,10 +374,9 @@
         <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
                style="position:absolute;left:-5000px;" aria-hidden="true">
 
-        <div class="newsletter-row">
-          <div class="emailfield">
+        <div class="newsletter-inline">
+          <label class="emailfield" for="bd-email">
             <span class="emailfield-left">Email</span>
-
             <input
               id="bd-email"
               type="email"
@@ -428,15 +386,14 @@
               autocomplete="email"
               inputmode="email"
             />
-          </div>
-        </div>
+          </label>
 
-        <div class="newsletter-actions">
-          <button type="submit" class="b">Subscribe</button>
+          <button type="submit" class="newsletter-submit">Subscribe</button>
         </div>
       </form>
     </div>
   </section>
+
 
     <section class="row" id="colophon">
       <div class="label"></div>
