@@ -3,14 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>Subscribe — Studio Apposite</title>
-  <meta name="description" content="Subscribe to Studio Apposite updates." />
-  <meta name="robots" content="noindex" />
+  <meta name="description" content="Subscribe to Studio Apposite — Research Updates." />
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
+  <!-- Lato -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
   <style>
     * { box-sizing: border-box; }
@@ -34,130 +35,119 @@
 
     .wrap{
       max-width: 980px;
-      margin: 0;
-      padding: var(--edge) var(--edge) calc(var(--rhythm) * 6);
-    }
-
-    a{
-      color:#000;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-thickness: 1px;
-    }
-    @media (hover:hover){
-      a:hover{ text-decoration-thickness: 2px; }
+      padding: var(--edge);
+      padding-bottom: calc(var(--rhythm) * 6);
     }
 
     .row{
       display: grid;
       grid-template-columns: var(--label-col) minmax(0, var(--content-max));
       column-gap: var(--gap);
-      padding: calc(var(--rhythm) * 0.5) 0;
+      padding: calc(var(--rhythm) * 0.75) 0;
       align-items: baseline;
-      justify-content: start;
     }
 
     .label{
       font-weight: 700;
       text-align: right;
-      padding-top: 0;
     }
 
-    h1.label, h2.label { margin: 0; font-size: inherit; }
-    p{ margin: 0 0 var(--rhythm) 0; }
-    .b{ font-weight: 700; }
-
-    .newsletter-inline{
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      flex-wrap: wrap;
+    h1{
+      margin: 0 0 calc(var(--rhythm) * 0.75);
+      font-size: inherit;
+      font-weight: 700;
     }
 
-    .emailfield input{
+    p{ margin: 0 0 var(--rhythm); }
+
+    /* Form */
+    form{ margin-top: calc(var(--rhythm) * 0.5); }
+
+    input{
       font: inherit;
-      color: #000;
-      background: #fff;
-      border: 1px dotted #000;
-      padding: 6px 10px;
-      border-radius: 0;
       width: min(520px, 100%);
-      height: 38px;
+      padding: 8px 10px;
+      border: 1px solid #000;
+      background: #fff;
     }
 
-    .newsletter-submit{
-      border: 0;
-      padding: 0;
+    button{
+      margin-top: calc(var(--rhythm) * 0.75);
+      font: inherit;
       background: none;
+      border: none;
+      padding: 0;
       cursor: pointer;
       text-decoration: underline;
       text-underline-offset: 3px;
-      text-decoration-thickness: 1px;
-      line-height: 1;
-      font: inherit;
-      color: #000;
-    }
-    @media (hover:hover){
-      .newsletter-submit:hover{ text-decoration-thickness: 2px; }
     }
 
-    .small{
-      font-size: 13px;
-      line-height: 1.4;
+    a{
+      color: #000;
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
 
     @media (max-width: 760px){
-      :root{ --edge: 16px; }
-      .wrap{ padding: var(--edge); padding-bottom: calc(var(--rhythm) * 6); }
       .row{ grid-template-columns: 1fr; }
       .label{ text-align: left; margin-bottom: 6px; }
-      .newsletter-inline{ gap: 12px; }
-      .emailfield input{ width: 100%; }
     }
   </style>
 </head>
 
 <body>
+
 <main class="wrap">
 
   <section class="row">
-    <div class="label">STUDIO APPOSITE</div>
+    <div class="label">Newsletter</div>
     <div class="content">
-      <p class="b">Subscribe</p>
-      <p class="small">Occasional updates on projects, publications, and exhibitions.</p>
+      <h1>Studio Apposite — Research Updates</h1>
 
+      <p>
+        Occasional updates on publications in development, archival research,
+        exhibitions, and notes on regional architectural history.
+      </p>
+
+      <!-- CONVERTKIT FORM -->
       <form
-        action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
+        action="https://app.convertkit.com/forms/FORM_ID/subscriptions"
         method="post"
       >
-        <input type="hidden" name="tag" value="research" />
-        <input type="hidden" name="metadata[source]" value="subscribe" />
-        <input type="hidden" name="redirect_to" value="https://apposite.studio/subscribed.html">
+        <!-- REQUIRED -->
+        <input type="hidden" name="form_id" value="FORM_ID">
 
-        <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
+        <!-- OPTIONAL: tagging -->
+        <input type="hidden" name="tags[]" value="research">
+
+        <!-- OPTIONAL: redirect -->
+        <input type="hidden" name="redirect" value="https://apposite.studio/subscribed.html">
+
+        <!-- Honeypot -->
+        <input type="text" name="hp" tabindex="-1" autocomplete="off"
                style="position:absolute;left:-5000px;" aria-hidden="true">
 
-        <div class="newsletter-inline">
-          <div class="emailfield">
-            <input
-              type="email"
-              name="email"
-              required
-              aria-label="Email address"
-              autocomplete="email"
-              inputmode="email"
-              placeholder="Email"
-            />
-          </div>
+        <label>
+          <span class="sr-only">Email address</span>
+          <input
+            type="email"
+            name="email_address"
+            placeholder="Email"
+            required
+            autocomplete="email"
+          />
+        </label>
 
-          <button type="submit" class="newsletter-submit">Subscribe</button>
-        </div>
+        <button type="submit">Subscribe</button>
       </form>
 
-      <p class="small" style="margin-top:16px;"><a href="index.html">← Home</a></p>
+      <p class="small">
+        <a href="/">← Back to Studio Apposite</a>
+      </p>
     </div>
   </section>
 
 </main>
+
 </body>
 </html>
