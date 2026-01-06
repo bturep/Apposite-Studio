@@ -1,218 +1,163 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Subscribe — Studio Apposite</title>
+  <meta name="description" content="Subscribe to Studio Apposite updates." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-4Z03LNW37H"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-4Z03LNW37H');
-</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
 
-<title>Subscribe — Studio Apposite</title>
-<meta name="description" content="Subscribe to Studio Apposite updates on publications, exhibitions, and architectural research." />
+    body{
+      font-family: "Lato", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      color: #000;
+      background: #fff;
+    }
 
-<link rel="icon" href="/favicon.ico" type="image/x-icon">
+    :root{
+      --rhythm: 16px;
+      --label-col: 240px;
+      --gap: 28px;
+      --edge: 24px;
+      --content-max: 620px;
+    }
 
-<!-- Lato -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    .wrap{
+      max-width: 980px;
+      margin: 0;
+      padding: var(--edge) var(--edge) calc(var(--rhythm) * 6);
+    }
 
-<style>
-*{ box-sizing:border-box; }
-html,body{ margin:0; padding:0; }
+    a{
+      color:#000;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+    }
+    @media (hover:hover){
+      a:hover{ text-decoration-thickness: 2px; }
+    }
 
-body{
-  font-family:"Lato", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  font-size:16px;
-  line-height:1.55;
-  color:#000;
-  background:#fff;
-}
+    .row{
+      display: grid;
+      grid-template-columns: var(--label-col) minmax(0, var(--content-max));
+      column-gap: var(--gap);
+      padding: calc(var(--rhythm) * 0.5) 0;
+      align-items: baseline;
+      justify-content: start;
+    }
 
-:root{
-  --rhythm:16px;
-  --label-col:240px;
-  --gap:28px;
-  --edge:24px;
-  --content-max:620px;
-}
+    .label{
+      font-weight: 700;
+      text-align: right;
+      padding-top: 0;
+    }
 
-.wrap{
-  max-width:980px;
-  padding:var(--edge) var(--edge) calc(var(--rhythm)*6);
-}
+    h1.label, h2.label { margin: 0; font-size: inherit; }
+    p{ margin: 0 0 var(--rhythm) 0; }
+    .b{ font-weight: 700; }
 
-.row{
-  display:grid;
-  grid-template-columns:var(--label-col) minmax(0,var(--content-max));
-  column-gap:var(--gap);
-  padding:calc(var(--rhythm)*0.5) 0;
-  align-items:baseline;
-}
+    .newsletter-inline{
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
 
-.label{
-  font-weight:700;
-  text-align:right;
-}
+    .emailfield input{
+      font: inherit;
+      color: #000;
+      background: #fff;
+      border: 1px dotted #000;
+      padding: 6px 10px;
+      border-radius: 0;
+      width: min(520px, 100%);
+      height: 38px;
+    }
 
-p{ margin:0 0 var(--rhythm) 0; }
+    .newsletter-submit{
+      border: 0;
+      padding: 0;
+      background: none;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      line-height: 1;
+      font: inherit;
+      color: #000;
+    }
+    @media (hover:hover){
+      .newsletter-submit:hover{ text-decoration-thickness: 2px; }
+    }
 
-.b{ font-weight:700; }
+    .small{
+      font-size: 13px;
+      line-height: 1.4;
+    }
 
-a{
-  color:#000;
-  text-decoration:underline;
-  text-underline-offset:3px;
-  text-decoration-thickness:1px;
-}
-
-@media (hover:hover){
-  a:hover{ text-decoration-thickness:2px; }
-}
-
-/* Rule */
-.rule{
-  height:1px;
-  width:100%;
-  background-image:repeating-linear-gradient(
-    to right,
-    #000 0,
-    #000 2px,
-    transparent 2px,
-    transparent 7px
-  );
-}
-
-.rulewrap{ margin:calc(var(--rhythm)*0.75) 0; }
-
-/* Newsletter form */
-.newsletter-inline{
-  display:flex;
-  align-items:baseline;
-  gap:18px;
-  flex-wrap:wrap;
-}
-
-.emailfield{
-  position:relative;
-  border:1px dotted #000;
-  width:min(520px,100%);
-  height:34px;
-}
-
-.emailfield span{
-  position:absolute;
-  left:10px;
-  top:50%;
-  transform:translateY(-50%);
-  pointer-events:none;
-}
-
-.emailfield input{
-  position:absolute;
-  inset:0;
-  border:0;
-  background:transparent;
-  padding:6px 10px;
-  padding-left:62px;
-  font:inherit;
-  outline:none;
-}
-
-.newsletter-submit{
-  border:0;
-  padding:0;
-  background:none;
-  font:inherit;
-  cursor:pointer;
-  text-decoration:underline;
-  text-underline-offset:3px;
-  text-decoration-thickness:1px;
-}
-
-@media (max-width:760px){
-  .row{ grid-template-columns:1fr; }
-  .label{ text-align:left; margin-bottom:6px; }
-}
-
-.colophon{
-  font-size:13px;
-  line-height:1.4;
-}
-</style>
+    @media (max-width: 760px){
+      :root{ --edge: 16px; }
+      .wrap{ padding: var(--edge); padding-bottom: calc(var(--rhythm) * 6); }
+      .row{ grid-template-columns: 1fr; }
+      .label{ text-align: left; margin-bottom: 6px; }
+      .newsletter-inline{ gap: 12px; }
+      .emailfield input{ width: 100%; }
+    }
+  </style>
 </head>
 
 <body>
-
 <main class="wrap">
 
-<section class="row">
-  <div class="label">STUDIO APPOSITE</div>
-  <div class="content">
-    <h1 class="b">Subscribe</h1>
+  <section class="row">
+    <div class="label">STUDIO APPOSITE</div>
+    <div class="content">
+      <p class="b">Subscribe</p>
+      <p class="small">Occasional updates on projects, publications, and exhibitions.</p>
 
-    <p>
-      Periodic updates on publications, exhibitions, and research projects from Studio Apposite and Apposite Press.
-    </p>
+      <form
+        action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
+        method="post"
+      >
+        <input type="hidden" name="tag" value="research" />
+        <input type="hidden" name="metadata[source]" value="subscribe" />
+        <input type="hidden" name="redirect_to" value="https://apposite.studio/subscribed.html">
 
-    <form
-      action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
-      method="post"
-    >
-      <input type="hidden" name="tag" value="research" />
-      <input type="hidden" name="metadata[source]" value="subscribe-page" />
+        <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
+               style="position:absolute;left:-5000px;" aria-hidden="true">
 
-      <!-- honeypot -->
-      <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
-             style="position:absolute;left:-5000px;" aria-hidden="true">
+        <div class="newsletter-inline">
+          <div class="emailfield">
+            <input
+              type="email"
+              name="email"
+              required
+              aria-label="Email address"
+              autocomplete="email"
+              inputmode="email"
+              placeholder="Email"
+            />
+          </div>
 
-      <div class="newsletter-inline">
-        <label class="emailfield">
-          <span>Email</span>
-          <input
-            type="email"
-            name="email"
-            required
-            autocomplete="email"
-            inputmode="email"
-            aria-label="Email address"
-          />
-        </label>
+          <button type="submit" class="newsletter-submit">Subscribe</button>
+        </div>
+      </form>
 
-        <button type="submit" class="newsletter-submit">Subscribe</button>
-      </div>
-    </form>
-
-    <p style="margin-top:calc(var(--rhythm)*1);">
-      <a href="index.html">← Back to Studio Apposite</a>
-    </p>
-  </div>
-</section>
-
-<section class="row rulewrap" aria-hidden="true">
-  <div class="label"></div>
-  <div class="content"><div class="rule"></div></div>
-</section>
-
-<section class="row">
-  <div class="label"></div>
-  <div class="content">
-    <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
-  </div>
-</section>
+      <p class="small" style="margin-top:16px;"><a href="index.html">← Home</a></p>
+    </div>
+  </section>
 
 </main>
-
-<script>
-document.getElementById("y").textContent = new Date().getFullYear();
-</script>
-
 </body>
 </html>
