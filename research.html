@@ -411,7 +411,13 @@
   <section class="row" id="contact">
     <div class="label">Contact</div>
     <div class="content">
-      <p><a href="mailto:mail@apposite.studio"><span class="b">mail@apposite.studio</span></a></p>
+      <p><a href="mailto:mail@apposite.studio"
+   onclick="gtag('event', 'contact_email_click', {
+     method: 'email'
+   });">
+   mail@apposite.studio
+</a>
+</p>
     </div>
   </section>
 
