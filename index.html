@@ -257,7 +257,7 @@
 
     @media (prefers-reduced-motion: reduce){
       .rule{ transform: none !important; transition: none !important; }
-    }
+    }}
   </style>
 </head>
 
@@ -360,47 +360,22 @@
     </div>
   </section>
 
-  <section class="row newsletter-section" id="newsletter">
-    <div class="label">Newsletter</div>
+  <section class="row" id="newsletter">
+    <h2 class="label">Newsletter</h2>
     <div class="content">
-      <form
-        class="newsletter-form"
-        action="https://buttondown.com/api/emails/embed-subscribe/studioapposite"
-        method="post"
-      >
-        <input type="hidden" name="tag" value="research" />
-        <input type="hidden" name="metadata[source]" value="index" />
-
-        <input type="text" name="bd_hp" tabindex="-1" autocomplete="off"
-               style="position:absolute;left:-5000px;" aria-hidden="true">
-
-        <div class="newsletter-inline">
-          <label class="emailfield" for="bd-email">
-            <span class="emailfield-left">Email</span>
-            <input
-              id="bd-email"
-              type="email"
-              name="email"
-              required
-              aria-label="Email address"
-              autocomplete="email"
-              inputmode="email"
-            />
-          </label>
-
-          <button type="submit" class="newsletter-submit">Subscribe</button>
-        </div>
-      </form>
+      <p><a href="https://buttondown.com/studioapposite">Subscribe</a></p>
     </div>
   </section>
 
 
-    <section class="row" id="colophon">
-      <div class="label"></div>
-      <div class="content">
-        <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
-      </div>
-    </section>
+  <section class="row" id="colophon">
+    <div class="label"></div>
+    <div class="content">
+      <p class="colophon">© <span id="y"></span> Studio Apposite · Victoria, BC</p>
+    </div>
+  </section>
+
+
 </main>
 
 <script>
