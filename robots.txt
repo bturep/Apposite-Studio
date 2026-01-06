@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://apposite.studio/sitemap.xml
