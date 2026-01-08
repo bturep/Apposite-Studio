@@ -220,6 +220,82 @@
     @media (prefers-reduced-motion: reduce){
       .rule{ transform: none !important; transition: none !important; }
     }
+
+        /* ----------------------------- */
+        /* Kit inline form — Apposite overrides */
+        /* ----------------------------- */
+        .apposite-kit{ max-width: 100% !important; }
+
+        .apposite-kit .formkit-fields{
+          margin: 0 !important;
+          align-items: center !important;
+        }
+
+        /* Use flex gap if present; fall back to margins */
+        .apposite-kit .formkit-fields{ gap: 18px !important; }
+
+        .apposite-kit .formkit-field,
+        .apposite-kit .formkit-submit{
+          margin: 0 !important;
+        }
+
+        .apposite-kit .formkit-input{
+          border: 1px dotted #000 !important;
+          border-radius: 0 !important;
+          background: transparent !important;
+          color: #000 !important;
+          padding: 6px 10px !important;
+          font: inherit !important;
+          height: 38px !important;
+          line-height: 1.2 !important;
+        }
+        .apposite-kit .formkit-input:focus{
+          outline: none !important;
+          border-color: #000 !important;
+        }
+
+        /* Button behaves like underlined link */
+        .apposite-kit .formkit-submit{
+          background: none !important;
+          color: #000 !important;
+          border: 0 !important;
+          border-radius: 0 !important;
+          padding: 0 !important;
+          font: inherit !important;
+          width: auto !important;
+          cursor: pointer !important;
+          margin-bottom: 0 !important;
+        }
+        .apposite-kit .formkit-submit > span{
+          display: inline !important;
+          padding: 0 !important;
+          text-decoration: underline !important;
+          text-underline-offset: 3px !important;
+          text-decoration-thickness: 1px !important;
+          background: none !important;
+        }
+        @media (hover:hover){
+          .apposite-kit .formkit-submit:hover > span{
+            text-decoration-thickness: 2px !important;
+          }
+        }
+
+        /* Hide “Built with Kit” */
+        .apposite-kit .formkit-powered-by-convertkit-container{
+          display: none !important;
+        }
+
+        /* Alerts: keep minimal */
+        .apposite-kit .formkit-alert{
+          border: 1px dotted #000 !important;
+          border-radius: 0 !important;
+          background: transparent !important;
+          color: #000 !important;
+          padding: 8px 10px !important;
+          margin: 12px 0 0 0 !important;
+          text-align: left !important;
+        }
+        .apposite-kit .formkit-alert:empty{ display: none !important; }
   </style>
 </head>
 
