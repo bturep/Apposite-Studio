@@ -230,7 +230,7 @@
           margin: 0 !important;
           align-items: center !important;
         }
-        
+
         /* Newsletter description line */
         .note{
           font-size: 14px;
@@ -303,7 +303,36 @@
           text-align: left !important;
         }
         .apposite-kit .formkit-alert:empty{ display: none !important; }
+        /* --- Newsletter: keep input + subscribe on one line --- */
+        .apposite-kit .formkit-fields{
+          display: flex !important;
+          flex-direction: row !important;
+          flex-wrap: nowrap !important;
+          align-items: baseline !important;
+          gap: 18px !important; /* keep your rhythm */
+        }
 
+        /* Let the email field take the available width */
+        .apposite-kit .formkit-field{
+          flex: 1 1 auto !important;
+          min-width: 0 !important;
+        }
+
+        /* Keep button from wrapping to a new line */
+        .apposite-kit .formkit-submit{
+          flex: 0 0 auto !important;
+          white-space: nowrap !important;
+        }
+
+        /* Optional: on very narrow screens, stack for legibility */
+        @media (max-width: 420px){
+          .apposite-kit .formkit-fields{
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 10px !important;
+          }
+          .apposite-kit .formkit-field{ width: 100% !important; }
+        }
 
   </style>
 </head>
