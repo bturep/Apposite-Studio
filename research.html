@@ -296,6 +296,38 @@
           text-align: left !important;
         }
         .apposite-kit .formkit-alert:empty{ display: none !important; }
+
+        /* Newsletter description line */
+.note{
+  font-size: 14px;
+  line-height: 1.45;
+  margin-bottom: calc(var(--rhythm) * 0.75);
+}
+
+/* ConvertKit: input becomes a single dotted rule */
+.apposite-kit .formkit-input{
+  border: 0 !important;
+  border-bottom: 1px dotted #000 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #000 !important;
+
+  padding: 6px 0 !important;       /* no left padding = more “rule-like” */
+  height: auto !important;
+  line-height: 1.2 !important;
+  width: min(420px, 100%) !important;
+}
+
+.apposite-kit .formkit-input:focus{
+  outline: none !important;
+  border-bottom-style: solid !important; /* subtle focus cue */
+}
+
+/* Align input + subscribe nicely on one baseline */
+.apposite-kit .formkit-fields{
+  align-items: baseline !important;
+}
+
   </style>
 </head>
 
@@ -525,6 +557,7 @@
         </div>
       </form>
     </div>
+
   </section>
   <section class="row rulewrap" aria-hidden="true">
     <div class="label"></div>
