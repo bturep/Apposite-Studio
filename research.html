@@ -333,6 +333,27 @@
           }
           .apposite-kit .formkit-field{ width: 100% !important; }
         }
+        /* Newsletter row: make input stretch + keep Subscribe aligned right */
+        .apposite-kit .formkit-fields{
+          justify-content: flex-start !important;  /* override Kit’s space-between */
+          width: 100% !important;
+        }
+
+        .apposite-kit .formkit-field{
+          flex: 1 1 auto !important;
+          max-width: none !important;
+          width: 100% !important;
+        }
+
+        .apposite-kit .formkit-input{
+          width: 100% !important;
+          max-width: none !important;
+        }
+
+        /* Push Subscribe to the far right, but keep a consistent gap */
+        .apposite-kit .formkit-submit{
+          margin-left: 18px !important;
+        }
 
   </style>
 </head>
