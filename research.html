@@ -230,6 +230,13 @@
           margin: 0 !important;
           align-items: center !important;
         }
+        
+        /* Newsletter description line */
+        .note{
+          font-size: 14px;
+          line-height: 1.45;
+          margin-bottom: calc(var(--rhythm) * 0.75);
+        }
 
         /* Use flex gap if present; fall back to margins */
         .apposite-kit .formkit-fields{ gap: 18px !important; }
@@ -297,7 +304,7 @@
         }
         .apposite-kit .formkit-alert:empty{ display: none !important; }
 
-        
+
   </style>
 </head>
 
@@ -492,6 +499,7 @@
   <section class="row" id="newsletter">
     <h2 class="label">Newsletter</h2>
     <div class="content">
+      <p class="note">Occasional notes on publications, exhibitions, and related research.</p>
       <form
         action="https://app.kit.com/forms/8946151/subscriptions"
         class="seva-form formkit-form apposite-kit"
